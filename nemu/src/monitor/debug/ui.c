@@ -86,7 +86,15 @@ static int cmd_x(char *args)
 	return 0;
 }
 
-
+static int cmd_p(char *args)
+{
+	bool success=0;
+	char *e=strtok(NULL," ");
+	printf("%d",expr(e,&success));
+	printf("\n");
+	assert(success);
+	return 0;
+}
 
 
 
@@ -103,7 +111,8 @@ static struct {
 	/* TODO: Add more commands */
 	{"info","print program informations",cmd_info},
 	{"si","execute each step",cmd_si},
-	{"x","print the memory",cmd_x}
+	{"x","print the memory",cmd_x},
+	{"p","print",cmd_p},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
