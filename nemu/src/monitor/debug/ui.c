@@ -8,7 +8,7 @@
 #include <readline/history.h>
 
 void cpu_exec(uint32_t);
-
+extern CPU_state cpu;
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -38,6 +38,59 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+
+static int cmd_info(char *args){
+
+	//显示寄存器
+	if(strcmp(args,"r")==0)
+	{
+		printf("eax\t0x%x\t%d\n",cpu.eax,cpu.eax);
+		printf("ecx\t0x%x\t%d\n",cpu.ecx,cpu.ecx);
+		printf("edx\t0x%x\t%d\n",cpu.edx,cpu.edx);
+		printf("ebx\t0x%x\t%d\n",cpu.ebx,cpu.ebx);
+		printf("esp\t0x%x\t%d\n",cpu.esp,cpu.esp);
+		printf("ebp\t0x%x\t%d\n",cpu.ebp,cpu.ebp);
+		printf("esi\t0x%x\t%d\n",cpu.esi,cpu.esi);
+		printf("edi\t0x%x\t%d\n",cpu.edi,cpu.edi);
+		printf("eip\t0x%x\t%d\n",cpu.eip,cpu.eip);
+	}
+	return 0;
+}
+
+static int cmd_si(char *args)
+{
+	char *p=strtok(NULL," ");
+	if(p)
+	{
+		cpu_exec(atoi(p));
+	}
+	else//无参数 缺省为1
+		cpu_exec(1);
+	return 0;
+}
+
+static int cmd_x(char *args)
+{
+	char *num=strtok(NULL," ");
+	char *expr=strtok(NULL," ");
+	int num_int=atoi(num);
+	int exp;
+	sscanf(expr,"%x",&exp);
+	printf("%x\n",exp );
+	int i=0;
+	for(;i<num_int;i++)
+	{	
+		printf("%x\t",swaddr_read(exp+4*i,4));
+	}
+	printf("\n");
+	return 0;
+}
+
+
+
+
+
+
 static struct {
 	char *name;
 	char *description;
@@ -48,7 +101,9 @@ static struct {
 	{ "q", "Exit NEMU", cmd_q },
 
 	/* TODO: Add more commands */
-
+	{"info","print program informations",cmd_info},
+	{"si","execute each step",cmd_si},
+	{"x","print the memory",cmd_x}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
