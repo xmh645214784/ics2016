@@ -244,12 +244,18 @@ int findthedominantoperatorposition(int p,int q)
 	//如果是单目运算符 为统治运算符 顺序应该为第一个
 	if(getpriority(tokens[flag+p].type)==6)
 	{
+		#ifdef DEBUG
 		Log("dominate在%d",danmu+p);
+		#endif
+		assert(danmu+p>=0);
 		return danmu+p;
 	}
 	else
 	{
+		#ifdef DEBUG
 		Log("dominate在%d",flag+p);
+		#endif
+		assert(flag+p>=0);
 		return flag+p;
 	}
 }
