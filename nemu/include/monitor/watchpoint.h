@@ -8,8 +8,12 @@ typedef struct watchpoint {
 	struct watchpoint *next;
 
 	/* TODO: Add more members if necessary */
-
+	char expr[50];
+	int oldvalue;
+	bool isfirstfigure;//是首次求值
 
 } WP;
-
+WP* new_wp();
+void  free_wp(int id);
+WP *returnhead();
 #endif

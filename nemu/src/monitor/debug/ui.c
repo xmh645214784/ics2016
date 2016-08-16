@@ -2,6 +2,7 @@
 #include "monitor/expr.h"
 #include "monitor/watchpoint.h"
 #include "nemu.h"
+#include "memory/memory.h"
 
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -9,6 +10,7 @@
 
 void cpu_exec(uint32_t);
 extern CPU_state cpu;
+
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -35,7 +37,6 @@ static int cmd_c(char *args) {
 static int cmd_q(char *args) {
 	return -1;
 }
-
 static int cmd_help(char *args);
 
 
@@ -53,6 +54,17 @@ static int cmd_info(char *args){
 		printf("esi\t0x%x\t%d\n",cpu.esi,cpu.esi);
 		printf("edi\t0x%x\t%d\n",cpu.edi,cpu.edi);
 		printf("eip\t0x%x\t%d\n",cpu.eip,cpu.eip);
+	}
+
+	//打印监视点信息
+	if(strcmp(args,"w")==0)
+	{
+		WP *head=returnhead();
+		for(;head!=NULL;head=head->next)
+		{
+			printf("Num\tType\tDisp\tEnb\tAddress\tWhat\n");
+			printf("%d\twatchpoint\tkeep\ty\t\t%s\n",head->NO,head->expr );
+		}
 	}
 	return 0;
 }
@@ -96,7 +108,23 @@ static int cmd_p(char *args)
 	return 0;
 }
 
-
+static int cmd_w(char *args)
+{
+	char *e=strtok(NULL," ");
+	WP* w=new_wp();
+	strcpy(w->expr,e);
+	bool success=0;
+	w->oldvalue=expr(w->expr,&success);
+	assert(success);
+	printf("Watchpoint %d:%s\n",w->NO,e);
+	return 0;
+}
+static int cmd_d(char *args)
+{
+	char *e=strtok(NULL," ");
+	free_wp(atoi(e));
+	return 0;
+}
 
 
 static struct {
@@ -113,6 +141,8 @@ static struct {
 	{"si","execute each step",cmd_si},
 	{"x","print the memory",cmd_x},
 	{"p","print",cmd_p},
+	{"w","set watchpoint",cmd_w},
+	{"d","delete",cmd_d}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
