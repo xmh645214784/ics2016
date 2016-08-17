@@ -87,8 +87,9 @@ static bool make_token(char *e) {
 			if(regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
-
+				#ifdef MYDEBUG
 				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
+				#endif
 				position += substr_len;
 
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
@@ -244,7 +245,7 @@ int findthedominantoperatorposition(int p,int q)
 	//如果是单目运算符 为统治运算符 顺序应该为第一个
 	if(getpriority(tokens[flag+p].type)==6)
 	{
-		#ifdef DEBUG
+		#ifdef MYDEBUG
 		Log("dominate在%d",danmu+p);
 		#endif
 		assert(danmu+p>=0);
@@ -252,7 +253,7 @@ int findthedominantoperatorposition(int p,int q)
 	}
 	else
 	{
-		#ifdef DEBUG
+		#ifdef MYDEBUG
 		Log("dominate在%d",flag+p);
 		#endif
 		assert(flag+p>=0);
