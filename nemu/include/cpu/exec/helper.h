@@ -3,7 +3,7 @@
 
 #include "cpu/helper.h"
 #include "cpu/decode/decode.h"
-
+//复用宏定义 对于int name(eip) 返回name_w or name_l
 #define make_helper_v(name) \
 	make_helper(concat(name, _v)) { \
 		return (ops_decoded.is_operand_size_16 ? concat(name, _w) : concat(name, _l)) (eip); \

@@ -2,6 +2,7 @@
 
 #define instr mov
 
+//通用执行函数
 static void do_execute() {
 	OPERAND_W(op_dest, op_src->val);
 	print_asm_template2();
