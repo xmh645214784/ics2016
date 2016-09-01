@@ -185,4 +185,19 @@ void concat(write_operand_, SUFFIX) (Operand *op, DATA_TYPE src) {
 	else { assert(0); }
 }
 
+
+//my docode↓
+
+//call 中的rel  译码时目的操作数为地址
+make_helper(concat(decode_rel_,SUFFIX)){
+	op_src->type = OP_TYPE_IMM;
+	op_src->imm = instr_fetch(eip, DATA_BYTE);
+	op_src->val = op_src->imm;
+
+#ifdef DEBUG
+	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->imm);
+#endif
+	return DATA_BYTE;
+}
+
 #include "cpu/exec/template-end.h"
