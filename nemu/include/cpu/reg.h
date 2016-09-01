@@ -92,6 +92,33 @@ typedef struct {
 	};
 	swaddr_t eip;
 
+	//EFLAGS
+	union
+	{
+		uint32_t EFLAGS;
+		struct 
+		{
+			int CF :1;
+			int nodef1:1;
+			int PF :1;
+			int nodef3 :1;
+			int ZF :1;
+			int nodef5 :1;
+			int AF :1;
+			int nodef7 :1;
+			int SF :1;
+			int TF :1;
+			int IF :1;
+			int DF :1;
+			int OF :1;
+			int TOPL:2;
+			int NT :1;
+			int nodef15 :1;
+			int RF :1;
+			int VM :1;
+			int nodef18:14;
+		};
+	};
 } CPU_state;
 
 extern CPU_state cpu;

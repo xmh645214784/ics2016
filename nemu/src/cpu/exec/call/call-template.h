@@ -1,5 +1,3 @@
-#ifndef _CALL_TEMPLATE_H
-#define _CALL_TEMPLATE_H
 #include "cpu/exec/template-start.h"
 
 #define instr call
@@ -9,20 +7,19 @@ extern CPU_state cpu;
 static void do_execute() {
 
 #if SUFFIX==l
-	swaddr_write(cpu.esp,1,cpu.eip);
 	cpu.esp-=4;
+	swaddr_write(cpu.esp,4,cpu.eip);
 	cpu.eip+=op_dest->imm;
+	print_asm_template1();
+#elif SUFFIX==w
+	cpu.esp-=2;
+	swaddr_write(cpu.esp,2,cpu.eip);
+	cpu.eip=(eip+op_dest->imm)&0000FFFFH;
+	print_asm_template1();
 
-#else 
-	#error NOT call_32
 #endif
 
-
-
-	print_asm_template1();
 }
-
 make_instr_helper(rel)
 
 #include "cpu/exec/template-end.h"
-#endif
