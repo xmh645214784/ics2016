@@ -36,7 +36,8 @@ make_helper(concat(decode_si_, SUFFIX)) {
 //此处我用了union性质
 	//panic("please implement me");
 
-	op_src->val = op_src->simm;
+	op_src->val = op_src->simm; //存疑
+
 
 #ifdef DEBUG
 	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->val);
@@ -193,11 +194,11 @@ void concat(write_operand_, SUFFIX) (Operand *op, DATA_TYPE src) {
 //call 中的rel  译码时目的操作数为地址
 make_helper(concat(decode_rel_,SUFFIX)){
 	op_src->type = OP_TYPE_IMM;
-	op_src->imm = instr_fetch(eip, DATA_BYTE);
-	op_src->val = op_src->imm;
+	op_src->simm = instr_fetch(eip, DATA_BYTE);
+	op_src->val = op_src->simm;
 
 #ifdef DEBUG
-	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->imm);
+	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->simm);
 #endif
 	return DATA_BYTE;
 }

@@ -51,6 +51,7 @@ make_helper(decode_rm_imm_w);
 make_helper(decode_rm_imm_l);
 
 //my
+make_helper(decode_rel_b);
 make_helper(decode_rel_l);
 make_helper(decode_rel_w);
 
