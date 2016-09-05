@@ -32,7 +32,9 @@ make_helper(concat(decode_si_, SUFFIX)) {
 	 *
 	op_src->simm = ???
 	 */
-	panic("please implement me");
+	op_src->imm = instr_fetch(eip, DATA_BYTE);
+//此处我用了union性质
+	//panic("please implement me");
 
 	op_src->val = op_src->simm;
 
