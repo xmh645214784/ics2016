@@ -32,11 +32,21 @@ make_helper(concat(decode_si_, SUFFIX)) {
 	 *
 	op_src->simm = ???
 	 */
-	op_src->imm = instr_fetch(eip, DATA_BYTE);
-//此处我用了union性质
-	//panic("please implement me");
+	int a = instr_fetch(eip, DATA_BYTE);
+	#if DATA_BYTE==1
+		if(a&0x80)//负数
+		{
+			op_src->simm=a|0xFFFFFF00;
+		}
+		else
+		{
+			op_src->simm=a&0x7F;
+		}
+	#elif DATA_BYTE==4
 
-	op_src->val = op_src->simm; //存疑
+			op_src->simm=a;
+	#endif
+	//panic("please implement me");
 
 
 #ifdef DEBUG
