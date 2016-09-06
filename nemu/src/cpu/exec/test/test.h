@@ -1,5 +1,5 @@
-#ifndef _TEST_H
-#define _TEST_H
+#ifndef _TEST_H_
+#define _TEST_H_
 
 make_helper(test_i2a_b);
 make_helper(test_i2a_w);
