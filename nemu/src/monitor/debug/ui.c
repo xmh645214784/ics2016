@@ -87,12 +87,12 @@ static int cmd_x(char *args)
 	char *expr=strtok(NULL," ");
 	int num_int=atoi(num);
 	int exp;
-	sscanf(expr,"%x",&exp);
+	sscanf(expr,"0x%x",&exp);
 	printf("%x\n",exp );
 	int i=0;
 	for(;i<num_int;i++)
 	{	
-		printf("%08x  ",swaddr_read(exp+4*i,4));
+		printf("0x%08x  ",swaddr_read(exp+4*i,4));
 	}
 	printf("\n");
 	return 0;
