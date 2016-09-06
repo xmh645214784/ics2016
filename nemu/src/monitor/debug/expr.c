@@ -295,6 +295,8 @@ uint32_t eval(int p,int q)
 				return cpu.edi;
 			if(strcmp(tokens[p].str,"$esp")==0)
 				return cpu.esp;
+			if(strcmp(tokens[p].str,"eip")==0)
+				return cpu.eip;
 
 			if(strcmp(tokens[p].str,"$ax")==0)
 				return cpu.ax;
@@ -329,6 +331,8 @@ uint32_t eval(int p,int q)
 				return cpu.ch;
 			if(strcmp(tokens[p].str,"$bh")==0)
 				return cpu.bh;
+
+
 			assert(0);
 		}
 		if(tokens[p].type==NEG||tokens[p].type==NOT||tokens[p].type==DEREF)//单目运算符
