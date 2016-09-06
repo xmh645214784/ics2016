@@ -36,7 +36,7 @@ static void do_execute() {
 		cpu.PF=0;
 
 //CF
-	
+	panic("没写完");
 }
 
 
