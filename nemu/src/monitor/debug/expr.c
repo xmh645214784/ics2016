@@ -295,6 +295,8 @@ uint32_t eval(int p,int q)
 				return cpu.edi;
 			if(strcmp(tokens[p].str,"$esp")==0)
 				return cpu.esp;
+			if(strcmp(tokens[p].str,"$eip")==0)
+				return cpu.eip;
 
 			if(strcmp(tokens[p].str,"$ax")==0)
 				return cpu.ax;
