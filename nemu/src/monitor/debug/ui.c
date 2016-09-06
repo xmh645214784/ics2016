@@ -92,7 +92,7 @@ static int cmd_x(char *args)
 	int i=0;
 	for(;i<num_int;i++)
 	{	
-		printf("%x\t",swaddr_read(exp+4*i,4));
+		printf("%02x\t",swaddr_read(exp+4*i,4));
 	}
 	printf("\n");
 	return 0;
