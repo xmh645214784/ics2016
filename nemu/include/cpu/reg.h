@@ -90,8 +90,11 @@ typedef struct {
 			
 		};
 	};
-	swaddr_t eip;
-
+	union
+	{
+		swaddr_t eip;
+		uint16_t ip;
+	};
 } CPU_state;
 
 extern CPU_state cpu;
