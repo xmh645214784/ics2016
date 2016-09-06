@@ -117,6 +117,7 @@ typedef struct {
 			int VM :1;
 			int nodef18:14;
 		};
+	};
 	union
 	{
 		swaddr_t eip;
