@@ -107,7 +107,15 @@ static int cmd_p(char *args)
 	assert(success);
 	return 0;
 }
-
+static int cmd_px(char *args)
+{
+	bool success=0;
+	char *e=strtok(NULL," ");
+	printf("0x%08x",expr(e,&success));
+	printf("\n");
+	assert(success);
+	return 0;
+}
 static int cmd_w(char *args)
 {
 	char *e=strtok(NULL," ");
@@ -142,7 +150,8 @@ static struct {
 	{"x","print the memory",cmd_x},
 	{"p","print",cmd_p},
 	{"w","set watchpoint",cmd_w},
-	{"d","delete",cmd_d}
+	{"d","delete",cmd_d},
+	{"p/x","print as hex",cmd_px}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
