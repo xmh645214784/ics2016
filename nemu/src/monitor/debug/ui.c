@@ -146,6 +146,7 @@ static struct {
 
 	/* TODO: Add more commands */
 	{"info","print program informations",cmd_info},
+	{"i","print program informations",cmd_info},
 	{"si","execute each step",cmd_si},
 	{"x","print the memory",cmd_x},
 	{"p","print",cmd_p},

@@ -7,14 +7,14 @@ extern CPU_state cpu;
 //通用执行函数
 static void do_execute() {
 
-//push 注意！！
+//push 注意可能有错！！
 #if SUFFIX==l
 	cpu.esp-=2;
-	swaddr_write(cpu.esp,2,op_dest->val);
+	swaddr_write(cpu.esp,2,op_src->val);
 	print_asm_template1();
 #else
 	cpu.esp-=4;
-	swaddr_write(cpu.esp,4,op_dest->val);
+	swaddr_write(cpu.esp,4,op_src->val);
 	print_asm_template1();
 #endif
 
