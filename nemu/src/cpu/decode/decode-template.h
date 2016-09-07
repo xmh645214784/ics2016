@@ -206,7 +206,6 @@ make_helper(concat(decode_rel_,SUFFIX)){
 	op_src->type = OP_TYPE_IMM;
 	#if SUFFIX==l
 		op_src->simm = instr_fetch(eip, DATA_BYTE);//应该用一个sign ime
-		op_src->val = op_src->simm;
 	#elif
 		panic("有问题"）;
 	#endif
