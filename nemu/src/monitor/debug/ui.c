@@ -84,11 +84,12 @@ static int cmd_si(char *args)
 static int cmd_x(char *args)
 {
 	char *num=strtok(NULL," ");
-	char *expr=strtok(NULL," ");
+	char *e=strtok(NULL," ");
 	int num_int=atoi(num);
-	int exp;
-	sscanf(expr,"0x%x",&exp);
-	printf("%x\n",exp );
+	bool success =0;
+	int exp=expr(e,&success);
+	assert(success);
+	printf("首地址为:0x%08x\n",exp );
 	int i=0;
 	for(;i<num_int;i++)
 	{	
