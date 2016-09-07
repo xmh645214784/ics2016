@@ -206,8 +206,12 @@ make_helper(concat(decode_rel_,SUFFIX)){
 	op_src->type = OP_TYPE_IMM;
 	#if SUFFIX==l
 		op_src->simm = instr_fetch(eip, DATA_BYTE);//应该用一个sign ime
-	#elif
-		panic("有问题"）;
+	#elif SUFFIX==w
+		short int temp=instr_fetch(eip, DATA_BYTE);
+		op_src->simm=temp;
+	#elif SUFFIX==b
+		char temp=instr_fetch(eip, DATA_BYTE);
+		op_src->simm=temp;
 	#endif
 #ifdef DEBUG
 	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->simm);
