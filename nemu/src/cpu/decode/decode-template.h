@@ -204,9 +204,12 @@ void concat(write_operand_, SUFFIX) (Operand *op, DATA_TYPE src) {
 //call 中的rel  译码时目的操作数为地址
 make_helper(concat(decode_rel_,SUFFIX)){
 	op_src->type = OP_TYPE_IMM;
-	op_src->simm = instr_fetch(eip, DATA_BYTE);
-	op_src->val = op_src->simm;
-
+	#if SUFFIX==l
+		op_src->simm = instr_fetch(eip, DATA_BYTE);//应该用一个sign ime
+		op_src->val = op_src->simm;
+	#elif
+		panic("有问题"）;
+	#endif
 #ifdef DEBUG
 	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->simm);
 #endif
