@@ -2,11 +2,13 @@
 
 #include "cpu/decode/modrm.h"
 
+
 #define decode_r_internal concat3(decode_r_, SUFFIX, _internal)
 #define decode_rm_internal concat3(decode_rm_, SUFFIX, _internal)
 #define decode_i concat(decode_i_, SUFFIX)
 #define decode_a concat(decode_a_, SUFFIX)
 #define decode_r2rm concat(decode_r2rm_, SUFFIX)
+
 
 /* Ib, Iv */
 make_helper(concat(decode_i_, SUFFIX)) {
@@ -212,6 +214,16 @@ make_helper(concat(decode_rel_,SUFFIX)){
 	return DATA_BYTE;
 }
 
+make_helper(concat(decode_m_, SUFFIX)) {
+	/* eip here is pointing to the immediate */
+	op_src->type = OP_TYPE_IMM;
+	op_src->imm = instr_fetch(eip, DATA_BYTE);
+	op_src->val = op_src->imm;
 
+#ifdef DEBUG
+	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->imm);
+#endif
+	return DATA_BYTE;
+}
 
 #include "cpu/exec/template-end.h"
