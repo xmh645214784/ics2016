@@ -2,7 +2,10 @@
 #include "debug.h"
 
 //暂时
-#define condition e
+#ifndef condition
+	#define condition e
+
+#endif
 
 #define instr concat(j,condition)  
 	//j+condition
@@ -18,7 +21,7 @@ static void do_execute() {
 	{	
 		cpu.eip+=op_src->simm;
 		Log("%d",op_src->simm);
-		
+		Log("%s",str(SUFFIX));
 		#if SUFFIX==w
 			cpu.eip=cpu.eip&0x0000FFFF;
 		#endif
