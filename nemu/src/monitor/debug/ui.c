@@ -54,6 +54,18 @@ static int cmd_info(char *args){
 		printf("esi\t0x%x\t%d\n",cpu.esi,cpu.esi);
 		printf("edi\t0x%x\t%d\n",cpu.edi,cpu.edi);
 		printf("eip\t0x%x\t%d\n",cpu.eip,cpu.eip);
+		printf("[EFLAGS]: ");
+		if(cpu.CF)
+			printf("CF ");
+		if(cpu.PF)
+			printf("PF ");
+		if(cpu.ZF)
+			printf("ZF ");
+		if(cpu.SF)
+			printf("SF ");
+		if(cpu.OF)
+			printf("OF ");
+		printf("\n");
 	}
 
 	//打印监视点信息
