@@ -6,11 +6,11 @@ extern CPU_state cpu;
 bool is_even_number_of_1(uint32_t val);
 //通用执行函数
 static void do_execute() {
-	DATA_TYPE_S src=(DATA_TYPE_S)op_src->simm;
+	DATA_TYPE_S src=(DATA_TYPE_S)op_src->val;
 	DATA_TYPE_S des=(DATA_TYPE_S)op_dest->val;
 	DATA_TYPE_S result=src-des;
-Log("目的操作数类型%d reg标号为%d 值为%d,",op_dest->type,op_dest->reg,op_dest->val);
-Log("cmp %d-%d",src,des);
+//Log("目的操作数类型%d reg标号为%d 值为%d,",op_dest->type,op_dest->reg,op_dest->val);
+//Log("cmp %d-%d",src,des);
 
 //OF
 	if(src>0&&des<0&&result<0)
@@ -46,6 +46,8 @@ Log("cmp %d-%d",src,des);
 		cpu.CF=1;
 	else
 		cpu.CF=0;	
+
+	print_asm_template2();
 }
 make_instr_helper(i2a)
 make_instr_helper(i2rm)
