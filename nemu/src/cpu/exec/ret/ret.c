@@ -5,7 +5,7 @@ extern CPU_state cpu;
 make_helper(ret_w)
 {
 	cpu.ip=swaddr_read(cpu.esp,2);
-	cpu.esp-=2;
+	cpu.esp+=2;
 	cpu.eip=cpu.eip&0x0000FFFF;
 	print_asm("retw");
 	return 1;
@@ -13,8 +13,8 @@ make_helper(ret_w)
 
 make_helper(ret_l)
 {
-	cpu.ip=swaddr_read(cpu.esp,4);
-	cpu.esp-=4;
+	cpu.eip=swaddr_read(cpu.esp,4);
+	cpu.esp+=4;
 	print_asm("retl");
 	return 1;
 }
