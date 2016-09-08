@@ -203,6 +203,9 @@ make_helper(concat(decode_rel_,SUFFIX)){
 		int8_t temp=instr_fetch(eip, DATA_BYTE);
 		op_src->simm=temp;
 	#endif
+
+	op_src->val=op_src->simm;
+
 #ifdef DEBUG
 	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->simm);
 #endif
