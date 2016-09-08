@@ -15,7 +15,10 @@ static void do_execute() {
 //ZF
 	DATA_TYPE result=op_dest->val&op_src->val;
 	if(result==0)
-		cpu.ZF=1;
+		{
+			cpu.ZF=1;
+			panic("OK");
+		}
 	else
 		cpu.ZF=0;
 

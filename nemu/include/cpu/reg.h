@@ -101,10 +101,9 @@ typedef struct {
 			int nodef1:1;
 			int PF :1;
 			int nodef3 :1;
-			int ZF :1;
-			int nodef5 :1;
 			int AF :1;
-			int nodef7 :1;
+			int nodef5 :1;
+			int ZF :1;
 			int SF :1;
 			int TF :1;
 			int IF :1;

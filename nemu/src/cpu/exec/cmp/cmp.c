@@ -18,6 +18,7 @@
 
 make_helper(cmp_i82rm_w)
 {
+	panic("进去了,译码错误");
 	decode_rm_imm_w(eip);
 	int8_t dest=op_dest->simm;
 
@@ -65,7 +66,7 @@ make_helper(cmp_i82rm_w)
 
 make_helper(cmp_i82rm_l)
 {
-panic("进去了");
+	panic("进去了,译码错误");
 	decode_rm_imm_w(eip);
 	int8_t dest=op_dest->simm;
 	int32_t result=op_src->simm-dest;
