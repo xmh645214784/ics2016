@@ -8,12 +8,12 @@ bool is_even_number_of_1(uint32_t val);
 static void do_execute() {
 	
 	DATA_TYPE_S result=(DATA_TYPE_S)op_src->simm-(DATA_TYPE_S)op_dest->simm;
-Log("%d",result);
+Log("cmp %d-%d",(DATA_TYPE_S)op_src->simm,(DATA_TYPE_S)op_dest->simm);
 
 //OF
-	if(op_src->simm>0&&op_dest->simm<0&&result<0)
+	if((DATA_TYPE_S)op_src->simm>0&&(DATA_TYPE_S)op_dest->simm<0&&result<0)
 		cpu.OF=1;
-	else if(op_src->simm<0&&op_dest->simm>0&&result>0)
+	else if((DATA_TYPE_S)op_src->simm<0&&(DATA_TYPE_S)op_dest->simm>0&&result>0)
 		cpu.OF=1;
 	else
 		cpu.OF=0;
