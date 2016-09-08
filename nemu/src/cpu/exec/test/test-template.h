@@ -13,32 +13,33 @@ static void do_execute() {
 	cpu.OF=0;
 
 //ZF
-	if((op_dest->val&op_src->val)==0)
+	DATA_TYPE result=op_dest->val&op_src->val;
+	if(result==0)
 		cpu.ZF=1;
 	else
 		cpu.ZF=0;
 
 //SF
 #if SUFFIX==b
-	if((op_dest->val&op_src->val&0x10)==1)
+	if((result&0x10)==1)
 		cpu.SF=1;
 	else
 		cpu.SF=0;
 
 #elif SUFFIX==w
-	if((op_dest->val&op_src->val)&0x1000)==1)
+	if((result)&0x1000)==1)
 		cpu.SF=1;
 	else
 		cpu.SF=0;
 #else
-	if((op_dest->val&op_src->val)&0x10000000)==1)
+	if((result)&0x10000000)==1)
 		cpu.SF=1;
 	else
 		cpu.SF=0;
 #endif
 
 //PF
-	if(is_even_number_of_1(op_dest->val&op_src->val))
+	if(is_even_number_of_1(result))
 		cpu.PF=1;
 	else
 		cpu.PF=0;
