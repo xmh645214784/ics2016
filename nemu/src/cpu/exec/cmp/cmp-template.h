@@ -8,6 +8,7 @@ bool is_even_number_of_1(uint32_t val);
 static void do_execute() {
 	
 	DATA_TYPE_S result=(DATA_TYPE_S)op_src->simm-(DATA_TYPE_S)op_dest->simm;
+Log("目的操作数类型%d reg标号为%d 值为%d,",op_dest->type,op_dest->reg,op_dest->val);
 Log("cmp %d-%d",(DATA_TYPE_S)op_src->simm,(DATA_TYPE_S)op_dest->simm);
 
 //OF
