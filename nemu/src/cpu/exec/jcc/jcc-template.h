@@ -16,7 +16,7 @@ static void do_execute() {
 //JE
 	if(cpu.ZF)
 	{	cpu.eip+=op_src->simm;
-		#if SUFFIX==w
+		#if SUFFIX==b
 			cpu.eip=cpu.eip&0x0000FFFF;
 		#endif
 	}
