@@ -20,7 +20,8 @@ make_helper(cmp_i82rm_w)
 {
 	decode_rm_imm_w(eip);
 	int8_t dest=op_dest->simm;
-	int16_t result=op_src->simm-dest;
+
+	int16_t result=(int16_t)op_src->simm - dest;
 
 
 //OF
@@ -67,7 +68,7 @@ make_helper(cmp_i82rm_l)
 	decode_rm_imm_w(eip);
 	int8_t dest=op_dest->simm;
 	int32_t result=op_src->simm-dest;
-
+Log("cmp操作数为%d  %d",op_src->simm,dest);
 
 //OF
 	if(op_src->simm>0&&dest<0&&result<0)
