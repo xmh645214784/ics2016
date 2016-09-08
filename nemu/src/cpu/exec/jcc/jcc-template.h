@@ -18,7 +18,8 @@ static void do_execute() {
 	{	
 		cpu.eip+=op_src->simm;
 		Log("%d",op_src->simm);
-		#if SUFFIX==b
+		
+		#if SUFFIX==w
 			cpu.eip=cpu.eip&0x0000FFFF;
 		#endif
 	}
