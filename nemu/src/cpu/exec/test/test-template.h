@@ -17,6 +17,7 @@ static void do_execute() {
 	if(result==0)
 		{
 			cpu.ZF=1;
+			Log("test中ZF为%d",cpu.ZF);
 		}
 	else
 		cpu.ZF=0;
