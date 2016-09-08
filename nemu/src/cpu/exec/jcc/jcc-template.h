@@ -17,7 +17,6 @@ extern CPU_state cpu;
 static void do_execute() {
 
 //JE
-Log("%d",cpu.ZF);
 	if(cpu.ZF==1)
 	{	
 		cpu.eip+=op_src->simm;

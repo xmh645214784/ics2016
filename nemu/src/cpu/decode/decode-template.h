@@ -209,10 +209,10 @@ make_helper(concat(decode_rel_,SUFFIX)){
 	#if DATA_BYTE==4
 		op_src->simm = instr_fetch(eip, DATA_BYTE);//应该用一个sign ime
 	#elif DATA_BYTE==2
-		short int temp=instr_fetch(eip, DATA_BYTE);
+		int16_t temp=instr_fetch(eip, DATA_BYTE);
 		op_src->simm=temp;
 	#elif DATA_BYTE==1
-		char temp=instr_fetch(eip, DATA_BYTE);
+		int8_t temp=instr_fetch(eip, DATA_BYTE);
 		op_src->simm=temp;
 	#endif
 #ifdef DEBUG

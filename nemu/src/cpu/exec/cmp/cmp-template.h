@@ -7,7 +7,7 @@ bool is_even_number_of_1(uint32_t val);
 //通用执行函数
 static void do_execute() {
 	
-	DATA_TYPE_S result=op_src->simm-op_dest->simm;
+	DATA_TYPE_S result=(DATA_TYPE_S)op_src->simm-(DATA_TYPE_S)op_dest->simm;
 
 
 //OF
@@ -48,8 +48,11 @@ static void do_execute() {
 make_instr_helper(i2a)
 make_instr_helper(i2rm)
 
-//sign extend 少
-//我写在C中了
+//sign extend 
+#if DATA_BYTE==2||DATA_BYTE==4
+	make_instr_helper(si2rm)
+#endif
+
 
 make_instr_helper(r2rm)
 make_instr_helper(rm2r)
