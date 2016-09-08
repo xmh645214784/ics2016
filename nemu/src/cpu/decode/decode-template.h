@@ -32,20 +32,8 @@ make_helper(concat(decode_si_, SUFFIX)) {
 	 *
 	op_src->simm = ???
 	 */
-	int a = instr_fetch(eip, DATA_BYTE);
-	#if DATA_BYTE==1
-		if(a&0x80)//负数
-		{
-			op_src->simm=a|0xFFFFFF00;
-		}
-		else
-		{
-			op_src->simm=a&0x7F;
-		}
-	#elif DATA_BYTE==4
-
-			op_src->simm=a;
-	#endif
+	DATA_TYPE_S a = instr_fetch(eip, DATA_BYTE);
+	op_src->simm=a;
 	//panic("please implement me");
 
 
