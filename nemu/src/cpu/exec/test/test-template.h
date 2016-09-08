@@ -17,7 +17,6 @@ static void do_execute() {
 	if(result==0)
 		{
 			cpu.ZF=1;
-			panic("OK");
 		}
 	else
 		cpu.ZF=0;
