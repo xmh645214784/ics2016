@@ -97,24 +97,24 @@ typedef struct {
 		uint32_t EFLAGS;
 		struct 
 		{
-			int CF :1;
-			int nodef1:1;
-			int PF :1;
-			int nodef3 :1;
-			int AF :1;
-			int nodef5 :1;
-			int ZF :1;
-			int SF :1;
-			int TF :1;
-			int IF :1;
-			int DF :1;
-			int OF :1;
-			int TOPL:2;
-			int NT :1;
-			int nodef15 :1;
-			int RF :1;
-			int VM :1;
-			int nodef18:14;
+			uint8_t CF :1;
+			uint8_t nodef1:1;
+			uint8_t PF :1;
+			uint8_t nodef3 :1;
+			uint8_t AF :1;
+			uint8_t nodef5 :1;
+			uint8_t ZF :1;
+			uint8_t SF :1;
+			uint8_t TF :1;
+			uint8_t IF :1;
+			uint8_t DF :1;
+			uint8_t OF :1;
+			uint8_t TOPL:2;
+			uint8_t NT :1;
+			uint8_t nodef15 :1;
+			uint8_t RF :1;
+			uint8_t VM :1;
+			uint16_t nodef18:14;
 		};
 	};
 	union
