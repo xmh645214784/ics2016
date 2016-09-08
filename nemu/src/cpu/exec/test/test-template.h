@@ -20,19 +20,19 @@ static void do_execute() {
 		cpu.ZF=0;
 
 //SF
-#if SUFFIX==b
+#if DATA_BYTE ==1
 	if((result&0x10)==1)
 		cpu.SF=1;
 	else
 		cpu.SF=0;
 
-#elif SUFFIX==w
-	if((result)&0x1000)==1)
+#elif DATA_BYTE ==2
+	if((result&0x1000)==1)
 		cpu.SF=1;
 	else
 		cpu.SF=0;
 #else
-	if((result)&0x10000000)==1)
+	if((result&0x10000000)==1)
 		cpu.SF=1;
 	else
 		cpu.SF=0;
