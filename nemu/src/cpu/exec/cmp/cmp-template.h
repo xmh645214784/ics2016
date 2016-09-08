@@ -6,7 +6,10 @@ extern CPU_state cpu;
 bool is_even_number_of_1(uint32_t val);
 //通用执行函数
 static void do_execute() {
-	int result=op_src->simm-op_dest->simm;
+	
+	DATA_TYPE_S result=op_src->simm-op_dest->simm;
+
+
 //OF
 	if(op_src->simm>0&&op_dest->simm<0&&result<0)
 		cpu.OF=1;
@@ -36,9 +39,19 @@ static void do_execute() {
 		cpu.PF=0;
 
 //CF
-	panic("没写完");
+	//可能有BUG
+	if(result<0)
+		cpu.CF=1;
+	else
+		cpu.CF=0;	
 }
+make_instr_helper(i2a)
+make_instr_helper(i2rm)
 
+//sign extend 少
+//我写在C中了
 
+make_instr_helper(r2rm)
+make_instr_helper(rm2r)
 
 #include "cpu/exec/template-end.h"

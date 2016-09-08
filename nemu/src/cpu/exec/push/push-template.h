@@ -13,7 +13,6 @@ if(DATA_BYTE==2)
 	cpu.esp-=2;
 	swaddr_write(cpu.esp,2,op_src->val);
 	print_asm_template1();
-	panic("错误");
 }
 else
 {

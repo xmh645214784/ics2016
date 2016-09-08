@@ -186,6 +186,8 @@ make_helper(concat(decode_rm_cl_, SUFFIX)) {
 	return len;
 }
 
+
+
 make_helper(concat(decode_rm_imm_, SUFFIX)) {
 	int len = decode_r2rm(eip);
 	len += decode_i_b(eip + len);
@@ -204,12 +206,12 @@ void concat(write_operand_, SUFFIX) (Operand *op, DATA_TYPE src) {
 //call 中的rel  译码时目的操作数为地址
 make_helper(concat(decode_rel_,SUFFIX)){
 	op_src->type = OP_TYPE_IMM;
-	#if SUFFIX==l
+	#if DATA_BYTE==4
 		op_src->simm = instr_fetch(eip, DATA_BYTE);//应该用一个sign ime
-	#elif SUFFIX==w
+	#elif DATA_BYTE==2
 		short int temp=instr_fetch(eip, DATA_BYTE);
 		op_src->simm=temp;
-	#elif SUFFIX==b
+	#elif DATA_BYTE==1
 		char temp=instr_fetch(eip, DATA_BYTE);
 		op_src->simm=temp;
 	#endif
@@ -218,5 +220,7 @@ make_helper(concat(decode_rel_,SUFFIX)){
 #endif
 	return DATA_BYTE;
 }
+
+
 
 #include "cpu/exec/template-end.h"
