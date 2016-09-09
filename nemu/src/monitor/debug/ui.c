@@ -72,6 +72,7 @@ static int cmd_info(char *args){
 	if(strcmp(args,"w")==0)
 	{
 		WP *head=returnhead();
+		assert(head);
 		for(;head!=NULL;head=head->next)
 		{
 			printf("Num\tType\tDisp\tEnb\tAddress\tWhat\n");
