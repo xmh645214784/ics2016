@@ -13,7 +13,6 @@ make_helper(ret_w)
 
 make_helper(ret_l)
 {
-	panic("进去了");
 	cpu.eip=swaddr_read(cpu.esp,4);
 	cpu.esp+=4;
 	print_asm("retl");
