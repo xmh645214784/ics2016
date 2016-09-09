@@ -94,8 +94,8 @@ void cpu_exec(volatile uint32_t n) {
 			if(temp->oldvalue!=newvalue)
 			{
 				printf("Watchpoint %d:%s\n",temp->NO,temp->expr );
-				printf("Old value = %d\n",temp->oldvalue );
-				printf("New value = %d\n",newvalue); 
+				printf("Old value = %d\t%x\n",temp->oldvalue,temp->oldvalue );
+				printf("New value = %d\t%x\n",newvalue,newvalue); 
 				temp->oldvalue=newvalue;
 				nemu_state=STOP;
 			}
