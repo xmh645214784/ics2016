@@ -72,7 +72,8 @@ static int cmd_info(char *args){
 	if(strcmp(args,"w")==0)
 	{
 		WP *head=returnhead();
-		assert(head);
+		if(!head)
+			printf("当前监视点信息\n");
 		for(;head!=NULL;head=head->next)
 		{
 			printf("Num\tType\tDisp\tEnb\tAddress\tWhat\n");
