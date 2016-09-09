@@ -4,6 +4,7 @@ extern CPU_state cpu;
 
 make_helper(ret_w)
 {
+	panic("进去了");
 	cpu.ip=swaddr_read(cpu.esp,2);
 	cpu.esp+=2;
 	cpu.eip=cpu.eip&0x0000FFFF;
