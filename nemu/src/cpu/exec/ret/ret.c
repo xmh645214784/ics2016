@@ -8,7 +8,7 @@ make_helper(ret_w)
 	cpu.esp+=2;
 	cpu.eip=cpu.eip&0x0000FFFF;
 	print_asm("retw");
-	return 1;
+	return 0;
 }
 
 make_helper(ret_l)
@@ -17,7 +17,7 @@ make_helper(ret_l)
 	Log("%08x",cpu.eip);
 	cpu.esp+=4;
 	print_asm("retl");
-	return 1;
+	return 0;
 }
 
 make_helper(ret_i_w)
@@ -25,7 +25,7 @@ make_helper(ret_i_w)
 	decode_i_w(eip);
 	int16_t a=op_src->val;
 	cpu.esp+=a;
-	return 2;
+	return 1;
 }
 
 make_helper_v(ret)
