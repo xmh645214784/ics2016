@@ -14,7 +14,6 @@ make_helper(ret_w)
 make_helper(ret_l)
 {
 	cpu.eip=swaddr_read(cpu.esp,4);
-	Log("%08x",cpu.eip);
 	cpu.esp+=4;
 	print_asm("retl");
 	return 0;
