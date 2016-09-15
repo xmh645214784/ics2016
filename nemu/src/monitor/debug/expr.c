@@ -126,7 +126,7 @@ uint32_t expr(char *e, bool *success)
 		return 0;
 	}
 	//Log("match successfully");
-	*success=true;
+	//*success=true;
 	/* TODO: Insert codes to evaluate the expression. */
 	//panic("please implement me");
 	int i;
@@ -277,6 +277,11 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 
 uint32_t eval(int p,int q,bool *success)
 {
+	if(*success==0)
+	{
+		Log("表达式求值发生了错误");
+		return 0;
+	}
 	if(p > q) {
 		/* Bad expression */
 		panic("p>q");

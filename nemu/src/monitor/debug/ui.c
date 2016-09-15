@@ -100,7 +100,7 @@ static int cmd_x(char *args)
 	char *num=strtok(NULL," ");
 	char *e=strtok(NULL," ");
 	int num_int=atoi(num);
-	bool success =0;
+	bool success =1;
 	int exp=expr(e,&success);
 	assert(success);
 	printf("首地址为:0x%08x\n",exp );
@@ -115,7 +115,7 @@ static int cmd_x(char *args)
 
 static int cmd_p(char *args)
 {
-	bool success=0;
+	bool success=1;
 	char *e=strtok(NULL," ");
 	printf("%d",expr(e,&success));
 	printf("\n");
@@ -124,7 +124,7 @@ static int cmd_p(char *args)
 }
 static int cmd_px(char *args)
 {
-	bool success=0;
+	bool success=1;
 	char *e=strtok(NULL," ");
 	printf("0x%08x",expr(e,&success));
 	printf("\n");
