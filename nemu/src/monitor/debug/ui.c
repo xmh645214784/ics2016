@@ -102,7 +102,11 @@ static int cmd_x(char *args)
 	int num_int=atoi(num);
 	bool success =1;
 	int exp=expr(e,&success);
-	assert(success);
+	
+	if(!success)
+		return 0;
+
+	//assert(success);
 	printf("首地址为:0x%08x\n",exp );
 	int i=0;
 	for(;i<num_int;i++)
@@ -119,7 +123,9 @@ static int cmd_p(char *args)
 	char *e=strtok(NULL," ");
 	printf("%d",expr(e,&success));
 	printf("\n");
-	assert(success);
+
+	if(!success)
+		return 0;
 	return 0;
 }
 static int cmd_px(char *args)
@@ -128,18 +134,25 @@ static int cmd_px(char *args)
 	char *e=strtok(NULL," ");
 	printf("0x%08x",expr(e,&success));
 	printf("\n");
-	assert(success);
+	if(!success)
+		return 0;
 	return 0;
 }
 static int cmd_w(char *args)
 {
 	char *e=strtok(NULL," ");
-	WP* w=new_wp();
-	strcpy(w->expr,e);
 	bool success=0;
-	w->oldvalue=expr(w->expr,&success);
-	assert(success);
-	printf("Watchpoint %d:%s\n",w->NO,e);
+
+	int oldvalue=expr(e,&success);
+	if(success)
+	{
+		WP* w=new_wp();
+		strcpy(w->expr,e);
+		w->oldvalue=oldvalue;
+		printf("Watchpoint %d:%s\n",w->NO,e);
+	}
+	else
+		printf("Watchpoint set failed\n");
 	return 0;
 }
 static int cmd_d(char *args)
