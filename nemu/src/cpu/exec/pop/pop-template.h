@@ -8,13 +8,7 @@ extern CPU_state cpu;
 static void do_execute() {
 	OPERAND_W(op_src,swaddr_read(cpu.esp,DATA_BYTE));
 
-#if DATA_BYTE==2
-	cpu.esp+=2;
-
-#elif DATA_BYTE==4
-	cpu.esp+=4;
-#endif
-
+	cpu.esp+=DATA_BYTE;
 	print_asm_template1();
 }
 
