@@ -60,6 +60,8 @@ static int cmd_info(char *args){
 	if(strcmp(args,"w")==0)
 	{
 		WP *head=returnhead();
+		if(!head)
+			printf("当前监视点信息\n");
 		for(;head!=NULL;head=head->next)
 		{
 			printf("Num\tType\tDisp\tEnb\tAddress\tWhat\n");
@@ -84,15 +86,20 @@ static int cmd_si(char *args)
 static int cmd_x(char *args)
 {
 	char *num=strtok(NULL," ");
-	char *expr=strtok(NULL," ");
+	char *e=strtok(NULL," ");
 	int num_int=atoi(num);
-	int exp;
-	sscanf(expr,"%x",&exp);
-	printf("%x\n",exp );
+	bool success =1;
+	int exp=expr(e,&success);
+	
+	if(!success)
+		return 0;
+
+	//assert(success);
+	printf("首地址为:0x%08x\n",exp );
 	int i=0;
 	for(;i<num_int;i++)
 	{	
-		printf("%x\t",swaddr_read(exp+4*i,4));
+		printf("0x%08x  ",swaddr_read(exp+4*i,4));
 	}
 	printf("\n");
 	return 0;
@@ -100,23 +107,40 @@ static int cmd_x(char *args)
 
 static int cmd_p(char *args)
 {
-	bool success=0;
+	bool success=1;
 	char *e=strtok(NULL," ");
 	printf("%d",expr(e,&success));
 	printf("\n");
-	assert(success);
+
+	if(!success)
+		return 0;
 	return 0;
 }
-
+static int cmd_px(char *args)
+{
+	bool success=1;
+	char *e=strtok(NULL," ");
+	printf("0x%08x",expr(e,&success));
+	printf("\n");
+	if(!success)
+		return 0;
+	return 0;
+}
 static int cmd_w(char *args)
 {
 	char *e=strtok(NULL," ");
-	WP* w=new_wp();
-	strcpy(w->expr,e);
 	bool success=0;
-	w->oldvalue=expr(w->expr,&success);
-	assert(success);
-	printf("Watchpoint %d:%s\n",w->NO,e);
+
+	int oldvalue=expr(e,&success);
+	if(success)
+	{
+		WP* w=new_wp();
+		strcpy(w->expr,e);
+		w->oldvalue=oldvalue;
+		printf("Watchpoint %d:%s\n",w->NO,e);
+	}
+	else
+		printf("Watchpoint set failed\n");
 	return 0;
 }
 static int cmd_d(char *args)
@@ -138,11 +162,13 @@ static struct {
 
 	/* TODO: Add more commands */
 	{"info","print program informations",cmd_info},
+	{"i","print program informations",cmd_info},
 	{"si","execute each step",cmd_si},
 	{"x","print the memory",cmd_x},
 	{"p","print",cmd_p},
 	{"w","set watchpoint",cmd_w},
-	{"d","delete",cmd_d}
+	{"d","delete",cmd_d},
+	{"p/x","print as hex",cmd_px}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
