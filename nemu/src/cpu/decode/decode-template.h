@@ -190,6 +190,18 @@ void concat(write_operand_, SUFFIX) (Operand *op, DATA_TYPE src) {
 	else { assert(0); }
 }
 
+/*
+void concat(myclever_write_operand,SUFFIX) (Operand *op,Operand *src){
+	if(src->type == OP_TYPE_IMM)
+		write_operand_SUFFIX(op,src->imm);
+	else if(src->type ==OP_TYPE_REG)
+		write_operand_SUFFIX(op,REG(src->reg));
+	else if(src->type == OP_TYPE_MEM)
+		write_operand_SUFFIX(op,swaddr_read(src->addr,DATA_TYPE));
+	else
+		panic("解析错误");
+}*/
+
 
 //my docode↓
 
@@ -216,9 +228,11 @@ make_helper(concat(decode_rel_,SUFFIX)){
 
 make_helper(concat(decode_m_, SUFFIX)) {
 	/* eip here is pointing to the immediate */
-	op_src->type = OP_TYPE_IMM;
+	op_src->type = OP_TYPE_MEM;
 	op_src->imm = instr_fetch(eip, DATA_BYTE);
-	op_src->val = op_src->imm;
+
+	
+	op_src->val = swaddr_read(op_src->addr,DATA_BYTE);
 
 #ifdef DEBUG
 	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->imm);
