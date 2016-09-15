@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <regex.h>
 #include <stdlib.h>
-uint32_t eval(int p,int q);
+uint32_t eval(int p,int q,bool *success);
 
 extern CPU_state cpu;
 
@@ -138,7 +138,7 @@ uint32_t expr(char *e, bool *success)
 			tokens[i].type = NEG;	
 		}
 	}
-	return eval(0,nr_token-1);
+	return eval(0,nr_token-1,success);
 }
 
 bool check_parentheses(int p,int q)
@@ -208,7 +208,7 @@ int getpriority(int fuhao)
 	return 0;
 }
 
-int findthedominantoperatorposition(int p,int q)
+int findthedominantoperatorposition(int p,int q,bool *success)
 {
 	bool a[32];
 	int i=0;//从p开始
@@ -245,24 +245,37 @@ int findthedominantoperatorposition(int p,int q)
 	//如果是单目运算符 为统治运算符 顺序应该为第一个
 	if(getpriority(tokens[flag+p].type)==6)
 	{
-		#ifdef DEBUG
+		#ifdef MYDEBUG
 		Log("dominate在%d",danmu+p);
 		#endif
-		assert(danmu+p>=0);
+
+		if(danmu+p<0)
+		{
+			Log("算术式解析错误\n");
+			*success=0;
+		}
+
+		//assert(danmu+p>=0);
 		return danmu+p;
 	}
 	else
 	{
-		#ifdef DEBUG
+		#ifdef MYDEBUG
 		Log("dominate在%d",flag+p);
 		#endif
-		assert(flag+p>=0);
+
+		if(flag+p<0)
+		{
+			Log("算术式解析错误\n");
+			*success=0;
+		}
+		//assert(flag+p>=0);
 		return flag+p;
 	}
 }
 
 
-uint32_t eval(int p,int q)
+uint32_t eval(int p,int q,bool *success)
 {
 	if(p > q) {
 		/* Bad expression */
@@ -332,26 +345,28 @@ uint32_t eval(int p,int q)
 			if(strcmp(tokens[p].str,"$bh")==0)
 				return cpu.bh;
 
-
-			assert(0);
 		}
 		if(tokens[p].type==NEG||tokens[p].type==NOT||tokens[p].type==DEREF)//单目运算符
 			return 0;
-		panic("解析数时发生错误\n");
+
+			Log("文字解析错误\n");
+			*success=0;
+			return -1;
+		//panic("解析数时发生错误\n");
 
 	}
 	else if(check_parentheses(p, q) == true) {
 		/* The expression is surrounded by a matched pair of parentheses. 
 		 * If that is the case, just throw away the parentheses.
 		 */
-		return eval(p + 1, q - 1); 
+		return eval(p + 1, q - 1,success); 
 	}
 	else {
-		int op = findthedominantoperatorposition(p, q);
+		int op = findthedominantoperatorposition(p, q,success);
 		uint32_t val1 = 0;
-		if(p<=op-1)
-			val1=eval(p, op - 1); //为单目运算符上的保险 由于不用算单目dominant运算符之前的东西
-		uint32_t val2 = eval(op + 1, q);
+		if(p<=op-1)//为单目运算符上的保险 由于不用算单目dominant运算符之前的东西
+			val1=eval(p, op - 1,success); 
+		uint32_t val2 = eval(op + 1, q,success);
 
 		switch(tokens[op].type) {
 			case '+': return val1 + val2;
