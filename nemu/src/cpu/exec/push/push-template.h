@@ -23,7 +23,15 @@ else
 	OPERAND_W(op_dest, op_src->val);
 	print_asm_template1();
 }
-make_instr_helper(r)
+
+
+
+#if DATA_BYTE==2||DATA_BYTE==4
+	make_instr_helper(r)
+	make_instr_helper(m)
+#endif
+
+make_instr_helper(i)
 
 
 #include "cpu/exec/template-end.h"

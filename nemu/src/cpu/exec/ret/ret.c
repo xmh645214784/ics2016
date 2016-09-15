@@ -24,7 +24,7 @@ make_helper(ret_i_w)
 	decode_i_w(eip);
 	int16_t a=op_src->val;
 	cpu.esp+=a;
-	return 1;
+	return 0;
 }
 
 make_helper_v(ret)
