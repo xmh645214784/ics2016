@@ -17,6 +17,7 @@ else
 {
 	cpu.esp-=4;
 }
+//注意 可能有BUG
 	op_dest->type=OP_TYPE_MEM;
 	op_dest->size=DATA_BYTE;
 	op_dest->addr=cpu.esp;
