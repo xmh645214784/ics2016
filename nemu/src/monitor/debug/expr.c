@@ -271,6 +271,7 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 		*/
 		assert(flag+p>=0);
 		Log("dominate在%d",flag+p);
+		panic("1");
 		return flag+p;
 }
 
