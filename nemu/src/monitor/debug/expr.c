@@ -192,7 +192,10 @@ bool zaiyiduipipeidekuohaozhong(int p,int q,int position)
 			{
 				b=j;
 				if(check_parentheses(a,b)==true)
-					return true;
+					{
+						panic("chajinrule");
+						return true;
+					}
 			}
 		}
 	}
