@@ -271,7 +271,6 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 		*/
 		assert(flag+p>=0);
 		Log("dominate在%d",flag+p);
-		panic("1");
 		return flag+p;
 }
 
@@ -365,7 +364,6 @@ uint32_t eval(int p,int q,bool *success)
 		/* The expression is surrounded by a matched pair of parentheses. 
 		 * If that is the case, just throw away the parentheses.
 		 */
-		panic("p=%d,q=%d",p,q);
 		return eval(p + 1, q - 1,success); 
 	}
 	else {
