@@ -191,8 +191,6 @@ bool zaiyiduipipeidekuohaozhong(int p,int q,int position)
 			if(tokens[j].type==')')
 			{
 				b=j;
-				if(p==0&&q==20&&position==16)
-					Log("check_parentheses %d %d is %d",a,b,check_parentheses(a,b));
 				if(check_parentheses(a,b)==true)
 					{
 						return true;
@@ -228,24 +226,17 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 	{	
 		if(getpriority(tokens[p+i].type)==0)//非运算符
 		{
-			Log("%d is NO YSF\n",p+i);
 			a[i]=0;
 		}
 		else if(zaiyiduipipeidekuohaozhong(p, q, p+i))
 		{
-			Log("zaiyiduipipeidekuohaozhong(%d,%d,%d)\n",p,q,p+i);
 			a[i]=0;
 		}
 		else
 		{
-			Log("%d is OK\n",p+i);
 			a[i]=1;
 		}
 	}
-	printf("p=%d,q=%d\n",p,q );
-	for(int i=0;i<=q-p;i++)
-		printf("%d ",a[i] );
-
 	int flag=-1;
 
 	//int danmu=-1;//单目运算符用 标记第一个可能的dominant运算符
@@ -291,7 +282,7 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 		//
 		*/
 		assert(flag+p>=0);
-		Log("dominate在%d",flag+p);
+		//Log("dominate在%d",flag+p);
 		return flag+p;
 }
 
@@ -300,7 +291,7 @@ uint32_t eval(int p,int q,bool *success)
 {
 	if(*success==0)
 	{
-		Log("表达式求值发生了错误");
+		Log("failed in evaluate expr");
 		return 0;
 	}
 	if(p > q) {
@@ -375,7 +366,7 @@ uint32_t eval(int p,int q,bool *success)
 		if(tokens[p].type==NEG||tokens[p].type==NOT||tokens[p].type==DEREF)//单目运算符
 			return 0;
 
-			Log("文字解析错误\n");
+			Log("find out the tokens' value failed\n");
 			*success=0;
 			return -1;
 		//panic("解析数时发生错误\n");
