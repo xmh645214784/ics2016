@@ -6,10 +6,6 @@ extern CPU_state cpu;
 bool is_even_number_of_1(uint32_t val);
 //通用执行函数
 static void do_execute() {
-
-
-
-	
 	DATA_TYPE_S src=(DATA_TYPE_S)op_src->val;
 	DATA_TYPE_S des=(DATA_TYPE_S)op_dest->val;
 	DATA_TYPE_S result=des-(src+cpu.CF);
