@@ -191,6 +191,8 @@ bool zaiyiduipipeidekuohaozhong(int p,int q,int position)
 			if(tokens[j].type==')')
 			{
 				b=j;
+				if(p==0&&q==20&&position==16)
+					Log("check_parentheses %d %d is %d",a,b,check_parentheses(a,b));
 				if(check_parentheses(a,b)==true)
 					{
 						return true;
