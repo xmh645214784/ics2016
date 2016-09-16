@@ -231,9 +231,9 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 		else
 			a[i]=1;
 	}
-
+	printf("p=%d,q=%d\n",p,q );
 	for(int i=0;i<20;i++)
-		printf("%d ",a[i] );
+		printf("%d ",a[p+i] );
 
 	int flag=-1;
 
