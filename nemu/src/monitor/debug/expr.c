@@ -192,11 +192,11 @@ bool zaiyiduipipeidekuohaozhong(int p,int q,int position)
 			{
 				b=j;
 				if(check_parentheses(a,b)==true)
-					return 1;
+					return true;
 			}
 		}
 	}
-	return a==-1&&b==-1;
+	return false;
 }
 
 int getpriority(int fuhao)
