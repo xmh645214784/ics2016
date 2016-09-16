@@ -38,3 +38,4 @@
 make_helper(leave_v);
 #include "data-mov/movsx.h"
 #include "data-mov/movzx.h"
+#include "data-mov/cwdcdq.h"
