@@ -258,10 +258,7 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 	}
 	else
 	{
-		#ifdef MYDEBUG
 		Log("dominate在%d",flag+p);
-		#endif
-
 		if(flag+p<0)
 		{
 			Log("算术式解析错误\n");
