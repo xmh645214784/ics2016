@@ -396,7 +396,9 @@ uint32_t eval(int p,int q,bool *success)
 			case OR : return val1 ||val2;
 			case NOT: return !val2;
 			case NEG: return -val2;
-			case DEREF:return swaddr_read(val2,4);
+			case DEREF:
+			panic("1");
+			return swaddr_read(val2,4);
 			default: return 0; //assert(0);
 		}
 	}
