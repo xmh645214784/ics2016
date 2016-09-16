@@ -227,7 +227,10 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 	for(;i<=q-p;i++)
 	{	
 		if(getpriority(tokens[p+i].type)==0)//非运算符
+		{
+			Log("%d is NO YSF\n",p+i);
 			a[i]=0;
+		}
 		else if(zaiyiduipipeidekuohaozhong(p, q, p+i))
 		{
 			Log("zaiyiduipipeidekuohaozhong(%d,%d,%d)\n",p,q,p+i);
