@@ -181,13 +181,13 @@ bool zaiyiduipipeidekuohaozhong(int p,int q,int position)
 	int j;
 	int a=-1;
 	int b=-1;
-	for(;i>p;i--)
+	for(;i>=p;i--)
 	{
 		if(tokens[i].type=='(')
 		{
 			a=i;
 		
-		for(j=position;j<q;j++)
+		for(j=position;j<=q;j++)
 			if(tokens[j].type==')')
 			{
 				b=j;
