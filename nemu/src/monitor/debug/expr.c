@@ -177,22 +177,27 @@ bool check_parentheses(int p,int q)
 //position在一对匹配的括号中
 bool zaiyiduipipeidekuohaozhong(int p,int q,int position)
 {
+	panic("BUG");
 	int i=position;
+	int j=position;
 	int a=-1;
 	int b=-1;
 	for(;i>p;i--)
+	{
 		if(tokens[i].type=='(')
+		{
+			a=i;
+		
+		for(;j<q;j++)
+			if(tokens[j].type==')')
 			{
-				a=i;
-				break;
+				b=j;
+				if(check_parentheses(a,b)==true)
+					return 1;
 			}
-	for(i=position;i<q;i++)
-		if(tokens[i].type==')')
-			{
-				b=i;
-				break;
-			}
-	return a!=-1&&b!=-1&&check_parentheses(a,b);
+		}
+	}
+	return a==-1&&b==-1;
 }
 
 int getpriority(int fuhao)
