@@ -211,7 +211,6 @@ int getpriority(int fuhao)
 
 int findthedominantoperatorposition(int p,int q,bool *success)
 {
-	panic("1");
 	bool a[maxtokens];
 	int i=0;//从p开始
 	for(;i<=q-p;i++)
@@ -268,6 +267,7 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 		//
 		*/
 		assert(flag+p>=0);
+		Log("dominate在%d",flag+p);
 		return flag+p;
 }
 
