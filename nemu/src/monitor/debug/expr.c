@@ -177,7 +177,6 @@ bool check_parentheses(int p,int q)
 //position在一对匹配的括号中
 bool zaiyiduipipeidekuohaozhong(int p,int q,int position)
 {
-	panic("BUG");
 	int i=position;
 	int j=position;
 	int a=-1;
