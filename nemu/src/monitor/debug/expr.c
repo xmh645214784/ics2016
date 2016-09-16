@@ -237,7 +237,10 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 			a[i]=0;
 		}
 		else
+		{
+			Log("%d is OK\n",p+i);
 			a[i]=1;
+		}
 	}
 	printf("p=%d,q=%d\n",p,q );
 	for(int i=0;i<=q-p;i++)
