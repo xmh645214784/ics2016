@@ -384,7 +384,7 @@ uint32_t eval(int p,int q,bool *success)
 		if(p<=op-1)//为单目运算符上的保险 由于不用算单目dominant运算符之前的东西
 			val1=eval(p, op - 1,success); 
 		uint32_t val2 = eval(op + 1, q,success);
-
+		panic("%x",val2);
 		switch(tokens[op].type) {
 			case '+': return val1 + val2;
 			case '-': return val1 - val2;
@@ -396,9 +396,7 @@ uint32_t eval(int p,int q,bool *success)
 			case OR : return val1 ||val2;
 			case NOT: return !val2;
 			case NEG: return -val2;
-			case DEREF:
-			panic("1");
-			return swaddr_read(val2,4);
+			case DEREF:return swaddr_read(val2,4);
 			default: return 0; //assert(0);
 		}
 	}
