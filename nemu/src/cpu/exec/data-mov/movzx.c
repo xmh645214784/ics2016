@@ -1,5 +1,6 @@
 #include "cpu/exec/helper.h"
 
+//BUG
 make_helper(movsx_rmb2r_w)
 {
 	int len=decode_rm2r_w(eip);
