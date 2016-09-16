@@ -224,7 +224,7 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 	}
 	int flag=-1;
 
-	int danmu=-1;//单目运算符用 标记第一个可能的dominant运算符
+	//int danmu=-1;//单目运算符用 标记第一个可能的dominant运算符
 
 	for(i=0;i<=q-p;i++)
 	{
@@ -232,7 +232,7 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 		{	if(flag==-1)
 			{
 				flag=i;
-				danmu=i;
+				//danmu=i;
 			}
 			else if(getpriority(tokens[p+i].type)<=getpriority(tokens[p+flag].type))
 			{
@@ -242,7 +242,7 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 	}
 
 
-	
+	/*
 	//如果是单目运算符 为统治运算符 顺序应该为第一个
 	if(getpriority(tokens[flag+p].type)==6)
 	{
@@ -264,9 +264,10 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 			Log("算术式解析错误\n");
 			*success=0;
 		}
-		//assert(flag+p>=0);
+		//
+		*/
+		assert(flag+p>=0);
 		return flag+p;
-	}
 }
 
 
