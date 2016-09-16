@@ -155,8 +155,8 @@ bool check_parentheses(int p,int q)
 	if(tokens[p].type!='('||tokens[q].type!=')')
 		return false;
 	int numofzuokuohao=0;
-	int i=p;
-	for(;i<=q;i++)
+	int i=p+1;
+	for(;i<=q-1;i++)
 	{
 		if(tokens[i].type=='(')
 			numofzuokuohao++;
