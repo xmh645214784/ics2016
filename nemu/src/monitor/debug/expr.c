@@ -162,7 +162,7 @@ bool check_parentheses(int p,int q)
 			numofzuokuohao++;
 		if(tokens[i].type==')')
 		{
-			if(numofzuokuohao<=0)
+			if(numofzuokuohao==0)
 				return false;
 			numofzuokuohao--;
 		}
@@ -178,7 +178,7 @@ bool check_parentheses(int p,int q)
 bool zaiyiduipipeidekuohaozhong(int p,int q,int position)
 {
 	int i=position;
-	int j=position;
+	int j;
 	int a=-1;
 	int b=-1;
 	for(;i>p;i--)
@@ -187,7 +187,7 @@ bool zaiyiduipipeidekuohaozhong(int p,int q,int position)
 		{
 			a=i;
 		
-		for(;j<q;j++)
+		for(j=position;j<q;j++)
 			if(tokens[j].type==')')
 			{
 				b=j;
