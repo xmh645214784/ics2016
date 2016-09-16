@@ -8,6 +8,8 @@
 #include <stdlib.h>
 uint32_t eval(int p,int q,bool *success);
 
+#define maxtokens 32
+
 extern CPU_state cpu;
 
 enum {
@@ -68,10 +70,10 @@ void init_regex() {
 
 typedef struct token {
 	int type;
-	char str[32];
+	char str[maxtokens];
 } Token;
 
-Token tokens[32];
+Token tokens[maxtokens];
 int nr_token;
 
 static bool make_token(char *e) {
@@ -105,6 +107,7 @@ static bool make_token(char *e) {
 
 				//nr_token自加
 				nr_token++;
+				assert(nr_token<=maxtokens);
 				break;
 				}
 			}
@@ -129,10 +132,10 @@ uint32_t expr(char *e, bool *success)
 	//panic("please implement me");
 	int i;
 	for(i = 0; i < nr_token; i ++) {
-		if(tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i-1].type!=HEXNUM) )&&tokens[i-1].type!='('&&tokens[i-1].type!=')') {
+		if(tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
 			tokens[i].type = DEREF;
 		}
-		if(tokens[i].type == '-' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i-1].type!=HEXNUM) )&&tokens[i-1].type!='('&&tokens[i-1].type!=')') {
+		if(tokens[i].type == '-' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
 			tokens[i].type = NEG;	
 		}
 	}
@@ -208,7 +211,7 @@ int getpriority(int fuhao)
 
 int findthedominantoperatorposition(int p,int q,bool *success)
 {
-	bool a[32];
+	bool a[maxtokens];
 	int i=0;//从p开始
 	for(;i<=q-p;i++)
 	{	
@@ -243,10 +246,7 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 	//如果是单目运算符 为统治运算符 顺序应该为第一个
 	if(getpriority(tokens[flag+p].type)==6)
 	{
-		#ifdef MYDEBUG
 		Log("dominate在%d",danmu+p);
-		#endif
-
 		if(danmu+p<0)
 		{
 			Log("算术式解析错误\n");
