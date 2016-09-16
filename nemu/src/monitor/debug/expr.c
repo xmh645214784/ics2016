@@ -231,6 +231,10 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 		else
 			a[i]=1;
 	}
+
+	for(int i=0;i<20;i++)
+		printf("%d ",a[i] );
+
 	int flag=-1;
 
 	//int danmu=-1;//单目运算符用 标记第一个可能的dominant运算符
