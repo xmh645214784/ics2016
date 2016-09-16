@@ -161,9 +161,12 @@ bool check_parentheses(int p,int q)
 		if(tokens[i].type=='(')
 			numofzuokuohao++;
 		if(tokens[i].type==')')
+		{
+			if(numofzuokuohao<=0)
+				return false;
 			numofzuokuohao--;
-		if(numofzuokuohao<0)
-			return false;
+		}
+
 	}
 	if(numofzuokuohao!=0)
 		return false;
@@ -361,7 +364,6 @@ uint32_t eval(int p,int q,bool *success)
 		/* The expression is surrounded by a matched pair of parentheses. 
 		 * If that is the case, just throw away the parentheses.
 		 */
-		panic("p=%d,q=%d",p,q);
 		return eval(p + 1, q - 1,success); 
 	}
 	else {
