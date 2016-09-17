@@ -256,31 +256,6 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 		}
 	}
 
-
-	/*
-	//如果是单目运算符 为统治运算符 顺序应该为第一个
-	if(getpriority(tokens[flag+p].type)==6)
-	{
-		Log("dominate在%d",danmu+p);
-		if(danmu+p<0)
-		{
-			Log("算术式解析错误\n");
-			*success=0;
-		}
-
-		//assert(danmu+p>=0);
-		return danmu+p;
-	}
-	else
-	{
-		Log("dominate在%d",flag+p);
-		if(flag+p<0)
-		{
-			Log("算术式解析错误\n");
-			*success=0;
-		}
-		//
-		*/
 		assert(flag+p>=0);
 		//Log("dominate在%d",flag+p);
 		return flag+p;
