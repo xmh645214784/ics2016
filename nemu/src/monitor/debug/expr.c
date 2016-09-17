@@ -307,7 +307,6 @@ uint32_t eval(int p,int q,bool *success)
 			return atoi(tokens[p].str);
 		if(tokens[p].type==HEXNUM)
 		{	
-			panic ("jinqule");
 			return strtol(tokens[p].str,NULL, 16);
 		}
 		if(tokens[p].type==REG)
