@@ -44,7 +44,7 @@ static struct rule {
 	{"&&",AND},
 	{"\\|\\|",OR},
 	{"!",NOT},
-	{"\\$[a-z]+",REG}
+	{"\\$[a-zA-Z]+",REG}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -311,57 +311,57 @@ uint32_t eval(int p,int q,bool *success)
 		}
 		if(tokens[p].type==REG)
 		{
-			if(strcmp(tokens[p].str,"$eax")==0)
+			if(strcasecmp(tokens[p].str,"$eax")==0)
 				return cpu.eax;
-			if(strcmp(tokens[p].str,"$edx")==0)
+			if(strcasecmp(tokens[p].str,"$edx")==0)
 				return cpu.edx;
-			if(strcmp(tokens[p].str,"$ecx")==0)
+			if(strcasecmp(tokens[p].str,"$ecx")==0)
 				return cpu.ecx;
-			if(strcmp(tokens[p].str,"$ebx")==0)
+			if(strcasecmp(tokens[p].str,"$ebx")==0)
 				return cpu.ebx;
-			if(strcmp(tokens[p].str,"$ebp")==0)
+			if(strcasecmp(tokens[p].str,"$ebp")==0)
 				return cpu.ebp;
-			if(strcmp(tokens[p].str,"$esi")==0)
+			if(strcasecmp(tokens[p].str,"$esi")==0)
 				return cpu.esi;
-			if(strcmp(tokens[p].str,"$edi")==0)
+			if(strcasecmp(tokens[p].str,"$edi")==0)
 				return cpu.edi;
-			if(strcmp(tokens[p].str,"$esp")==0)
+			if(strcasecmp(tokens[p].str,"$esp")==0)
 				return cpu.esp;
-			if(strcmp(tokens[p].str,"$eip")==0)
+			if(strcasecmp(tokens[p].str,"$eip")==0)
 				return cpu.eip;
 
-			if(strcmp(tokens[p].str,"$ax")==0)
+			if(strcasecmp(tokens[p].str,"$ax")==0)
 				return cpu.ax;
-			if(strcmp(tokens[p].str,"$dx")==0)
+			if(strcasecmp(tokens[p].str,"$dx")==0)
 				return cpu.dx;
-			if(strcmp(tokens[p].str,"$cx")==0)
+			if(strcasecmp(tokens[p].str,"$cx")==0)
 				return cpu.cx;
-			if(strcmp(tokens[p].str,"$bx")==0)
+			if(strcasecmp(tokens[p].str,"$bx")==0)
 				return cpu.bx;
-			if(strcmp(tokens[p].str,"$bp")==0)
+			if(strcasecmp(tokens[p].str,"$bp")==0)
 				return cpu.bp;
-			if(strcmp(tokens[p].str,"$si")==0)
+			if(strcasecmp(tokens[p].str,"$si")==0)
 				return cpu.si;
-			if(strcmp(tokens[p].str,"$di")==0)
+			if(strcasecmp(tokens[p].str,"$di")==0)
 				return cpu.di;
-			if(strcmp(tokens[p].str,"$sp")==0)
+			if(strcasecmp(tokens[p].str,"$sp")==0)
 				return cpu.sp;
 
-			if(strcmp(tokens[p].str,"$al")==0)
+			if(strcasecmp(tokens[p].str,"$al")==0)
 				return cpu.al;
-			if(strcmp(tokens[p].str,"$dl")==0)
+			if(strcasecmp(tokens[p].str,"$dl")==0)
 				return cpu.dl;
-			if(strcmp(tokens[p].str,"$cl")==0)
+			if(strcasecmp(tokens[p].str,"$cl")==0)
 				return cpu.cl;
-			if(strcmp(tokens[p].str,"$bl")==0)
+			if(strcasecmp(tokens[p].str,"$bl")==0)
 				return cpu.bl;
-			if(strcmp(tokens[p].str,"$ah")==0)
+			if(strcasecmp(tokens[p].str,"$ah")==0)
 				return cpu.ah;
-			if(strcmp(tokens[p].str,"$dh")==0)
+			if(strcasecmp(tokens[p].str,"$dh")==0)
 				return cpu.dh;
-			if(strcmp(tokens[p].str,"$ch")==0)
+			if(strcasecmp(tokens[p].str,"$ch")==0)
 				return cpu.ch;
-			if(strcmp(tokens[p].str,"$bh")==0)
+			if(strcasecmp(tokens[p].str,"$bh")==0)
 				return cpu.bh;
 
 		}
