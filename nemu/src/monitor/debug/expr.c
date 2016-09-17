@@ -8,6 +8,8 @@
 #include <stdlib.h>
 uint32_t eval(int p,int q,bool *success);
 
+#define maxtokens 32
+
 extern CPU_state cpu;
 
 enum {
@@ -68,10 +70,10 @@ void init_regex() {
 
 typedef struct token {
 	int type;
-	char str[32];
+	char str[maxtokens];
 } Token;
 
-Token tokens[32];
+Token tokens[maxtokens];
 int nr_token;
 
 static bool make_token(char *e) {
@@ -87,9 +89,7 @@ static bool make_token(char *e) {
 			if(regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
-				#ifdef MYDEBUG
-				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
-				#endif
+				//Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
@@ -107,6 +107,7 @@ static bool make_token(char *e) {
 
 				//nr_token自加
 				nr_token++;
+				assert(nr_token<=maxtokens);
 				break;
 				}
 			}
@@ -131,10 +132,10 @@ uint32_t expr(char *e, bool *success)
 	//panic("please implement me");
 	int i;
 	for(i = 0; i < nr_token; i ++) {
-		if(tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i-1].type!=HEXNUM) )&&tokens[i-1].type!='('&&tokens[i-1].type!=')') {
+		if(tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
 			tokens[i].type = DEREF;
 		}
-		if(tokens[i].type == '-' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i-1].type!=HEXNUM) )&&tokens[i-1].type!='('&&tokens[i-1].type!=')') {
+		if(tokens[i].type == '-' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
 			tokens[i].type = NEG;	
 		}
 	}
@@ -154,15 +155,18 @@ bool check_parentheses(int p,int q)
 	if(tokens[p].type!='('||tokens[q].type!=')')
 		return false;
 	int numofzuokuohao=0;
-	int i=p;
-	for(;i<=q;i++)
+	int i=p+1;
+	for(;i<=q-1;i++)
 	{
 		if(tokens[i].type=='(')
 			numofzuokuohao++;
 		if(tokens[i].type==')')
+		{
+			if(numofzuokuohao==0)
+				return false;
 			numofzuokuohao--;
-		if(numofzuokuohao<0)
-			return false;
+		}
+
 	}
 	if(numofzuokuohao!=0)
 		return false;
@@ -174,21 +178,27 @@ bool check_parentheses(int p,int q)
 bool zaiyiduipipeidekuohaozhong(int p,int q,int position)
 {
 	int i=position;
+	int j;
 	int a=-1;
 	int b=-1;
 	for(;i>=p;i--)
+	{
 		if(tokens[i].type=='(')
+		{
+			a=i;
+		
+		for(j=position;j<=q;j++)
+			if(tokens[j].type==')')
 			{
-				a=i;
-				break;
+				b=j;
+				if(check_parentheses(a,b)==true)
+					{
+						return true;
+					}
 			}
-	for(i=position;i<=q;i++)
-		if(tokens[i].type==')')
-			{
-				b=i;
-				break;
-			}
-	return a!=-1&&b!=-1&&check_parentheses(a,b);
+		}
+	}
+	return false;
 }
 
 int getpriority(int fuhao)
@@ -210,20 +220,26 @@ int getpriority(int fuhao)
 
 int findthedominantoperatorposition(int p,int q,bool *success)
 {
-	bool a[32];
+	bool a[maxtokens];
 	int i=0;//从p开始
 	for(;i<=q-p;i++)
 	{	
 		if(getpriority(tokens[p+i].type)==0)//非运算符
+		{
 			a[i]=0;
+		}
 		else if(zaiyiduipipeidekuohaozhong(p, q, p+i))
+		{
 			a[i]=0;
+		}
 		else
+		{
 			a[i]=1;
+		}
 	}
 	int flag=-1;
 
-	int danmu=-1;//单目运算符用 标记第一个可能的dominant运算符
+	//int danmu=-1;//单目运算符用 标记第一个可能的dominant运算符
 
 	for(i=0;i<=q-p;i++)
 	{
@@ -231,7 +247,7 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 		{	if(flag==-1)
 			{
 				flag=i;
-				danmu=i;
+				//danmu=i;
 			}
 			else if(getpriority(tokens[p+i].type)<=getpriority(tokens[p+flag].type))
 			{
@@ -241,14 +257,11 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 	}
 
 
-	
+	/*
 	//如果是单目运算符 为统治运算符 顺序应该为第一个
 	if(getpriority(tokens[flag+p].type)==6)
 	{
-		#ifdef MYDEBUG
 		Log("dominate在%d",danmu+p);
-		#endif
-
 		if(danmu+p<0)
 		{
 			Log("算术式解析错误\n");
@@ -260,18 +273,17 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 	}
 	else
 	{
-		#ifdef MYDEBUG
 		Log("dominate在%d",flag+p);
-		#endif
-
 		if(flag+p<0)
 		{
 			Log("算术式解析错误\n");
 			*success=0;
 		}
-		//assert(flag+p>=0);
+		//
+		*/
+		assert(flag+p>=0);
+		//Log("dominate在%d",flag+p);
 		return flag+p;
-	}
 }
 
 
@@ -279,7 +291,7 @@ uint32_t eval(int p,int q,bool *success)
 {
 	if(*success==0)
 	{
-		Log("表达式求值发生了错误");
+		Log("failed in evaluate expr");
 		return 0;
 	}
 	if(p > q) {
@@ -294,7 +306,9 @@ uint32_t eval(int p,int q,bool *success)
 		if(tokens[p].type==NUM)
 			return atoi(tokens[p].str);
 		if(tokens[p].type==HEXNUM)
+		{	
 			return strtol(tokens[p].str,NULL, 16);
+		}
 		if(tokens[p].type==REG)
 		{
 			if(strcmp(tokens[p].str,"$eax")==0)
@@ -354,7 +368,7 @@ uint32_t eval(int p,int q,bool *success)
 		if(tokens[p].type==NEG||tokens[p].type==NOT||tokens[p].type==DEREF)//单目运算符
 			return 0;
 
-			Log("文字解析错误\n");
+			Log("make out the tokens' value failed\n");
 			*success=0;
 			return -1;
 		//panic("解析数时发生错误\n");
@@ -372,7 +386,7 @@ uint32_t eval(int p,int q,bool *success)
 		if(p<=op-1)//为单目运算符上的保险 由于不用算单目dominant运算符之前的东西
 			val1=eval(p, op - 1,success); 
 		uint32_t val2 = eval(op + 1, q,success);
-
+		//Log("%x %d",val2,val2);
 		switch(tokens[op].type) {
 			case '+': return val1 + val2;
 			case '-': return val1 - val2;
