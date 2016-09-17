@@ -191,17 +191,7 @@ void concat(write_operand_, SUFFIX) (Operand *op, DATA_TYPE src) {
 	else { assert(0); }
 }
 
-/*
-void concat(myclever_write_operand,SUFFIX) (Operand *op,Operand *src){
-	if(src->type == OP_TYPE_IMM)
-		write_operand_SUFFIX(op,src->imm);
-	else if(src->type ==OP_TYPE_REG)
-		write_operand_SUFFIX(op,REG(src->reg));
-	else if(src->type == OP_TYPE_MEM)
-		write_operand_SUFFIX(op,swaddr_read(src->addr,DATA_TYPE));
-	else
-		panic("解析错误");
-}*/
+
 
 
 //my docode↓

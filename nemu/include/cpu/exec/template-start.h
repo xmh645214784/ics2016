@@ -1,5 +1,6 @@
 #include "cpu/exec/helper.h"
-
+extern CPU_state cpu;
+bool is_even_number_of_1(uint32_t val);
 #if DATA_BYTE == 1
 
 #define SUFFIX b
@@ -33,3 +34,41 @@
 #define OPERAND_W(op, src) concat(write_operand_, SUFFIX) (op, src)
 
 #define MSB(n) ((DATA_TYPE)(n) >> ((DATA_BYTE << 3) - 1))
+
+//下 need signed
+
+#define CPU_AFFECT_OF(src,des) \
+	if(src>0&&des<0&&src+des<0)\
+		cpu.OF=1;\
+	else if(src<0&&des>0&&src+des>0)\
+		cpu.OF=1;\
+	else\
+		cpu.OF=0;
+
+#define CPU_AFFECT_SF(src,des) \
+	if(src+des>=0)\
+		cpu.SF=0;\
+	else\
+		cpu.SF=1;
+
+#define CPU_AFFECT_ZF(src,des) \
+	if(src+des==0)\
+		cpu.ZF=1;\
+	else\
+		cpu.ZF=0;
+
+//PF
+#define CPU_AFFECT_PF(src,des) \
+	if(is_even_number_of_1(src+des))\
+		cpu.PF=1;\
+	else\
+		cpu.PF=0;
+
+//CF
+	//可能有BUG
+#define CPU_AFFECT_CF(src,des) \
+	long long sum=src+des;\
+	if(sum>>DATA_BYTE&1)\
+		cpu.CF=1;\
+	else\
+		cpu.CF=0;

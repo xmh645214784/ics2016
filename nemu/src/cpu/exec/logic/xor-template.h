@@ -2,12 +2,20 @@
 
 #define instr xor
 
+extern CPU_state cpu;
+bool is_even_number_of_1(uint32_t val);
+
 static void do_execute () {
-	DATA_TYPE result = op_dest->val ^ op_src->val;
+	DATA_TYPE_S result = op_dest->val ^ op_src->val;
 	OPERAND_W(op_dest, result);
 
 	/* TODO: Update EFLAGS. */
-	panic("please implement me");
+	//panic("please implement me");
+ 	cpu.OF=0;
+ 	cpu.CF=0;
+ 	CPU_AFFECT_ZF(result,0)
+ 	CPU_AFFECT_PF(result,0)
+ 	CPU_AFFECT_SF(result,0)
 
 	print_asm_template2();
 }
