@@ -306,7 +306,10 @@ uint32_t eval(int p,int q,bool *success)
 		if(tokens[p].type==NUM)
 			return atoi(tokens[p].str);
 		if(tokens[p].type==HEXNUM)
+		{	
+			panic ("jinqule");
 			return strtol(tokens[p].str,NULL, 16);
+		}
 		if(tokens[p].type==REG)
 		{
 			if(strcmp(tokens[p].str,"$eax")==0)
@@ -384,7 +387,6 @@ uint32_t eval(int p,int q,bool *success)
 		if(p<=op-1)//为单目运算符上的保险 由于不用算单目dominant运算符之前的东西
 			val1=eval(p, op - 1,success); 
 		uint32_t val2 = eval(op + 1, q,success);
-		panic("%d",op);
 		switch(tokens[op].type) {
 			case '+': return val1 + val2;
 			case '-': return val1 - val2;
