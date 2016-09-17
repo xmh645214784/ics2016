@@ -369,7 +369,7 @@ uint32_t eval(int p,int q,bool *success)
 		if(tokens[p].type==NEG||tokens[p].type==NOT||tokens[p].type==DEREF)//单目运算符
 			return 0;
 
-			Log("find out the tokens' value failed\n");
+			Log("make out the tokens' value failed\n");
 			*success=0;
 			return -1;
 		//panic("解析数时发生错误\n");
@@ -387,6 +387,7 @@ uint32_t eval(int p,int q,bool *success)
 		if(p<=op-1)//为单目运算符上的保险 由于不用算单目dominant运算符之前的东西
 			val1=eval(p, op - 1,success); 
 		uint32_t val2 = eval(op + 1, q,success);
+		Log("%x",val2);
 		switch(tokens[op].type) {
 			case '+': return val1 + val2;
 			case '-': return val1 - val2;
