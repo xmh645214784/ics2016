@@ -89,7 +89,7 @@ static bool make_token(char *e) {
 			if(regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
-				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
+				//Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
@@ -386,7 +386,7 @@ uint32_t eval(int p,int q,bool *success)
 		if(p<=op-1)//为单目运算符上的保险 由于不用算单目dominant运算符之前的东西
 			val1=eval(p, op - 1,success); 
 		uint32_t val2 = eval(op + 1, q,success);
-		Log("%x %d",val2,val2);
+		//Log("%x %d",val2,val2);
 		switch(tokens[op].type) {
 			case '+': return val1 + val2;
 			case '-': return val1 - val2;
