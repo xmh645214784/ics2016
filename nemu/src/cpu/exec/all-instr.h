@@ -46,3 +46,5 @@ make_helper(leave_v);
 #include "binary-arithmetic/add.h"
 #include "binary-arithmetic/adc.h"
 #include "binary-arithmetic/sub.h"
+
+#include "set/set.h"
