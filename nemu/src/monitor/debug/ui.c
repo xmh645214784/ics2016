@@ -129,7 +129,7 @@ static int cmd_px(char *args)
 static int cmd_w(char *args)
 {
 	char *e=strtok(NULL," ");
-	bool success=0;
+	bool success=1;
 
 	int oldvalue=expr(e,&success);
 	if(success)
