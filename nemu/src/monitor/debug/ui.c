@@ -142,7 +142,6 @@ static int cmd_w(char *args)
 {
 	char *e=strtok(NULL," ");
 	bool success=1;
-	Log("%s",e);
 	int oldvalue=expr(e,&success);
 	if(success)
 	{
