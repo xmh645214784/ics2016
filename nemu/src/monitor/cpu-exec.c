@@ -88,9 +88,8 @@ void cpu_exec(volatile uint32_t n) {
 		}
 		else
 		{*/
-			bool success=0;
+			bool success=1;
 			int newvalue=expr(temp->expr,&success);
-			assert(success);
 			if(temp->oldvalue!=newvalue)
 			{
 				printf("Watchpoint %d:%s\n",temp->NO,temp->expr );
