@@ -67,7 +67,7 @@ bool is_even_number_of_1(uint32_t val);
 //CF
 	//可能有BUG
 #define CPU_AFFECT_CF(src,des) \
-	long long sum=(DATA_TYPE_S)src+(DATA_TYPE_S)des;\
+	long long sum=(DATA_TYPE)src+(DATA_TYPE)des;\
 	if((sum>>DATA_BYTE)&1)\
 		cpu.CF=1;\
 	else\
