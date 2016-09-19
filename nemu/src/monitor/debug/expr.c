@@ -363,6 +363,8 @@ uint32_t eval(int p,int q,bool *success)
 			val1=eval(p, op - 1,success);
 		Log("val1=%d",val1);	 
 		uint32_t val2 = eval(op + 1, q,success);
+		Log("val2=%d",val2);	 
+
 		//Log("%x %d",val2,val2);
 		switch(tokens[op].type) {
 			case '+': return val1 + val2;
