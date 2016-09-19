@@ -357,10 +357,11 @@ uint32_t eval(int p,int q,bool *success)
 	}
 	else {
 		int op = findthedominantoperatorposition(p, q,success);
-		Log("op=%d",op);
+		Log("op=%d\n",op);
 		uint32_t val1 = 0;
 		if(p<=op-1)//为单目运算符上的保险 由于不用算单目dominant运算符之前的东西
-			val1=eval(p, op - 1,success); 
+			val1=eval(p, op - 1,success);
+		Log("val1=%d",val1);	 
 		uint32_t val2 = eval(op + 1, q,success);
 		//Log("%x %d",val2,val2);
 		switch(tokens[op].type) {
