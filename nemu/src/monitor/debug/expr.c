@@ -368,7 +368,7 @@ uint32_t eval(int p,int q,bool *success)
 		//Log("%x %d",val2,val2);
 		switch(tokens[op].type) {
 			case '+': return val1 + val2;
-			case '-': panic("LJ");return val1 - val2;
+			case '-': return val1 - val2;
 			case '*': return val1 * val2;
 			case '/': return val1 / val2;
 			case EQ : return val1 ==val2;
