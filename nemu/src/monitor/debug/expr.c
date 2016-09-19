@@ -127,7 +127,7 @@ uint32_t expr(char *e, bool *success)
 		*success = false;
 		return 0;
 	}
-	//Log("match successfully");
+	Log("match successfully");
 	//*success=true;
 	/* TODO: Insert codes to evaluate the expression. */
 	//panic("please implement me");
