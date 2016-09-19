@@ -11,6 +11,7 @@ make_helper_jcc(ja)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("ja_rel_"str(SUFFIX));
 	return 2;
 }
 
@@ -22,6 +23,8 @@ make_helper_jcc(jae)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jae_rel_"str(SUFFIX));
+	
 	return 2;
 }
 
@@ -33,6 +36,8 @@ make_helper_jcc(jb)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jb_rel_"str(SUFFIX));
+	
 	return 2;
 }
 
@@ -45,6 +50,7 @@ make_helper_jcc(jbe)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jbe_rel_"str(SUFFIX));	
 	return 2;
 }
 
@@ -56,6 +62,7 @@ make_helper_jcc(jc)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jc_rel_"str(SUFFIX));
 	return 2;
 }
 
@@ -69,6 +76,7 @@ make_helper_jcc(jcxz)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jcxz_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(jecxz)
@@ -79,6 +87,7 @@ make_helper_jcc(jecxz)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jecxz_rel_"str(SUFFIX));
 	return 2;
 }
 #endif
@@ -91,6 +100,7 @@ make_helper_jcc(je)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("je_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(jg)
@@ -101,6 +111,7 @@ make_helper_jcc(jg)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jg_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(jge)
@@ -111,6 +122,7 @@ make_helper_jcc(jge)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jge_rel_"str(SUFFIX));
 	return 2;
 }
 
@@ -122,6 +134,7 @@ make_helper_jcc(jl)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jl_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(jle)
@@ -132,6 +145,7 @@ make_helper_jcc(jle)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jle_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(jna)
@@ -142,6 +156,7 @@ make_helper_jcc(jna)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jna_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(jnae)
@@ -152,6 +167,7 @@ make_helper_jcc(jnae)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jnae_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(jnb)
@@ -162,6 +178,7 @@ make_helper_jcc(jnb)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jnb_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(jnbe)
@@ -172,6 +189,7 @@ make_helper_jcc(jnbe)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jnbe_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(jnc)
@@ -182,6 +200,7 @@ make_helper_jcc(jnc)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jnc_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(jne)
@@ -192,6 +211,7 @@ make_helper_jcc(jne)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jne_rel_"str(SUFFIX));
 	return 2;
 }
 
@@ -203,6 +223,7 @@ make_helper_jcc(jng)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jng_rel_"str(SUFFIX));
 	return 2;
 }
 
@@ -214,6 +235,7 @@ make_helper_jcc(jnge)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jnge_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(jnl)
@@ -224,6 +246,7 @@ make_helper_jcc(jnl)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jnl_rel_"str(SUFFIX));
 	return 2;
 }
 
@@ -236,6 +259,7 @@ make_helper_jcc(jnle)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jnle_rel_"str(SUFFIX));
 	return 2;
 }
 
@@ -247,6 +271,7 @@ make_helper_jcc(jno)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jno_rel_"str(SUFFIX));
 	return 2;
 }
 
@@ -258,6 +283,7 @@ make_helper_jcc(jnp)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jnp_rel_"str(SUFFIX));
 	return 2;
 }
 
@@ -269,6 +295,7 @@ make_helper_jcc(jns)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jns_rel_"str(SUFFIX));
 	return 2;
 }
 
@@ -280,6 +307,7 @@ make_helper_jcc(jnz)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jnz_rel_"str(SUFFIX));
 	return 2;
 }
 
@@ -292,6 +320,7 @@ make_helper_jcc(jo)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jo_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(jp)
@@ -302,6 +331,7 @@ make_helper_jcc(jp)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jp_rel_"str(SUFFIX));
 	return 2;
 }
 
@@ -313,6 +343,7 @@ make_helper_jcc(jpe)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jpe_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(jpo)
@@ -323,6 +354,7 @@ make_helper_jcc(jpo)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jpo_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(js)
@@ -333,6 +365,7 @@ make_helper_jcc(js)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("js_rel_"str(SUFFIX));
 	return 2;
 }
 make_helper_jcc(jz)
@@ -343,6 +376,7 @@ make_helper_jcc(jz)
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
+	print_asm("jz_rel_"str(SUFFIX));
 	return 2;
 }
 
