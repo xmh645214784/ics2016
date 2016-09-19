@@ -132,10 +132,10 @@ uint32_t expr(char *e, bool *success)
 	//panic("please implement me");
 	int i;
 	for(i = 0; i < nr_token; i ++) {
-		if(tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
+		if(tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i - 1].type !=REG&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
 			tokens[i].type = DEREF;
 		}
-		if(tokens[i].type == '-' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
+		if(tokens[i].type == '-' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i - 1].type !=REG&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
 			tokens[i].type = NEG;	
 		}
 	}
