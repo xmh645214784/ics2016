@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <regex.h>
 #include <stdlib.h>
+#include <string.h>
 uint32_t eval(int p,int q,bool *success);
 
 #define maxtokens 32
@@ -126,16 +127,15 @@ uint32_t expr(char *e, bool *success)
 		*success = false;
 		return 0;
 	}
-	//Log("match successfully");
 	//*success=true;
 	/* TODO: Insert codes to evaluate the expression. */
 	//panic("please implement me");
 	int i;
 	for(i = 0; i < nr_token; i ++) {
-		if(tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
+		if(tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i - 1].type !=REG&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
 			tokens[i].type = DEREF;
 		}
-		if(tokens[i].type == '-' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
+		if(tokens[i].type == '-' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i - 1].type !=REG&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
 			tokens[i].type = NEG;	
 		}
 	}
@@ -256,31 +256,6 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 		}
 	}
 
-
-	/*
-	//如果是单目运算符 为统治运算符 顺序应该为第一个
-	if(getpriority(tokens[flag+p].type)==6)
-	{
-		Log("dominate在%d",danmu+p);
-		if(danmu+p<0)
-		{
-			Log("算术式解析错误\n");
-			*success=0;
-		}
-
-		//assert(danmu+p>=0);
-		return danmu+p;
-	}
-	else
-	{
-		Log("dominate在%d",flag+p);
-		if(flag+p<0)
-		{
-			Log("算术式解析错误\n");
-			*success=0;
-		}
-		//
-		*/
 		assert(flag+p>=0);
 		//Log("dominate在%d",flag+p);
 		return flag+p;
@@ -384,7 +359,7 @@ uint32_t eval(int p,int q,bool *success)
 		int op = findthedominantoperatorposition(p, q,success);
 		uint32_t val1 = 0;
 		if(p<=op-1)//为单目运算符上的保险 由于不用算单目dominant运算符之前的东西
-			val1=eval(p, op - 1,success); 
+			val1=eval(p, op - 1,success);
 		uint32_t val2 = eval(op + 1, q,success);
 		//Log("%x %d",val2,val2);
 		switch(tokens[op].type) {
