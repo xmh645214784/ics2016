@@ -54,7 +54,7 @@ void  free_wp(int id)
 {
 	if(head==NULL)
 	{
-		Log("NO such watchpoint");
+		printf("NO such watchpoint\n");
 		return ;
 	}
 
@@ -64,7 +64,7 @@ void  free_wp(int id)
 		;
 	if(headtemp==NULL)
 	{
-		Log("NO such watchpoint");
+		printf("NO such watchpoint\n");
 		return ;
 	}
 	WP *wp=headtemp;//找到要删除的节点是wp
