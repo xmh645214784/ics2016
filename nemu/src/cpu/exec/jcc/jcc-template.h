@@ -47,7 +47,7 @@ make_helper_jcc(jbe)
 	concat(decode_rel_,SUFFIX)(eip);
 	if(cpu.CF==1||cpu.ZF==1)
 		cpu.eip+=op_src->val;
-	panic("%d",op_src->val);
+	panic("%d",op_src->simm);
 #if DATA_BYTE==2
 	cpu.eip=cpu.eip&0xFFFF;
 #endif
