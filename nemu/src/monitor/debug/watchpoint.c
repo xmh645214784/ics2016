@@ -54,14 +54,19 @@ void  free_wp(int id)
 {
 	if(head==NULL)
 	{
-		Log("使用中的链表为空\n");
+		printf("NO such watchpoint\n");
 		return ;
 	}
 
 
 	WP *headtemp=head;
-	for(;headtemp->NO!=id;headtemp=headtemp->next)
+	for(;headtemp!=NULL&&headtemp->NO!=id;headtemp=headtemp->next)
 		;
+	if(headtemp==NULL)
+	{
+		printf("NO such watchpoint\n");
+		return ;
+	}
 	WP *wp=headtemp;//找到要删除的节点是wp
 
 
