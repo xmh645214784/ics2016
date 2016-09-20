@@ -54,17 +54,17 @@ void  free_wp(int id)
 {
 	if(head==NULL)
 	{
-		Log("NO such watchpoint\n");
+		Log("NO such watchpoint");
 		return ;
 	}
 
 
 	WP *headtemp=head;
-	for(;headtemp->NO!=id&&headtemp!=NULL;headtemp=headtemp->next)
+	for(;headtemp!=NULL&&headtemp->NO!=id;headtemp=headtemp->next)
 		;
 	if(headtemp==NULL)
 	{
-		Log("NO such watchpoint\n");
+		Log("NO such watchpoint");
 		return ;
 	}
 	WP *wp=headtemp;//找到要删除的节点是wp
