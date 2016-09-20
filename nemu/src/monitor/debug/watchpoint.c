@@ -54,7 +54,7 @@ void  free_wp(int id)
 {
 	if(head==NULL)
 	{
-		Log("使用中的链表为空\n");
+		Log("NO such watchpoint\n");
 		return ;
 	}
 
