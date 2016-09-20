@@ -199,18 +199,17 @@ void concat(write_operand_, SUFFIX) (Operand *op, DATA_TYPE src) {
 //call 中的rel  译码时目的操作数为地址
 make_helper(concat(decode_rel_,SUFFIX)){
 	op_src->type = OP_TYPE_IMM;
-	#if DATA_BYTE==4
-		op_src->simm = instr_fetch(eip, DATA_BYTE);//应该用一个sign ime
-	#elif DATA_BYTE==2
-		int16_t temp=instr_fetch(eip, DATA_BYTE);
-		op_src->simm=temp;
-	#elif DATA_BYTE==1
-		int8_t temp=instr_fetch(eip, DATA_BYTE);
-		op_src->simm=temp;
-	#endif
 
+	/* TODO: Use instr_fetch() to read `DATA_BYTE' bytes of memory pointed
+	 * by `eip'. Interpret the result as an signed immediate, and assign
+	 * it to op_src->simm.
+	 *
+	op_src->simm = ???
+	 */
+	DATA_TYPE_S a = instr_fetch(eip, DATA_BYTE);
+	op_src->simm=a;
+	//panic("please implement me");
 	op_src->val=op_src->simm;
-
 #ifdef DEBUG
 	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->simm);
 #endif
