@@ -61,7 +61,7 @@ static int cmd_info(char *args){
 	{
 		WP *head=returnhead();
 		if(!head)
-			printf("当前监视点信息\n");
+			printf("NO Watchpoint\n");
 		for(;head!=NULL;head=head->next)
 		{
 			printf("Num\tType\tDisp\tEnb\tAddress\tWhat\n");
