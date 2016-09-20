@@ -5,7 +5,7 @@
 
 make_helper_jcc(ja)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.CF==0&&cpu.ZF==0)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -17,7 +17,7 @@ make_helper_jcc(ja)
 
 make_helper_jcc(jae)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.CF==0)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -30,7 +30,7 @@ make_helper_jcc(jae)
 
 make_helper_jcc(jb)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.CF==1)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -44,7 +44,7 @@ make_helper_jcc(jb)
 
 make_helper_jcc(jbe)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.CF==1||cpu.ZF==1)
 		cpu.eip+=op_src->val;
 	Log("%d",op_src->simm);
@@ -57,7 +57,7 @@ make_helper_jcc(jbe)
 
 make_helper_jcc(jc)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.CF==1)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -71,7 +71,7 @@ make_helper_jcc(jc)
 #if DATA_BYTE==1
 make_helper_jcc(jcxz)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.cx==0)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -82,7 +82,7 @@ make_helper_jcc(jcxz)
 }
 make_helper_jcc(jecxz)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.ecx==0)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -95,7 +95,7 @@ make_helper_jcc(jecxz)
 
 make_helper_jcc(je)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.ZF==1)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -106,7 +106,7 @@ make_helper_jcc(je)
 }
 make_helper_jcc(jg)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.ZF==0&&cpu.SF==cpu.OF)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -117,7 +117,7 @@ make_helper_jcc(jg)
 }
 make_helper_jcc(jge)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.SF==cpu.OF)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -129,7 +129,7 @@ make_helper_jcc(jge)
 
 make_helper_jcc(jl)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.SF!=cpu.OF)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -140,7 +140,7 @@ make_helper_jcc(jl)
 }
 make_helper_jcc(jle)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.ZF==1||cpu.SF!=cpu.OF)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -151,7 +151,7 @@ make_helper_jcc(jle)
 }
 make_helper_jcc(jna)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.CF==1||cpu.ZF==1)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -162,7 +162,7 @@ make_helper_jcc(jna)
 }
 make_helper_jcc(jnae)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.CF==1)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -173,7 +173,7 @@ make_helper_jcc(jnae)
 }
 make_helper_jcc(jnb)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.CF==0)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -184,7 +184,7 @@ make_helper_jcc(jnb)
 }
 make_helper_jcc(jnbe)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.CF==0&&cpu.ZF==0)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -195,7 +195,7 @@ make_helper_jcc(jnbe)
 }
 make_helper_jcc(jnc)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.CF==0)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -206,7 +206,7 @@ make_helper_jcc(jnc)
 }
 make_helper_jcc(jne)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.ZF==0)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -218,7 +218,7 @@ make_helper_jcc(jne)
 
 make_helper_jcc(jng)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.ZF==1||cpu.SF!=cpu.OF)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -230,7 +230,7 @@ make_helper_jcc(jng)
 
 make_helper_jcc(jnge)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.SF!=cpu.OF)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -241,7 +241,7 @@ make_helper_jcc(jnge)
 }
 make_helper_jcc(jnl)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.SF==cpu.OF)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -254,7 +254,7 @@ make_helper_jcc(jnl)
 
 make_helper_jcc(jnle)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.ZF==0&&cpu.SF==cpu.OF)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -266,7 +266,7 @@ make_helper_jcc(jnle)
 
 make_helper_jcc(jno)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.OF==0)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -278,7 +278,7 @@ make_helper_jcc(jno)
 
 make_helper_jcc(jnp)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.PF==0)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -290,7 +290,7 @@ make_helper_jcc(jnp)
 
 make_helper_jcc(jns)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.SF==0)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -302,7 +302,7 @@ make_helper_jcc(jns)
 
 make_helper_jcc(jnz)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.ZF==0)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -315,7 +315,7 @@ make_helper_jcc(jnz)
 
 make_helper_jcc(jo)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.OF==1)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -326,7 +326,7 @@ make_helper_jcc(jo)
 }
 make_helper_jcc(jp)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.PF==1)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -338,7 +338,7 @@ make_helper_jcc(jp)
 
 make_helper_jcc(jpe)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.PF==1)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -349,7 +349,7 @@ make_helper_jcc(jpe)
 }
 make_helper_jcc(jpo)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.PF==0)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -360,7 +360,7 @@ make_helper_jcc(jpo)
 }
 make_helper_jcc(js)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.SF==1)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
@@ -371,7 +371,7 @@ make_helper_jcc(js)
 }
 make_helper_jcc(jz)
 {
-	concat(decode_rel_,SUFFIX)(eip);
+	concat(decode_rel_,SUFFIX)(eip+1);
 	if(cpu.ZF==1)
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
