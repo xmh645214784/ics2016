@@ -70,7 +70,7 @@ static int cmd_info(char *args){
 			for(;head!=NULL;head=head->next)
 			{
 				printf("Num\tType\t\tDisp\tEnb\tWhat\n");
-				printf("%d\twatchpoint\tkeep\t%c\t\t%s\n",head->NO,head->enable,head->expr );
+				printf("%d\twatchpoint\tkeep\t%c\t%s\n",head->NO,head->enable,head->expr );
 			}
 		else
 		{
@@ -78,7 +78,7 @@ static int cmd_info(char *args){
 				if(head->NO==atoi(q))
 				{
 					printf("Num\tType\t\tDisp\tEnb\tWhat\n");
-					printf("%d\twatchpoint\tkeep\t%c\t\t%s\n",head->NO,head->enable,head->expr );
+					printf("%d\twatchpoint\tkeep\t%c\t%s\n",head->NO,head->enable,head->expr );
 				}
 		}
 	}
