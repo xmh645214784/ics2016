@@ -57,7 +57,7 @@ static int cmd_info(char *args){
 	}
 
 	//打印监视点信息
-	if(strcmp(p,"w")==0)
+	if(strcmp(p,"w")==0||strcmp(p,"watchpoint")==0)
 	{
 		WP *head=returnhead();
 		if(!head)
@@ -69,7 +69,7 @@ static int cmd_info(char *args){
 		if(q==NULL)
 			for(;head!=NULL;head=head->next)
 			{
-				printf("Num\tType\tDisp\tEnb\tAddress\tWhat\n");
+				printf("Num\tType\tDisp\tEnb\tWhat\n");
 				printf("%d\twatchpoint\tkeep\t%c\t\t%s\n",head->NO,head->enable,head->expr );
 			}
 		else
@@ -77,7 +77,7 @@ static int cmd_info(char *args){
 			for(;head!=NULL;head=head->next)
 				if(head->NO==atoi(q))
 				{
-					printf("Num\tType\tDisp\tEnb\tAddress\tWhat\n");
+					printf("Num\tType\tDisp\tEnb\tWhat\n");
 					printf("%d\twatchpoint\tkeep\t%c\t\t%s\n",head->NO,head->enable,head->expr );
 				}
 		}
