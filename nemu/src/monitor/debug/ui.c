@@ -206,7 +206,11 @@ static int cmd_w(char *args)
 static int cmd_d(char *args)
 {
 	char *e=strtok(NULL," ");
-	free_wp(atoi(e));
+	while(e!=NULL)
+	{
+		free_wp(atoi(e));
+		e=strtok(NULL," ");
+	}
 	return 0;
 }
 
