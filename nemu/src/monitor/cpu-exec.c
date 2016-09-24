@@ -78,16 +78,9 @@ void cpu_exec(volatile uint32_t n) {
 	WP *temp=returnhead();
 	for(;temp!=NULL;temp=temp->next)
 	{
-		/*
-		if(temp->isfirstfigure)
+		if(temp->enable=='y')
 		{
-			bool success=0;
-			temp->oldvalue=expr(temp->expr,&success);
-			assert(success);
-			temp->isfirstfigure=0;
-		}
-		else
-		{*/
+
 			bool success=1;
 			int newvalue=expr(temp->expr,&success);
 			if(temp->oldvalue!=newvalue)
@@ -98,7 +91,7 @@ void cpu_exec(volatile uint32_t n) {
 				temp->oldvalue=newvalue;
 				nemu_state=STOP;
 			}
-		
+		}
 	}
 
 

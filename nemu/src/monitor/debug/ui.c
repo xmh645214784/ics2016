@@ -41,9 +41,9 @@ static int cmd_help(char *args);
 
 
 static int cmd_info(char *args){
-
+	char *p=strtok(NULL," ");
 	//显示寄存器
-	if(strcmp(args,"r")==0)
+	if(strcmp(p,"r")==0)
 	{
 		printf("eax\t0x%x\t%d\n",cpu.eax,cpu.eax);
 		printf("ecx\t0x%x\t%d\n",cpu.ecx,cpu.ecx);
@@ -69,19 +69,78 @@ static int cmd_info(char *args){
 	}
 
 	//打印监视点信息
-	if(strcmp(args,"w")==0)
+	if(strcmp(p,"w")==0||strcmp(p,"watchpoint")==0)
 	{
 		WP *head=returnhead();
 		if(!head)
-			printf("当前监视点信息\n");
-		for(;head!=NULL;head=head->next)
+
+		{	
+			printf("NO Watchpoint\n");
+			return 0;
+		}
+		char *q=strtok(NULL," ");
+		if(q==NULL)
+			for(;head!=NULL;head=head->next)
+			{
+				printf("Num\tType\t\tDisp\tEnb\tWhat\n");
+				printf("%d\twatchpoint\tkeep\t%c\t%s\n",head->NO,head->enable,head->expr );
+			}
+		else
 		{
-			printf("Num\tType\tDisp\tEnb\tAddress\tWhat\n");
-			printf("%d\twatchpoint\tkeep\ty\t\t%s\n",head->NO,head->expr );
+			for(;head!=NULL;head=head->next)
+				if(head->NO==atoi(q))
+				{
+					printf("Num\tType\t\tDisp\tEnb\tWhat\n");
+					printf("%d\twatchpoint\tkeep\t%c\t%s\n",head->NO,head->enable,head->expr );
+				}
 		}
 	}
 	return 0;
 }
+
+
+static int cmd_enable(char *args){
+	char *p=strtok(NULL," ");
+	p=strtok(NULL," ");
+	WP *head=returnhead();
+		if(!head)
+		{	
+			printf("NO Watchpoint\n");
+			return 0;
+		}
+	while(p!=NULL)
+	{
+		for(head=returnhead();head!=NULL;head=head->next)
+		if(head->NO==atoi(p))
+		{
+			head->enable='y';
+		}
+	p=strtok(NULL," ");
+	}
+	return 0;
+}
+
+static int cmd_disable(char *args){
+	char *p=strtok(NULL," ");
+	p=strtok(NULL," ");
+	WP *head=returnhead();
+		if(!head)
+		{	
+			printf("NO Watchpoint\n");
+			return 0;
+		}
+	while(p!=NULL)
+	{
+		for(head=returnhead();head!=NULL;head=head->next)
+		if(head->NO==atoi(p))
+		{
+			head->enable='n';
+		}
+		p=strtok(NULL," ");
+	}
+	return 0;
+}
+
 
 static int cmd_si(char *args)
 {
@@ -146,6 +205,8 @@ static int cmd_w(char *args)
 	if(success)
 	{
 		WP* w=new_wp();
+		if(w==NULL)
+			return  0;
 		strcpy(w->expr,e);
 		w->oldvalue=oldvalue;
 		printf("Watchpoint %d:%s\n",w->NO,e);
@@ -157,7 +218,11 @@ static int cmd_w(char *args)
 static int cmd_d(char *args)
 {
 	char *e=strtok(NULL," ");
-	free_wp(atoi(e));
+	while(e!=NULL)
+	{
+		free_wp(atoi(e));
+		e=strtok(NULL," ");
+	}
 	return 0;
 }
 
@@ -179,7 +244,12 @@ static struct {
 	{"p","print",cmd_p},
 	{"w","set watchpoint",cmd_w},
 	{"d","delete",cmd_d},
-	{"p/x","print as hex",cmd_px}
+
+	{"delete","delete",cmd_d},
+	{"p/x","print as hex",cmd_px},
+	{"enable","enable watchpoint",cmd_enable},
+	{"disable","disable watchpoint",cmd_disable}
+
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))

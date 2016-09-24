@@ -271,7 +271,8 @@ uint32_t eval(int p,int q,bool *success)
 	}
 	if(p > q) {
 		/* Bad expression */
-		panic("p>q");
+		*success=0;
+		return 0;
 	}
 	else if(p == q) { 
 		/* Single token.
