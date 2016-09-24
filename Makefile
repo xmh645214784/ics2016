@@ -1,6 +1,6 @@
 ##### global settings #####
 
-.PHONY: nemu entry testcase kernel run gdb test submit clean
+.PHONY: nemu entry testcase kernel run gdb test submit clean count
 
 CC := gcc
 LD := ld
@@ -75,4 +75,5 @@ submit: clean
 	cd .. && tar cvj $(shell pwd | grep -o '[^/]*$$') > $(STU_ID).tar.bz2
 
 count: 
-	sh count.sh
+	./count.sh
+
