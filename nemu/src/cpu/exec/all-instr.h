@@ -51,3 +51,6 @@ make_helper(leave_v);
 #include "jmp/jmp.h"
 
 #include "data-mov/movs.h"
+#include "data-mov/stos.h"
+#include "data-mov/lods.h"
+#include "cmp/scas.h"

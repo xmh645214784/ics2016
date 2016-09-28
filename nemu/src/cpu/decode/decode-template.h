@@ -8,7 +8,7 @@
 #define decode_i concat(decode_i_, SUFFIX)
 #define decode_a concat(decode_a_, SUFFIX)
 #define decode_r2rm concat(decode_r2rm_, SUFFIX)
-
+#define decode_none concat(decode_none_, SUFFIX)
 
 /* Ib, Iv */
 make_helper(concat(decode_i_, SUFFIX)) {
@@ -229,5 +229,14 @@ make_helper(concat(decode_m_, SUFFIX)) {
 #endif
 	return DATA_BYTE;
 }
+
+
+//伪译码
+make_helper(concat(decode_none_, SUFFIX)) {
+	
+	return 0;
+}
+
+
 
 #include "cpu/exec/template-end.h"
