@@ -109,7 +109,7 @@ make_helper_jcc(jecxz)
 make_helper_jcc(je)
 {
 	concat(decode_rel_,SUFFIX)(eip+1);
-	if(cpu.ZF)
+	if(cpu.ZF==1)
 	{
 	cpu.eip+=op_src->val;
 #if DATA_BYTE==2
