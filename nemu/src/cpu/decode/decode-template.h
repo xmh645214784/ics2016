@@ -217,17 +217,7 @@ make_helper(concat(decode_rel_,SUFFIX)){
 }
 
 make_helper(concat(decode_m_, SUFFIX)) {
-	/* eip here is pointing to the immediate */
-	op_src->type = OP_TYPE_MEM;
-	op_src->imm = instr_fetch(eip, DATA_BYTE);
-
-	
-	op_src->val = swaddr_read(op_src->addr,DATA_BYTE);
-
-#ifdef DEBUG
-	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->imm);
-#endif
-	return DATA_BYTE;
+	 return decode_rm_internal(eip, op_src, op_dest);
 }
 
 
