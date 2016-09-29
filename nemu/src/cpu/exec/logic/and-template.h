@@ -4,7 +4,7 @@
 
 static void do_execute () {
 	DATA_TYPE_S result = op_dest->val & op_src->val;
-	Log("des%x %s src:%x",op_dest->val,REG_NAME(op_dest->reg),op_src->val);
+	//Log("des%x %s src:%x",op_dest->val,REG_NAME(op_dest->reg),op_src->val);
 	OPERAND_W(op_dest, result);
 
 	/* TODO: Update EFLAGS. */
