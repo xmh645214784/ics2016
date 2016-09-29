@@ -19,6 +19,7 @@ make_helper(movs_m2m_b)
 make_helper(movs_m2m_w)
 {
 	swaddr_write(cpu.edi,2,swaddr_read(cpu.esi,2));
+	int incdec=0;
 	if(cpu.DF==0)
 		incdec=2;
 	else
@@ -32,6 +33,7 @@ make_helper(movs_m2m_w)
 make_helper(movs_m2m_l)
 {
 	swaddr_write(cpu.edi,4,swaddr_read(cpu.esi,4));
+	int incdec=0;
 	if(cpu.DF==0)
 		incdec=4;
 	else

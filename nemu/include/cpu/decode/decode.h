@@ -59,6 +59,9 @@ make_helper(decode_m_b);
 make_helper(decode_m_w);
 make_helper(decode_m_l);
 
+make_helper(decode_none_b);
+make_helper(decode_none_w);
+make_helper(decode_none_l);
 
 void write_operand_b(Operand *, uint8_t);
 void write_operand_w(Operand *, uint16_t);
