@@ -14,6 +14,7 @@ make_helper(movzx_rmb2r_w)
 
 make_helper(movzx_rmb2r_l)
 {
+	panic("%x",eip);
 	int len=decode_rm2r_b(eip);
 	uint8_t a=op_src->val;
 	uint32_t b=a;
