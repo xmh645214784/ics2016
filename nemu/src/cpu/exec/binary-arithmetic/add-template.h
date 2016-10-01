@@ -9,9 +9,7 @@ static void do_execute() {
 	DATA_TYPE_S result=src+des;
 	OPERAND_W(op_dest,result);
 	
-//Log("目的操作数类型%d reg标号为%d 值为%d,",op_dest->type,op_dest->reg,op_dest->val);
-//Log("cmp %d-%d",src,des);
-
+	
  	CPU_AFFECT_CF(src,des)
  	CPU_AFFECT_ZF(src,des)
  	CPU_AFFECT_PF(src,des)
