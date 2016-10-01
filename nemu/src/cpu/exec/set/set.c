@@ -7,7 +7,7 @@ make_helper(seta)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 make_helper(setae)
@@ -17,7 +17,7 @@ make_helper(setae)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 make_helper(setb)
@@ -27,7 +27,7 @@ make_helper(setb)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 
@@ -38,7 +38,7 @@ make_helper(setbe)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 make_helper(setc)
@@ -48,7 +48,7 @@ make_helper(setc)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 make_helper(sete)
@@ -58,7 +58,7 @@ make_helper(sete)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 make_helper(setg)
 {
@@ -67,7 +67,7 @@ make_helper(setg)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 make_helper(setge)
 {
@@ -76,7 +76,7 @@ make_helper(setge)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 make_helper(setl)
@@ -86,7 +86,7 @@ make_helper(setl)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 make_helper(setle)
 {
@@ -95,7 +95,7 @@ make_helper(setle)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 make_helper(setna)
 {
@@ -104,7 +104,7 @@ make_helper(setna)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 make_helper(setnae)
 {
@@ -113,7 +113,7 @@ make_helper(setnae)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 make_helper(setnb)
 {
@@ -122,7 +122,7 @@ make_helper(setnb)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 make_helper(setnbe)
 {
@@ -131,7 +131,7 @@ make_helper(setnbe)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 make_helper(setnc)
 {
@@ -140,7 +140,7 @@ make_helper(setnc)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 make_helper(setne)
 {
@@ -149,7 +149,7 @@ make_helper(setne)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 make_helper(setng)
@@ -159,7 +159,7 @@ make_helper(setng)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 make_helper(setnge)
@@ -169,7 +169,7 @@ make_helper(setnge)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 make_helper(setnl)
 {
@@ -178,7 +178,7 @@ make_helper(setnl)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 
@@ -189,7 +189,7 @@ make_helper(setnle)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 make_helper(setno)
@@ -199,7 +199,7 @@ make_helper(setno)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 make_helper(setnp)
@@ -209,7 +209,7 @@ make_helper(setnp)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 make_helper(setns)
@@ -219,7 +219,7 @@ make_helper(setns)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 make_helper(setnz)
@@ -229,7 +229,7 @@ make_helper(setnz)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 
@@ -245,7 +245,7 @@ make_helper(seto)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 make_helper(setp)
 {
@@ -254,7 +254,7 @@ make_helper(setp)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 
 make_helper(setpe)
@@ -264,7 +264,7 @@ make_helper(setpe)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 make_helper(setpo)
 {
@@ -273,7 +273,7 @@ make_helper(setpo)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 make_helper(sets)
 {
@@ -282,7 +282,7 @@ make_helper(sets)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
 make_helper(setz)
 {
@@ -291,5 +291,5 @@ make_helper(setz)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
-	return 1;
+	return 2;
 }
