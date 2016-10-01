@@ -6,7 +6,7 @@
 static void do_execute() {
 	DATA_TYPE_S src=-MEM_R(cpu.edi);
 	DATA_TYPE_S des=REG(0);
-	CPU_AFFECT_CF(src,des)
+	CPU_AFFECT_CF(src,des,0)
  	CPU_AFFECT_ZF(src,des)
  	CPU_AFFECT_PF(src,des)
  	CPU_AFFECT_SF(src,des)

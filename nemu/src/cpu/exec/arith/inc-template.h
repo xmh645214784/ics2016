@@ -10,7 +10,7 @@ static void do_execute () {
 	OPERAND_W(op_src, result);
 
 
- 	CPU_AFFECT_CF(src,des)
+ 	CPU_AFFECT_CF(src,des,1)
  	CPU_AFFECT_ZF(src,des)
  	CPU_AFFECT_PF(src,des)
  	CPU_AFFECT_SF(src,des)

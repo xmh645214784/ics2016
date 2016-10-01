@@ -11,7 +11,7 @@ static void do_execute() {
 //Log("目的操作数类型%d reg标号为%d 值为%d,",op_dest->type,op_dest->reg,op_dest->val);
 //Log("cmp %d-%d",src,des);
 
- 	CPU_AFFECT_CF(src,des)
+ 	CPU_AFFECT_CF(src,des,0)
  	CPU_AFFECT_ZF(src,des)
  	CPU_AFFECT_PF(src,des)
  	CPU_AFFECT_SF(src,des)
