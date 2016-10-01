@@ -158,6 +158,17 @@ static int cmd_x(char *args)
 {
 	char *num=strtok(NULL," ");
 	char *e=strtok(NULL," ");
+	//缺省情况
+	if(e==NULL)
+	{
+		bool success =1;
+		int exp=expr(num,&success);
+		if(!success)
+			return 0;
+		printf("首地址为:0x%08x\n",exp );
+		printf("0x%08x  \n",swaddr_read(exp,4));
+		return 0;
+	}
 	int num_int=atoi(num);
 	bool success =1;
 	int exp=expr(e,&success);
