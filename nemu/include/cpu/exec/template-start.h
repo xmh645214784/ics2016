@@ -90,7 +90,7 @@ bool is_even_number_of_1(uint32_t val);
 	else\
 	{\
 		DATA_TYPE src__neg=-src;\
-		if(des<=src__neg)\
+		if(des>=src__neg)\
 			cpu.CF=0;\
 		else\
 			cpu.CF=1;\
