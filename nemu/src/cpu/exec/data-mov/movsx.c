@@ -8,8 +8,7 @@ make_helper(movsx_rmb2r_w)
 	int16_t b=a;//fuhaokuozhang
 	reg_w(op_dest->reg)=b;
 	//write_operand_w(op_des,(int16_t)a);
-	assert(2+len==3);
-	return 2+len;
+	return 1+len;
 }
 
 make_helper(movsx_rmb2r_l)
@@ -19,8 +18,7 @@ make_helper(movsx_rmb2r_l)
 	int32_t b=a;
 	//write_operand_l(op_des,(int32_t)a);
 	reg_l(op_dest->reg)=b;
-	assert(2+len==3);
-	return 2+len;
+	return 1+len;
 }
 
 make_helper(movsx_rmw2r_l)
@@ -30,8 +28,7 @@ make_helper(movsx_rmw2r_l)
 	int32_t b=a;
 	//write_operand_l(op_des,(int32_t)a);
 	reg_l(op_dest->reg)=b;
-	assert(2+len==3);
-	return 2+len;
+	return 1+len;
 }
 
 make_helper_v(movsx_rmb2r)
