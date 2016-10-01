@@ -10,7 +10,7 @@ make_helper(movzx_rmb2r_w)
 	reg_w(op_dest->reg)=b;
 	//write_operand_w(op_des,(uint16_t)a);
 	print_asm("movzx %s,%s",op_src->str,op_dest->str);
-	return 2+len;
+	return 1+len;
 }
 
 make_helper(movzx_rmb2r_l)
@@ -21,7 +21,7 @@ make_helper(movzx_rmb2r_l)
 	//write_operand_l(op_des,(uint32_t)a);
 	reg_l(op_dest->reg)=b;
 	print_asm("movzx %s,%s",op_src->str,op_dest->str);
-	return 2+len;
+	return 1+len;
 }
 
 make_helper(movzx_rmw2r_l)
@@ -32,7 +32,7 @@ make_helper(movzx_rmw2r_l)
 	//write_operand_l(op_des,(uint32_t)a);
 	reg_l(op_dest->reg)=b;
 	print_asm("movzx %s,%s",op_src->str,op_dest->str);
-	return 2+len;
+	return 1+len;
 }
 
 make_helper_v(movzx_rmb2r)
