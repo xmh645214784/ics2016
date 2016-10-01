@@ -7,6 +7,7 @@ make_helper(seta)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("seta %s",op_src->str);
 	return 2;
 }
 
@@ -17,6 +18,7 @@ make_helper(setae)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setae %s",op_src->str);
 	return 2;
 }
 
@@ -27,6 +29,7 @@ make_helper(setb)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setb %s",op_src->str);
 	return 2;
 }
 
@@ -38,6 +41,7 @@ make_helper(setbe)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setbe %s",op_src->str);
 	return 2;
 }
 
@@ -48,6 +52,7 @@ make_helper(setc)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setc %s",op_src->str);
 	return 2;
 }
 
@@ -58,6 +63,7 @@ make_helper(sete)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("sete %s",op_src->str);
 	return 2;
 }
 make_helper(setg)
@@ -67,6 +73,7 @@ make_helper(setg)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setg %s",op_src->str);
 	return 2;
 }
 make_helper(setge)
@@ -76,6 +83,7 @@ make_helper(setge)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setge %s",op_src->str);
 	return 2;
 }
 
@@ -86,6 +94,7 @@ make_helper(setl)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setl %s",op_src->str);
 	return 2;
 }
 make_helper(setle)
@@ -95,6 +104,7 @@ make_helper(setle)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setle %s",op_src->str);
 	return 2;
 }
 make_helper(setna)
@@ -104,6 +114,7 @@ make_helper(setna)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setna %s",op_src->str);
 	return 2;
 }
 make_helper(setnae)
@@ -113,6 +124,7 @@ make_helper(setnae)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setnae %s",op_src->str);
 	return 2;
 }
 make_helper(setnb)
@@ -122,6 +134,7 @@ make_helper(setnb)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setnb %s",op_src->str);
 	return 2;
 }
 make_helper(setnbe)
@@ -131,6 +144,7 @@ make_helper(setnbe)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setnbe %s",op_src->str);
 	return 2;
 }
 make_helper(setnc)
@@ -140,6 +154,7 @@ make_helper(setnc)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setnc %s",op_src->str);
 	return 2;
 }
 make_helper(setne)
@@ -149,6 +164,7 @@ make_helper(setne)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setne %s",op_src->str);
 	return 2;
 }
 
@@ -159,6 +175,7 @@ make_helper(setng)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setng %s",op_src->str);
 	return 2;
 }
 
@@ -169,6 +186,7 @@ make_helper(setnge)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setnge %s",op_src->str);
 	return 2;
 }
 make_helper(setnl)
@@ -178,6 +196,7 @@ make_helper(setnl)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setnl %s",op_src->str);
 	return 2;
 }
 
@@ -189,6 +208,7 @@ make_helper(setnle)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setnle %s",op_src->str);
 	return 2;
 }
 
@@ -199,6 +219,7 @@ make_helper(setno)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setno %s",op_src->str);
 	return 2;
 }
 
@@ -209,6 +230,7 @@ make_helper(setnp)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setnp %s",op_src->str);
 	return 2;
 }
 
@@ -219,6 +241,7 @@ make_helper(setns)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setns %s",op_src->str);
 	return 2;
 }
 
@@ -229,6 +252,7 @@ make_helper(setnz)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setnz %s",op_src->str);
 	return 2;
 }
 
@@ -245,6 +269,7 @@ make_helper(seto)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("seto %s",op_src->str);
 	return 2;
 }
 make_helper(setp)
@@ -254,6 +279,7 @@ make_helper(setp)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setp %s",op_src->str);
 	return 2;
 }
 
@@ -264,6 +290,7 @@ make_helper(setpe)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setpe %s",op_src->str);
 	return 2;
 }
 make_helper(setpo)
@@ -273,6 +300,7 @@ make_helper(setpo)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setpo %s",op_src->str);
 	return 2;
 }
 make_helper(sets)
@@ -282,6 +310,7 @@ make_helper(sets)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("sets %s",op_src->str);
 	return 2;
 }
 make_helper(setz)
@@ -291,5 +320,6 @@ make_helper(setz)
 		write_operand_b(op_src, 1);
 	else
 		write_operand_b(op_src, 0);
+	print_asm("setz %s",op_src->str);
 	return 2;
 }
