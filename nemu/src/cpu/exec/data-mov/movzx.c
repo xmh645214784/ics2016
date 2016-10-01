@@ -19,6 +19,7 @@ make_helper(movzx_rmb2r_l)
 	uint32_t b=a;
 	//write_operand_l(op_des,(uint32_t)a);
 	reg_l(op_dest->reg)=b;
+		panic("%x",b);
 	return 2+len;
 }
 

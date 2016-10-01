@@ -8,7 +8,6 @@ make_helper(movsx_rmb2r_w)
 	int16_t b=a;//fuhaokuozhang
 	reg_w(op_dest->reg)=b;
 	//write_operand_w(op_des,(int16_t)a);
-	panic("%x",b);
 	assert(2+len==3);
 	return 2+len;
 }
