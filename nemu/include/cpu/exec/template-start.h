@@ -66,8 +66,8 @@ bool is_even_number_of_1(uint32_t val);
 
 //CF
 //
-
-/*	//可能有BUG
+/*
+	//可能有BUG
 #define CPU_AFFECT_CF(src,des,isADD) \
 	long long sum=(DATA_TYPE)src+(DATA_TYPE)des;\
 	if((sum>>DATA_BYTE*8)&1)\
@@ -75,10 +75,33 @@ bool is_even_number_of_1(uint32_t val);
 	else\
 		cpu.CF=0;\
 	if(!isADD)\
-		cpu.CF=!cpu.CF;*/
+		cpu.CF=!cpu.CF;
+*/
+
+#define CPU_AFFECT_CF(src,des,isADD) \
+	if(isADD)\
+	{\
+		long long sum=(DATA_TYPE)src+(DATA_TYPE)des;\
+		if((sum>>DATA_BYTE*8)&1)\
+			cpu.CF=1;\
+		else\
+			cpu.CF=0;\
+	}\
+	else\
+	{\
+		DATA_TYPE src__neg=-src;\
+		long long src_dai_cout=~src__neg+1;\
+		long long sum=src_dai_cout+(DATA_TYPE)des;\
+		if((sum>>DATA_BYTE*8)&1)\
+			cpu.CF=0;\
+		else\
+			cpu.CF=1;\
+	}
+
+		/*
 #define CPU_AFFECT_CF(src,des,isADD) \
 		DATA_TYPE result__=(DATA_TYPE)src+(DATA_TYPE)des;\
 		if(src>result__||des>result__)\
 			cpu.CF=1;\
 		else\
-			cpu.CF=0;
+			cpu.CF=0;*/
