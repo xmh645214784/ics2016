@@ -1,35 +1,37 @@
 #include "cpu/exec/helper.h"
 
-
 //BUG
-make_helper(movzx_rmb2r_w)
+make_helper(movsx_rmb2r_w)
 {
 	int len=decode_rm2r_w(eip);
-	uint8_t a=op_src->val;
-	uint16_t b=a;//fuhaokuozhang
+	int8_t a=op_src->val;
+	int16_t b=a;//fuhaokuozhang
 	reg_w(op_dest->reg)=b;
-	//write_operand_w(op_des,(uint16_t)a);
+	//write_operand_w(op_des,(int16_t)a);
+	assert(2+len==3);
 	return 2+len;
 }
 
-make_helper(movzx_rmb2r_l)
+make_helper(movsx_rmb2r_l)
 {
 	int len=decode_rm2r_w(eip);
-	uint8_t a=op_src->val;
-	uint32_t b=a;
-	//write_operand_l(op_des,(uint32_t)a);
+	int8_t a=op_src->val;
+	int32_t b=a;
+	//write_operand_l(op_des,(int32_t)a);
 	reg_l(op_dest->reg)=b;
+	assert(2+len==3);
 	return 2+len;
 }
 
-make_helper(movzx_rmw2r_l)
+make_helper(movsx_rmw2r_l)
 {
 	int len=decode_rm2r_l(eip);
-	uint16_t a=op_src->val;
-	uint32_t b=a;
-	//write_operand_l(op_des,(uint32_t)a);
+	int16_t a=op_src->val;
+	int32_t b=a;
+	//write_operand_l(op_des,(int32_t)a);
 	reg_l(op_dest->reg)=b;
+	assert(2+len==3);
 	return 2+len;
 }
 
-make_helper_v(movzx_rmb2r)
+make_helper_v(movsx_rmb2r)
