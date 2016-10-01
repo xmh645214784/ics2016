@@ -2,7 +2,7 @@
 extern CPU_state cpu;
 make_helper(seta)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.CF==0&&cpu.ZF==0)
 		write_operand_b(op_src, 1);
 	else
@@ -12,7 +12,7 @@ make_helper(seta)
 
 make_helper(setae)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.CF==0)
 		write_operand_b(op_src, 1);
 	else
@@ -22,7 +22,7 @@ make_helper(setae)
 
 make_helper(setb)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.CF==1)
 		write_operand_b(op_src, 1);
 	else
@@ -33,7 +33,7 @@ make_helper(setb)
 
 make_helper(setbe)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.CF==1||cpu.ZF==1)
 		write_operand_b(op_src, 1);
 	else
@@ -43,7 +43,7 @@ make_helper(setbe)
 
 make_helper(setc)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.CF==1)
 		write_operand_b(op_src, 1);
 	else
@@ -53,7 +53,7 @@ make_helper(setc)
 
 make_helper(sete)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.ZF==1)
 		write_operand_b(op_src, 1);
 	else
@@ -62,7 +62,7 @@ make_helper(sete)
 }
 make_helper(setg)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.ZF==0&&cpu.SF==cpu.OF)
 		write_operand_b(op_src, 1);
 	else
@@ -71,7 +71,7 @@ make_helper(setg)
 }
 make_helper(setge)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.SF==cpu.OF)
 		write_operand_b(op_src, 1);
 	else
@@ -81,7 +81,7 @@ make_helper(setge)
 
 make_helper(setl)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.SF!=cpu.OF)
 		write_operand_b(op_src, 1);
 	else
@@ -90,7 +90,7 @@ make_helper(setl)
 }
 make_helper(setle)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.ZF==1||cpu.SF!=cpu.OF)
 		write_operand_b(op_src, 1);
 	else
@@ -99,7 +99,7 @@ make_helper(setle)
 }
 make_helper(setna)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.CF==1||cpu.ZF==1)
 		write_operand_b(op_src, 1);
 	else
@@ -108,7 +108,7 @@ make_helper(setna)
 }
 make_helper(setnae)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.CF==1)
 		write_operand_b(op_src, 1);
 	else
@@ -117,7 +117,7 @@ make_helper(setnae)
 }
 make_helper(setnb)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.CF==0)
 		write_operand_b(op_src, 1);
 	else
@@ -126,7 +126,7 @@ make_helper(setnb)
 }
 make_helper(setnbe)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.CF==0&&cpu.ZF==0)
 		write_operand_b(op_src, 1);
 	else
@@ -135,7 +135,7 @@ make_helper(setnbe)
 }
 make_helper(setnc)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.CF==0)
 		write_operand_b(op_src, 1);
 	else
@@ -144,7 +144,7 @@ make_helper(setnc)
 }
 make_helper(setne)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.ZF==0)
 		write_operand_b(op_src, 1);
 	else
@@ -154,7 +154,7 @@ make_helper(setne)
 
 make_helper(setng)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.ZF==1||cpu.SF!=cpu.OF)
 		write_operand_b(op_src, 1);
 	else
@@ -164,7 +164,7 @@ make_helper(setng)
 
 make_helper(setnge)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.SF!=cpu.OF)
 		write_operand_b(op_src, 1);
 	else
@@ -173,7 +173,7 @@ make_helper(setnge)
 }
 make_helper(setnl)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.SF==cpu.OF)
 		write_operand_b(op_src, 1);
 	else
@@ -184,7 +184,7 @@ make_helper(setnl)
 
 make_helper(setnle)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.ZF==0&&cpu.SF==cpu.OF)
 		write_operand_b(op_src, 1);
 	else
@@ -194,7 +194,7 @@ make_helper(setnle)
 
 make_helper(setno)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.OF==0)
 		write_operand_b(op_src, 1);
 	else
@@ -204,7 +204,7 @@ make_helper(setno)
 
 make_helper(setnp)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.PF==0)
 		write_operand_b(op_src, 1);
 	else
@@ -214,7 +214,7 @@ make_helper(setnp)
 
 make_helper(setns)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.SF==0)
 		write_operand_b(op_src, 1);
 	else
@@ -224,7 +224,7 @@ make_helper(setns)
 
 make_helper(setnz)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.ZF==0)
 		write_operand_b(op_src, 1);
 	else
@@ -240,7 +240,7 @@ make_helper(setnz)
 
 make_helper(seto)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.OF==1)
 		write_operand_b(op_src, 1);
 	else
@@ -249,7 +249,7 @@ make_helper(seto)
 }
 make_helper(setp)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.PF==1)
 		write_operand_b(op_src, 1);
 	else
@@ -259,7 +259,7 @@ make_helper(setp)
 
 make_helper(setpe)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.PF==1)
 		write_operand_b(op_src, 1);
 	else
@@ -268,7 +268,7 @@ make_helper(setpe)
 }
 make_helper(setpo)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.PF==0)
 		write_operand_b(op_src, 1);
 	else
@@ -277,7 +277,7 @@ make_helper(setpo)
 }
 make_helper(sets)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.SF==1)
 		write_operand_b(op_src, 1);
 	else
@@ -286,7 +286,7 @@ make_helper(sets)
 }
 make_helper(setz)
 {
-	decode_rm_b(eip);
+	decode_rm2r_b(eip);
 	if(cpu.ZF==1)
 		write_operand_b(op_src, 1);
 	else
