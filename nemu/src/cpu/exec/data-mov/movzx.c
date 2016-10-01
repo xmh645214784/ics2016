@@ -4,7 +4,7 @@
 //BUG
 make_helper(movzx_rmb2r_w)
 {
-	int len=decode_rm2r_b(eip);
+	int len=decode_rm2r_b(eip+1);
 	uint8_t a=op_src->val;
 	uint16_t b=a;//fuhaokuozhang
 	reg_w(op_dest->reg)=b;
@@ -14,8 +14,7 @@ make_helper(movzx_rmb2r_w)
 
 make_helper(movzx_rmb2r_l)
 {
-	panic("%x",eip);
-	int len=decode_rm2r_b(eip);
+	int len=decode_rm2r_b(eip+1);
 	uint8_t a=op_src->val;
 	uint32_t b=a;
 	//write_operand_l(op_des,(uint32_t)a);
@@ -26,7 +25,7 @@ make_helper(movzx_rmb2r_l)
 
 make_helper(movzx_rmw2r_l)
 {
-	int len=decode_rm2r_w(eip);
+	int len=decode_rm2r_w(eip+1);
 	uint16_t a=op_src->val;
 	uint32_t b=a;
 	//write_operand_l(op_des,(uint32_t)a);
