@@ -81,18 +81,16 @@ bool is_even_number_of_1(uint32_t val);
 #define CPU_AFFECT_CF(src,des,isADD) \
 	if(isADD)\
 	{\
-		long long sum=(DATA_TYPE)src+(DATA_TYPE)des;\
-		if((sum>>DATA_BYTE*8)&1)\
-			cpu.CF=1;\
-		else\
+		DATA_TYPE sum=(DATA_TYPE)src+(DATA_TYPE)des;\
+		if(sum>=src&&sum>=des)\
 			cpu.CF=0;\
+		else\
+			cpu.CF=1;\
 	}\
 	else\
 	{\
 		DATA_TYPE src__neg=-src;\
-		long long src_dai_cout=~src__neg+1;\
-		long long sum=src_dai_cout+(DATA_TYPE)des;\
-		if((sum>>DATA_BYTE*8)&1)\
+		if(des<=src__neg)\
 			cpu.CF=0;\
 		else\
 			cpu.CF=1;\
