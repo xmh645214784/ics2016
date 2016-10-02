@@ -38,9 +38,9 @@ bool is_even_number_of_1(uint32_t val);
 //下 need signed
 
 #define CPU_AFFECT_OF(src,des) \
-	if(src>0&&des<0&&src+des<0)\
+	if(src>0&&des>0&&src+des<0)\
 		cpu.OF=1;\
-	else if(src<0&&des>0&&src+des>0)\
+	else if(src<0&&des<0&&src+des>0)\
 		cpu.OF=1;\
 	else\
 		cpu.OF=0;
