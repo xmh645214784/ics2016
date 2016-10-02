@@ -46,6 +46,7 @@ make_helper(leave_v);
 #include "arith/add.h"
 #include "arith/adc.h"
 #include "arith/sub.h"
+#include "arith/sbb.h"
 
 #include "set/set.h"
 #include "jmp/jmp.h"
