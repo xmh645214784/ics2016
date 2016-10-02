@@ -51,11 +51,23 @@ if(isADD==0&&des==0&&src==-src&&src!=0)\
 	cpu.OF=1;
 */
 #define CPU_AFFECT_OF(src,des,isADD) \
+if(isADD)\
+{\
 	DATA_TYPE_S sum=(DATA_TYPE_S)src+(DATA_TYPE_S)des;\
-	long long a=(DATA_TYPE_S)src;\
-	long long b=(DATA_TYPE_S)des;\
-	long long sum2=a+b;\
-	cpu.OF=sum!=sum2;
+	long long a_=(DATA_TYPE_S)src;\
+	long long b_=(DATA_TYPE_S)des;\
+	long long sum2=a_+b_;\
+	cpu.OF=sum!=sum2;\
+}\
+else\
+{\
+	DATA_TYPE_S src__neg_=-src;\
+	long long a_=(DATA_TYPE_S)src__neg_;\
+	long long b_=(DATA_TYPE_S)des;\
+	long long sum2=a_-b_;\
+	DATA_TYPE_S sum=(DATA_TYPE_S)src+(DATA_TYPE_S)des;\
+	cpu.OF=sum!=sum2;\
+}
 
 
 #define CPU_AFFECT_SF(src,des) \
