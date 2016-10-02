@@ -11,9 +11,9 @@ static void do_execute() {
 
 	DATA_TYPE result=op_dest->val&op_src->val;
 
-	CPU_AFFECT_ZF(result,0)
-	CPU_AFFECT_SF(result,0)
-	CPU_AFFECT_PF(result,0)
+	CPU_AFFECT_ZF(result,0,1)
+	CPU_AFFECT_SF(result,0,1)
+	CPU_AFFECT_PF(result,0,1)
 
 
 	print_asm_template2();

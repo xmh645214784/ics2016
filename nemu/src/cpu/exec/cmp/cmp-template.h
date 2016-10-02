@@ -5,17 +5,16 @@
 //通用执行函数
 static void do_execute() {
 	//BUG?
-	DATA_TYPE src=(DATA_TYPE_S)op_src->val;
-	DATA_TYPE des=(DATA_TYPE_S)op_dest->val;
+	DATA_TYPE src=op_src->val;
+	DATA_TYPE des=op_dest->val;
 	printf("%d\n", des);
 	Log("des-src=%x-%x",des,src);
-	Log("DATA_BYTE=%d",DATA_BYTE);
-	
-	CPU_AFFECT_CF(-src,des,0)
- 	CPU_AFFECT_ZF(-src,des)
- 	CPU_AFFECT_PF(-src,des)
- 	CPU_AFFECT_SF(-src,des)
-  	CPU_AFFECT_OF(-src,des,0)
+
+	CPU_AFFECT_CF(src,des,0)
+ 	CPU_AFFECT_ZF(src,des,0)
+ 	CPU_AFFECT_PF(src,des,0)
+ 	CPU_AFFECT_SF(src,des,0)
+  	CPU_AFFECT_OF(src,des,0)
 
 	print_asm_template2();
 }

@@ -10,9 +10,9 @@ static void do_execute () {
 	//panic("please implement me");
  	cpu.OF=0;
  	cpu.CF=0;
- 	CPU_AFFECT_ZF(result,0)
- 	CPU_AFFECT_PF(result,0)
- 	CPU_AFFECT_SF(result,0)
+ 	CPU_AFFECT_ZF(result,0,1)
+ 	CPU_AFFECT_PF(result,0,1)
+ 	CPU_AFFECT_SF(result,0,1)
 	print_asm_template2();
 }
 

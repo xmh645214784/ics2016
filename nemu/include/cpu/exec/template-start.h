@@ -61,52 +61,48 @@ if(isADD)\
 }\
 else\
 {\
-	DATA_TYPE_S src__neg_=-src;\
-	long long a_=(DATA_TYPE_S)src__neg_;\
+	long long a_=(DATA_TYPE_S)src;\
 	long long b_=(DATA_TYPE_S)des;\
 	long long sum2=b_-a_;\
-	DATA_TYPE_S sum=(DATA_TYPE_S)src+(DATA_TYPE_S)des;\
+	DATA_TYPE_S sum=-(DATA_TYPE_S)src+(DATA_TYPE_S)des;\
 	cpu.OF=sum!=sum2;\
 }
 
 
-#define CPU_AFFECT_SF(src,des) \
-	if(src+des>=0)\
-		cpu.SF=0;\
-	else\
-		cpu.SF=1;
+#define CPU_AFFECT_SF(src,des,isADD) \
+if(isADD)\
+{\
+	cpu.SF=(src+des)<0;\
+}\
+else\
+{\
+	cpu.SF=(-src+des)<0;\
+}
 
-#define CPU_AFFECT_ZF(src,des) \
-	if(src+des==(DATA_TYPE_S)0)\
-		cpu.ZF=1;\
-	else\
-		cpu.ZF=0;
+
+#define CPU_AFFECT_ZF(src,des,isADD) \
+if(isADD)\
+{\
+	cpu.ZF=(src+des)==0;\
+}\
+else\
+{\
+	cpu.ZF=(-src+des)==0;\
+}
 
 //PF
-#define CPU_AFFECT_PF(src,des) \
-	if(is_even_number_of_1(src+des))\
-		cpu.PF=1;\
-	else\
-		cpu.PF=0;
+#define CPU_AFFECT_PF(src,des,isADD) \
+if(isADD)\
+	cpu.PF=is_even_number_of_1(src+des);\
+else\
+	cpu.PF=is_even_number_of_1(-src+des);
 
-//CF
-//
-/*
-	//可能有BUG
-#define CPU_AFFECT_CF(src,des,isADD) \
-	long long sum=(DATA_TYPE)src+(DATA_TYPE)des;\
-	if((sum>>DATA_BYTE*8)&1)\
-		cpu.CF=1;\
-	else\
-		cpu.CF=0;\
-	if(!isADD)\
-		cpu.CF=!cpu.CF;
-*/
+
 
 #define CPU_AFFECT_CF(src,des,isADD) \
 	if(isADD)\
 	{\
-		DATA_TYPE sum=(DATA_TYPE)src+(DATA_TYPE)des;\
+		DATA_TYPE sum=src+des;\
 		if(sum>=src&&sum>=des)\
 			cpu.CF=0;\
 		else\
@@ -114,17 +110,10 @@ else\
 	}\
 	else\
 	{\
-		DATA_TYPE src__neg=-src;\
+		DATA_TYPE src__neg=src;\
 		if(des>=src__neg)\
 			cpu.CF=0;\
 		else\
 			cpu.CF=1;\
 	}
 
-		/*
-#define CPU_AFFECT_CF(src,des,isADD) \
-		DATA_TYPE result__=(DATA_TYPE)src+(DATA_TYPE)des;\
-		if(src>result__||des>result__)\
-			cpu.CF=1;\
-		else\
-			cpu.CF=0;*/

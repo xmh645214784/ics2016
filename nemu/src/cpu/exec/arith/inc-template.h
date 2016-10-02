@@ -3,17 +3,17 @@
 #define instr inc
 static void do_execute () {
 	
-	DATA_TYPE_S src=op_src->val;
-	DATA_TYPE_S des=1;
+	DATA_TYPE src=op_src->val;
+	DATA_TYPE des=1;
 
-	DATA_TYPE_S result = op_src->val + 1;
+	DATA_TYPE result = op_src->val + 1;
 	OPERAND_W(op_src, result);
 
 
  	CPU_AFFECT_CF(src,des,1)
- 	CPU_AFFECT_ZF(src,des)
- 	CPU_AFFECT_PF(src,des)
- 	CPU_AFFECT_SF(src,des)
+ 	CPU_AFFECT_ZF(src,des,1)
+ 	CPU_AFFECT_PF(src,des,1)
+ 	CPU_AFFECT_SF(src,des,1)
   	CPU_AFFECT_OF(src,des,1)
 	/* TODO: Update EFLAGS. */
 	//panic("please implement me");
