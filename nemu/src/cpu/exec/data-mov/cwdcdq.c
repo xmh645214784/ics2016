@@ -2,7 +2,7 @@
 extern CPU_state cpu;
 make_helper(cwdcdq_w)
 {
-	if(cpu.ax<0)
+	if((int16_t)cpu.ax<0)
 		cpu.dx=0xFFFF;
 	else
 		cpu.dx=0;
@@ -13,7 +13,7 @@ make_helper(cwdcdq_w)
 
 make_helper(cwdcdq_l)
 {
-	if(cpu.eax<0)
+	if((int)cpu.eax<0)
 		cpu.edx=0xFFFFFFFF;
 	else
 		cpu.edx=0;
