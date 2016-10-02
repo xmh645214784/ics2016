@@ -77,7 +77,7 @@ else\
 		cpu.SF=1;
 
 #define CPU_AFFECT_ZF(src,des) \
-	if(src+des==0)\
+	if(src+des==(DATA_TYPE_S)0)\
 		cpu.ZF=1;\
 	else\
 		cpu.ZF=0;

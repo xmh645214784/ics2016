@@ -10,8 +10,8 @@ static void do_execute() {
 	printf("%d\n", des);
 	Log("des-src=%x-%x",des,src);
 	Log("DATA_BYTE=%d",DATA_BYTE);
+	
 	CPU_AFFECT_CF(-src,des,0)
-
  	CPU_AFFECT_ZF(-src,des)
  	CPU_AFFECT_PF(-src,des)
  	CPU_AFFECT_SF(-src,des)
