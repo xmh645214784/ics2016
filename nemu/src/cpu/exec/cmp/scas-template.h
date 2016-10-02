@@ -10,7 +10,7 @@ static void do_execute() {
  	CPU_AFFECT_ZF(src,des)
  	CPU_AFFECT_PF(src,des)
  	CPU_AFFECT_SF(src,des)
-  	CPU_AFFECT_OF(src,des)
+  	CPU_AFFECT_OF(src,des,0)
   	if(cpu.DF==0)
   		cpu.edi+=DATA_BYTE;
   	else

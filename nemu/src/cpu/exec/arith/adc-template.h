@@ -14,7 +14,7 @@ static void do_execute() {
  	CPU_AFFECT_ZF(src,des)
  	CPU_AFFECT_PF(src,des)
  	CPU_AFFECT_SF(src,des)
-  	CPU_AFFECT_OF(src,des)
+  	CPU_AFFECT_OF(src,des,1)
 
 	print_asm_template2();
 }

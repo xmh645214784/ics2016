@@ -37,13 +37,16 @@ bool is_even_number_of_1(uint32_t val);
 
 //下 need signed
 
-#define CPU_AFFECT_OF(src,des) \
-	if(src>0&&des>0&&src+des<0)\
+//如果是减法 判断是不是0 0x8000000
+#define CPU_AFFECT_OF(src,des,isADD) \
+	if(src>=0&&des>=0&&src+des<0)\
 		cpu.OF=1;\
-	else if(src<0&&des<0&&src+des>0)\
+	else if(src<0&&des<0&&src+des>=0)\
 		cpu.OF=1;\
 	else\
-		cpu.OF=0;
+		cpu.OF=0;\
+if(isADD==0&&src==0&&des==-des&&des!=0)\
+	cpu.OF=1;
 
 #define CPU_AFFECT_SF(src,des) \
 	if(src+des>=0)\
