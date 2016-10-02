@@ -7,7 +7,6 @@ static void do_execute() {
 	//BUG?
 	DATA_TYPE src=op_src->val;
 	DATA_TYPE des=op_dest->val;
-	printf("%d\n", des);
 	Log("des-src=%x-%x",des,src);
 
 	CPU_AFFECT_CF(src,des,0)
