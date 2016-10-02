@@ -1,7 +1,7 @@
 #ifndef _LOOP_H_
 #define _LOOP_H_ 
-make_helper(loopne);
-make_helper(loop);
-make_helper(loope);
+make_helper(loopne_v);
+make_helper(loop_v);
+make_helper(loope_v);
 
 #endif
