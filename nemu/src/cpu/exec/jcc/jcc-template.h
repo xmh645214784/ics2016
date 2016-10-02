@@ -14,7 +14,7 @@ make_helper_jcc(ja)
 #endif
 	}
 	print_asm("ja_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 make_helper_jcc(jae)
@@ -29,7 +29,7 @@ make_helper_jcc(jae)
 	}
 	print_asm("jae_rel_"str(SUFFIX)" %s",op_src->str);
 	
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 make_helper_jcc(jb)
@@ -44,7 +44,7 @@ make_helper_jcc(jb)
 	}
 	print_asm("jb_rel_"str(SUFFIX)" %s",op_src->str);
 	
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 
@@ -59,7 +59,7 @@ make_helper_jcc(jbe)
 #endif
 	}
 	print_asm("jbe_rel_"str(SUFFIX)" %s",op_src->str);	
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 make_helper_jcc(jc)
@@ -73,7 +73,7 @@ make_helper_jcc(jc)
 #endif
 	}
 	print_asm("jc_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 
@@ -89,7 +89,7 @@ make_helper_jcc(jcxz)
 #endif
 	}
 	print_asm("jcxz_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(jecxz)
 {
@@ -102,7 +102,7 @@ make_helper_jcc(jecxz)
 #endif
 	}
 	print_asm("jecxz_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 #endif
 
@@ -117,7 +117,7 @@ make_helper_jcc(je)
 #endif
 	}
 	print_asm("je_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(jg)
 {
@@ -130,7 +130,7 @@ make_helper_jcc(jg)
 #endif
 	}
 	print_asm("jg_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(jge)
 {
@@ -143,7 +143,7 @@ make_helper_jcc(jge)
 #endif
 	}
 	print_asm("jge_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 make_helper_jcc(jl)
@@ -157,7 +157,7 @@ make_helper_jcc(jl)
 #endif
 	}
 	print_asm("jl_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(jle)
 {
@@ -170,7 +170,7 @@ make_helper_jcc(jle)
 #endif
 	}
 	print_asm("jle_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(jna)
 {
@@ -183,7 +183,7 @@ make_helper_jcc(jna)
 #endif
 	}
 	print_asm("jna_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(jnae)
 {
@@ -196,7 +196,7 @@ make_helper_jcc(jnae)
 #endif
 	}
 	print_asm("jnae_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(jnb)
 {
@@ -209,7 +209,7 @@ make_helper_jcc(jnb)
 #endif
 	}
 	print_asm("jnb_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(jnbe)
 {
@@ -222,7 +222,7 @@ make_helper_jcc(jnbe)
 #endif
 	}
 	print_asm("jnbe_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(jnc)
 {
@@ -235,7 +235,7 @@ make_helper_jcc(jnc)
 #endif
 	}
 	print_asm("jnc_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(jne)
 {
@@ -248,7 +248,7 @@ make_helper_jcc(jne)
 #endif
 	}
 	print_asm("jne_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 make_helper_jcc(jng)
@@ -262,7 +262,7 @@ make_helper_jcc(jng)
 #endif
 	}
 	print_asm("jng_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 make_helper_jcc(jnge)
@@ -276,7 +276,7 @@ make_helper_jcc(jnge)
 #endif
 	}
 	print_asm("jnge_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(jnl)
 {
@@ -289,7 +289,7 @@ make_helper_jcc(jnl)
 #endif
 	}
 	print_asm("jnl_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 
@@ -304,7 +304,7 @@ make_helper_jcc(jnle)
 #endif
 	}
 	print_asm("jnle_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 make_helper_jcc(jno)
@@ -318,7 +318,7 @@ make_helper_jcc(jno)
 #endif
 	}
 	print_asm("jno_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 make_helper_jcc(jnp)
@@ -332,7 +332,7 @@ make_helper_jcc(jnp)
 #endif
 	}
 	print_asm("jnp_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 make_helper_jcc(jns)
@@ -346,7 +346,7 @@ make_helper_jcc(jns)
 #endif
 	}
 	print_asm("jns_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 make_helper_jcc(jnz)
@@ -360,7 +360,7 @@ make_helper_jcc(jnz)
 #endif
 	}
 	print_asm("jnz_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 
@@ -375,7 +375,7 @@ make_helper_jcc(jo)
 #endif
 	}
 	print_asm("jo_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(jp)
 {
@@ -388,7 +388,7 @@ make_helper_jcc(jp)
 #endif
 	}
 	print_asm("jp_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 make_helper_jcc(jpe)
@@ -402,7 +402,7 @@ make_helper_jcc(jpe)
 #endif
 	}
 	print_asm("jpe_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(jpo)
 {
@@ -415,7 +415,7 @@ make_helper_jcc(jpo)
 #endif
 	}
 	print_asm("jpo_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(js)
 {
@@ -428,7 +428,7 @@ make_helper_jcc(js)
 #endif
 	}
 	print_asm("js_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 make_helper_jcc(jz)
 {
@@ -441,7 +441,7 @@ make_helper_jcc(jz)
 #endif
 	}
 	print_asm("jz_rel_"str(SUFFIX)" %s",op_src->str);
-	return 2;
+	return 1+DATA_BYTE;
 }
 
 #include "cpu/exec/template-end.h"
