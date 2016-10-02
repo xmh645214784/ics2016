@@ -29,7 +29,7 @@ make_helper(jmp_rel_l)
 make_helper(jmp_rm_w)
 {
 	decode_rm2r_w(eip+1);
-	cpu.eip+=(int16_t)op_src->val;
+	cpu.eip=(int16_t)op_src->val&0x0000FFFF;
 	print_asm("jmp %s",op_src->str);
 	return 2;
 }
@@ -37,7 +37,7 @@ make_helper(jmp_rm_w)
 make_helper(jmp_rm_l)
 {
 	decode_rm2r_l(eip+1);
-	cpu.eip+=(int32_t)op_src->val;
+	cpu.eip=(int32_t)op_src->val;
 	print_asm("jmp %s",op_src->str);
 	return 2;
 }
