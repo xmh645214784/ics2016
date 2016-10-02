@@ -54,4 +54,8 @@ make_helper(leave_v);
 #include "data-mov/movs.h"
 #include "data-mov/stos.h"
 #include "data-mov/lods.h"
+
 #include "cmp/scas.h"
+
+#include "loop/loop.h"
+
