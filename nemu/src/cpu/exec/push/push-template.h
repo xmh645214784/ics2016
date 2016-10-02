@@ -18,10 +18,7 @@ else
 	cpu.esp-=4;
 }
 //注意 可能有BUG
-	op_dest->type=OP_TYPE_MEM;
-	op_dest->size=DATA_BYTE;
-	op_dest->addr=cpu.esp;
-	OPERAND_W(op_dest, op_src->val);
+	swaddr_write(cpu.esp,DATA_BYTE,op_src->val);
 	print_asm_template1();
 }
 
