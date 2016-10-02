@@ -51,8 +51,8 @@ if(isADD==0&&des==0&&src==-src&&src!=0)\
 	cpu.OF=1;
 */
 #define CPU_AFFECT_OF(src,des,isADD) \
-	DATA_TYPE_S sum=src+des;\
-	long long sum2=src+des;\
+	DATA_TYPE_S sum=(DATA_TYPE_S)src+(DATA_TYPE_S)des;\
+	long long sum2=(DATA_TYPE_S)src+(DATA_TYPE_S)des;\
 	cpu.OF=sum!=sum2;
 
 
