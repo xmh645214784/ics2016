@@ -17,6 +17,7 @@ int main() {
 		for (j = i;j < NR_DATA;j++) { 
 			nemu_assert(ans[ans_idx++] == mul(test_data[i],test_data[j]));
 			loop ++;
+			set_bp();
 		}
 	}
 
