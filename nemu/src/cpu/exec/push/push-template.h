@@ -11,14 +11,15 @@ static void do_execute() {
 if(DATA_BYTE==2)
 {
 	cpu.esp-=2;
-
+	swaddr_write(cpu.esp,2,op_src->val);
 }
 else
 {
 	cpu.esp-=4;
+	swaddr_write(cpu.esp,4,op_src->val);
 }
 //注意 可能有BUG
-	swaddr_write(cpu.esp,DATA_BYTE,op_src->val);
+
 	print_asm_template1();
 }
 
