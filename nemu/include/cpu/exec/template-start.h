@@ -64,7 +64,7 @@ else\
 	DATA_TYPE_S src__neg_=-src;\
 	long long a_=(DATA_TYPE_S)src__neg_;\
 	long long b_=(DATA_TYPE_S)des;\
-	long long sum2=a_-b_;\
+	long long sum2=b_-a_;\
 	DATA_TYPE_S sum=(DATA_TYPE_S)src+(DATA_TYPE_S)des;\
 	cpu.OF=sum!=sum2;\
 }
