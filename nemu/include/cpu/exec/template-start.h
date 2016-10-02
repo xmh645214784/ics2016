@@ -72,11 +72,11 @@ else\
 #define CPU_AFFECT_SF(src,des,isADD) \
 if(isADD)\
 {\
-	cpu.SF=(src+des)<0;\
+	cpu.SF=MSB(src+des);\
 }\
 else\
 {\
-	cpu.SF=(-src+des)<0;\
+	cpu.SF=MSB(-src+des);\
 }
 
 
