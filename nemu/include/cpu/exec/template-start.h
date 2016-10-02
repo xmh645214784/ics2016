@@ -45,7 +45,7 @@ bool is_even_number_of_1(uint32_t val);
 		cpu.OF=1;\
 	else\
 		cpu.OF=0;\
-if(isADD==0&&src==0&&des==-des&&des!=0)\
+if(isADD==0&&des==0&&src==-src&&src!=0)\
 	cpu.OF=1;
 
 #define CPU_AFFECT_SF(src,des) \
