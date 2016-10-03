@@ -7,6 +7,7 @@ make_helper(call_rel_w)
 	swaddr_write(cpu.esp,2,cpu.ip+3);
 	cpu.eip=(cpu.eip+(int16_t)op_src->val)&0x0000FFFF;
 	print_asm("call "str(op_src->str));
+	Log("w");
 	return 3;
 }
 
