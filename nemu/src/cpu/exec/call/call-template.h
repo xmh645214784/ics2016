@@ -11,7 +11,6 @@ static void do_execute() {
 	swaddr_write(cpu.esp,4,cpu.eip+5);
 	cpu.eip+=(DATA_TYPE_S)op_src->val;
 	print_asm_template1();
-
 #elif DATA_BYTE ==2
 	cpu.esp-=2;
 	swaddr_write(cpu.esp,2,cpu.ip+3);
@@ -22,7 +21,6 @@ static void do_execute() {
 
 }
 make_instr_helper(rel)
-
 
 #if DATA_BYTE==2||DATA_BYTE==4
 make_instr_helper(rm)
