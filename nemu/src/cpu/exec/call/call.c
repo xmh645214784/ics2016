@@ -18,6 +18,7 @@ make_helper(call_rel_l)
 	swaddr_write(cpu.esp,4,cpu.eip+5);
 	cpu.eip+=(int)op_src->val;
 	print_asm("call "str(op_src->str));
+	Log("l");
 	return 5;
 }
 
