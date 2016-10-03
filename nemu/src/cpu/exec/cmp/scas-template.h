@@ -5,7 +5,7 @@
 //通用执行函数
 static void do_execute() {
 	DATA_TYPE src=MEM_R(cpu.edi);
-	DATA_TYPE des=REG(0);
+	DATA_TYPE des=REG(R_EAX);
 	CPU_AFFECT_CF(src,des,0)
  	CPU_AFFECT_ZF(src,des,0)
  	CPU_AFFECT_PF(src,des,0)
