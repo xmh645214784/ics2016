@@ -21,7 +21,7 @@ make_helper(ret_l)
 
 make_helper(ret_i_w)
 {
-	cpu.eip=swaddr_read(cpu.esp,2);
+	cpu.eip=swaddr_read(cpu.esp,42);
 	decode_i_w(eip+1);
 	int16_t a=op_src->val;
 	cpu.esp+=2;
@@ -29,5 +29,17 @@ make_helper(ret_i_w)
 	print_asm("ret imm16");
 	return 0;
 }
+make_helper(ret_i_l)
+{
+	cpu.eip=swaddr_read(cpu.esp,4);
+	decode_i_w(eip+1);
+	int16_t a=op_src->val;
+	cpu.esp+=4;
+	cpu.esp+=a;
+	print_asm("ret imm16");
+	return 0;
+}
+
 
 make_helper_v(ret)
+make_helper_v(ret_i)
