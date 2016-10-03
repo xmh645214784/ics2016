@@ -12,7 +12,7 @@ make_helper(call_rel_w)
 
 make_helper(call_rel_l)
 {
-	decode_i_w(eip+1);
+	decode_i_l(eip+1);
 	cpu.esp-=4;
 	swaddr_write(cpu.esp,4,cpu.eip+5);
 	cpu.eip+=(int)op_src->val;
