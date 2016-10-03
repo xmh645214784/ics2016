@@ -21,7 +21,8 @@ make_helper(ret_l)
 
 make_helper(ret_i_w)
 {
-	decode_i_w(eip);
+	cpu.eip=swaddr_read(cpu.esp,2);
+	decode_i_w(eip+1);
 	int16_t a=op_src->val;
 	cpu.esp+=2;
 	cpu.esp+=a;
