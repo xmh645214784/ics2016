@@ -10,7 +10,7 @@ make_helper(jmp_rel_b)
 
 make_helper(jmp_rel_w)
 {
-	decode_i_b(eip+1);
+	decode_i_w(eip+1);
 	cpu.eip+=(int16_t)op_src->val;
 	cpu.eip=cpu.eip&0xFFFF;
 	print_asm("jmp %s",op_src->str);
@@ -19,7 +19,7 @@ make_helper(jmp_rel_w)
 
 make_helper(jmp_rel_l)
 {
-	decode_i_b(eip+1);
+	decode_i_l(eip+1);
 	cpu.eip+=(int32_t)op_src->val;
 	print_asm("jmp %s",op_src->str);
 	return 5;
