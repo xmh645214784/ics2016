@@ -35,22 +35,10 @@ bool is_even_number_of_1(uint32_t val);
 
 #define MSB(n) ((DATA_TYPE)(n) >> ((DATA_BYTE << 3) - 1))
 
-//下 need signed
 
-//如果是减法 判断是不是0 0x8000000
-//
-/*
 #define CPU_AFFECT_OF(src,des,isADD) \
-	if(src>=0&&des>=0&&src+des<0)\
-		cpu.OF=1;\
-	else if(src<0&&des<0&&src+des>=0)\
-		cpu.OF=1;\
-	else\
-		cpu.OF=0;\
-if(isADD==0&&des==0&&src==-src&&src!=0)\
-	cpu.OF=1;
-*/
-#define CPU_AFFECT_OF(src,des,isADD) \
+do\
+{\
 if(isADD)\
 {\
 	DATA_TYPE_S sum=(DATA_TYPE_S)src+(DATA_TYPE_S)des;\
@@ -66,40 +54,50 @@ else\
 	long long sum2=b_-a_;\
 	DATA_TYPE_S sum=-(DATA_TYPE_S)src+(DATA_TYPE_S)des;\
 	cpu.OF=sum!=sum2;\
-}
-
+}\
+}while(0);
 
 #define CPU_AFFECT_SF(src,des,isADD) \
-if(isADD)\
+do\
 {\
-	cpu.SF=MSB(src+des);\
-}\
-else\
-{\
-	cpu.SF=MSB(-src+des);\
-}
-
+	if(isADD)\
+	{\
+		cpu.SF=MSB(src+des);\
+	}\
+	else\
+	{\
+		cpu.SF=MSB(-src+des);\
+	}\
+}while(0);
 
 #define CPU_AFFECT_ZF(src,des,isADD) \
-if(isADD)\
+do\
 {\
-	cpu.ZF=(src+des)==0;\
-}\
-else\
-{\
-	cpu.ZF=(-src+des)==0;\
-}
+	if(isADD)\
+	{\
+		cpu.ZF=(src+des)==0;\
+	}\
+	else\
+	{\
+		cpu.ZF=(-src+des)==0;\
+	}\
+}while(0);
 
 //PF
 #define CPU_AFFECT_PF(src,des,isADD) \
-if(isADD)\
-	cpu.PF=is_even_number_of_1(src+des);\
-else\
-	cpu.PF=is_even_number_of_1(-src+des);
+do\
+{\
+	if(isADD)\
+		cpu.PF=is_even_number_of_1(src+des);\
+	else\
+		cpu.PF=is_even_number_of_1(-src+des);\
+}while(0);
 
 
 
 #define CPU_AFFECT_CF(src,des,isADD) \
+do\
+{\
 	if(isADD)\
 	{\
 		DATA_TYPE sum=src+des;\
@@ -115,5 +113,6 @@ else\
 			cpu.CF=0;\
 		else\
 			cpu.CF=1;\
-	}
+	}\
+}while(0);
 
