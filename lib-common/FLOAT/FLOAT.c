@@ -42,12 +42,10 @@ FLOAT f2F(float a) {
 	 * performing arithmetic operations on it directly?
 	 */
 
-	int *point=&a;
-	if(a>=0)
-	{
-		;
-	}
-	return *point&1;
+	void* point=&a;
+	int float_int=*(int *)point;
+	return 0;
+
 }
 
 FLOAT Fabs(FLOAT a) {
