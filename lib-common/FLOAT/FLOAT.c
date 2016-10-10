@@ -44,7 +44,21 @@ FLOAT f2F(float a) {
 
 	void* point=&a;
 	int float_int=*(int *)point;
-	return 0;
+	unsigned exp=(float_int>>23)&0xFF-127;
+	int sign=(float_int>>31)&1;
+	unsigned e=float_int&0x7FFFFF;
+	e=e|0x800000;// 1+23  duo<<le 7   1---24   1 should be at 17
+	exp=exp-7;
+	if(e>>7)//-exp
+	{
+		e=e>>((-exp)&0xFF);
+	}
+	else//+exp
+	{
+		e=e<<exp;
+	}
+
+	return e;
 
 }
 
