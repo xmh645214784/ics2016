@@ -352,6 +352,7 @@ uint32_t eval(int p,int q,bool *success)
 		}
 		if(tokens[p].type==SYMBOL)
 		{
+			panic("1");
 			for(int i=0;i<nr_symtab_entry;i++)
 			{
 				if(symtab[i].st_info==STT_OBJECT)
