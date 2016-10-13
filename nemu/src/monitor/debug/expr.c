@@ -352,9 +352,9 @@ uint32_t eval(int p,int q,bool *success)
 		}
 		if(tokens[p].type==SYMBOL)
 		{
-			Log("symtab num =%d",nr_symtab_entry);
 			for(int i=0;i<nr_symtab_entry;i++)
 			{
+				Log("symbol[%d] st_info is %d ",i,symtab[i].st_info);
 				if(symtab[i].st_info==STT_OBJECT)
 				{
 					char *symbolStrName=strtab+symtab[i].st_name;
