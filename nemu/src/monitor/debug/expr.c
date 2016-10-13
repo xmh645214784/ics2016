@@ -352,13 +352,13 @@ uint32_t eval(int p,int q,bool *success)
 		}
 		if(tokens[p].type==SYMBOL)
 		{
-			panic("1");
 			for(int i=0;i<nr_symtab_entry;i++)
 			{
 				if(symtab[i].st_info==STT_OBJECT)
 				{
-					char *nowstrname=strtab+symtab[i].st_name;
-					if(strcmp(tokens[p].str,nowstrname)==0)
+					char *symbolStrName=strtab+symtab[i].st_name;
+					Log("%s",symbolStrName);
+					if(strcmp(tokens[p].str,symbolStrName)==0)
 					{
 						return symtab[i].st_value;
 					}
