@@ -354,11 +354,11 @@ uint32_t eval(int p,int q,bool *success)
 		{
 			for(int i=0;i<nr_symtab_entry;i++)
 			{
-				Log("symbol[%d] st_info is %d ",i,symtab[i].st_info);
+				//Log("symbol[%d] st_info is %d ",i,symtab[i].st_info);
 				if(ELF32_ST_TYPE(symtab[i].st_info)==STT_OBJECT)
 				{
 					char *symbolStrName=strtab+symtab[i].st_name;
-					Log("%s",symbolStrName);
+					//Log("%s",symbolStrName);
 					if(strcmp(tokens[p].str,symbolStrName)==0)
 					{
 						return symtab[i].st_value;
