@@ -356,6 +356,7 @@ uint32_t eval(int p,int q,bool *success)
 			{
 				if(symtab[i].st_info==STT_OBJECT)
 				{
+					panic("11");
 					char *symbolStrName=strtab+symtab[i].st_name;
 					Log("%s",symbolStrName);
 					if(strcmp(tokens[p].str,symbolStrName)==0)
