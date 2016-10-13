@@ -1,12 +1,21 @@
 #include "monitor/monitor.h"
 #include "monitor/expr.h"
 #include "monitor/watchpoint.h"
+#include "monitor/stackframe.h"
+
 #include "nemu.h"
 #include "memory/memory.h"
 
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <elf.h>
+
+/*Symbol table*/
+extern char *strtab;
+extern Elf32_Sym *symtab ; 
+extern int nr_symtab_entry;
+
 
 void cpu_exec(uint32_t);
 extern CPU_state cpu;
@@ -237,6 +246,38 @@ static int cmd_d(char *args)
 	return 0;
 }
 
+static int cmd_bt(char *args)
+{
+	PartOfStackFrame sf[100];//BUG!
+	int framenum=0;
+
+	/*handle now frame/first */
+	int ebp_temp=cpu.ebp;
+
+ 
+	/*handle remain*/
+	do
+	{
+		sf[framenum].prev_ebp=swaddr_read(ebp_temp,4);
+		sf[framenum].ret_addr=swaddr_read(ebp_temp+4,4);
+		for(int i=0;i<4;i++)
+			sf[framenum].args[i]=swaddr_read(ebp_temp+4+4*i,4);
+		for(int i=0;i<nr_symtab_entry;i++)
+		{
+			if(ELF32_ST_TYPE(symtab[i].st_info)==STT_FUNC)
+			{
+				if (cpu.eip>=symtab[i].st_value&&cpu.eip<symtab[i].st_value+symtab[i].st_size)
+				{
+					sf[framenum].func_addr=symtab[i].st_value;
+					Assert(snprintf(sf[framenum].funcname,20,"%s",strtab+symtab[i].st_name)<20,"bt buffer overflow");
+				}
+			}
+
+		}
+		Assert(framenum<=100,"stackframe overflow");
+	}while(sf[framenum++].prev_ebp!=0);
+	return 0;
+}
 
 static struct {
 	char *name;
@@ -259,8 +300,8 @@ static struct {
 	{"delete","delete",cmd_d},
 	{"p/x","print as hex",cmd_px},
 	{"enable","enable watchpoint",cmd_enable},
-	{"disable","disable watchpoint",cmd_disable}
-
+	{"disable","disable watchpoint",cmd_disable},
+	{"bt","print stackframe",cmd_bt}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
