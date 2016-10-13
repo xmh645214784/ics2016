@@ -262,7 +262,7 @@ static int cmd_bt(char *args)
 		sf[framenum].prev_ebp=swaddr_read(ebp_temp,4);
 		sf[framenum].ret_addr=swaddr_read(ebp_temp+4,4);
 		for(int i=0;i<4;i++)
-			sf[framenum].args[i]=swaddr_read(ebp_temp+4+4*i,4);
+			sf[framenum].args[i]=swaddr_read(ebp_temp+8+4*i,4);
 
 		/*update ebp_temp*/
 		ebp_temp=sf[framenum].prev_ebp;
