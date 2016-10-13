@@ -352,11 +352,11 @@ uint32_t eval(int p,int q,bool *success)
 		}
 		if(tokens[p].type==SYMBOL)
 		{
+			Log("symtab num =%d",nr_symtab_entry);
 			for(int i=0;i<nr_symtab_entry;i++)
 			{
 				if(symtab[i].st_info==STT_OBJECT)
 				{
-					panic("11");
 					char *symbolStrName=strtab+symtab[i].st_name;
 					Log("%s",symbolStrName);
 					if(strcmp(tokens[p].str,symbolStrName)==0)
