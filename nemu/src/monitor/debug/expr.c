@@ -7,6 +7,14 @@
 #include <regex.h>
 #include <stdlib.h>
 #include <string.h>
+#include <elf.h>
+
+/*Symbol table*/
+ extern char *strtab;
+ extern Elf32_Sym *symtab ; 
+ extern int nr_symtab_entry;
+
+
 uint32_t eval(int p,int q,bool *success);
 
 #define maxtokens 32
@@ -15,7 +23,7 @@ extern CPU_state cpu;
 
 enum {
 	NOTYPE = 256, EQ,/* TODO: Add more token types */
-	NUM,HEXNUM,NEG,DEREF,NEQ,AND,OR,NOT,REG
+	NUM,HEXNUM,NEG,DEREF,NEQ,AND,OR,NOT,REG,SYMBOL
 };
 
 static struct rule {
@@ -45,7 +53,8 @@ static struct rule {
 	{"&&",AND},
 	{"\\|\\|",OR},
 	{"!",NOT},
-	{"\\$[a-zA-Z]+",REG}
+	{"\\$[a-zA-Z]+",REG},
+	{"\\w+",SYMBOL}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -340,6 +349,20 @@ uint32_t eval(int p,int q,bool *success)
 			if(strcasecmp(tokens[p].str,"$bh")==0)
 				return cpu.bh;
 
+		}
+		if(tokens[p].type==SYMBOL)
+		{
+			for(int i=0;i<nr_symtab_entry;i++)
+			{
+				if(symtab[i].st_info==STT_OBJECT)
+				{
+					char *nowstrname=strtab+symtab[i].st_name;
+					if(strcmp(tokens[p].str,nowstrname)==0)
+					{
+						return symtab[i].st_value;
+					}
+				}
+			}
 		}
 		if(tokens[p].type==NEG||tokens[p].type==NOT||tokens[p].type==DEREF)//单目运算符
 			return 0;

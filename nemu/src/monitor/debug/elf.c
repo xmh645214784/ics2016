@@ -4,9 +4,9 @@
 
 char *exec_file = NULL;
 
-static char *strtab = NULL;
-static Elf32_Sym *symtab = NULL;
-static int nr_symtab_entry;
+/*static*/ char *strtab = NULL;
+/*static*/ Elf32_Sym *symtab = NULL;
+/*static*/ int nr_symtab_entry;
 
 void load_elf_tables(int argc, char *argv[]) {
 	int ret;
@@ -23,7 +23,6 @@ void load_elf_tables(int argc, char *argv[]) {
 	/* The first several bytes contain the ELF header. */
 	Elf32_Ehdr *elf = (void *)buf;
 	char magic[] = {ELFMAG0, ELFMAG1, ELFMAG2, ELFMAG3};
-
 	/* Check ELF header */
 	assert(memcmp(elf->e_ident, magic, 4) == 0);		// magic number
 	assert(elf->e_ident[EI_CLASS] == ELFCLASS32);		// 32-bit architecture
