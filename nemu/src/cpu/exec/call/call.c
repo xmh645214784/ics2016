@@ -16,7 +16,7 @@ make_helper(call_rel_l)
 	cpu.esp-=4;
 	swaddr_write(cpu.esp,4,cpu.eip+5);
 	cpu.eip+=(int)op_src->val;
-	print_asm("call "str(op_src->str));
+	print_asm("call %s",op_src->str);
 	return 5;
 }
 
@@ -26,7 +26,7 @@ make_helper(call_rm_w)
 	cpu.esp-=2;
 	swaddr_write(cpu.esp,2,cpu.ip+2);
 	cpu.eip=op_src->val&0x0000FFFFF;
-	print_asm("call "str(op_src->str));
+	print_asm("call %s",op_src->str);
 	return 0;
 }
 
@@ -36,7 +36,7 @@ make_helper(call_rm_l)
 	cpu.esp-=4;
 	swaddr_write(cpu.esp,4,cpu.eip+2);
 	cpu.eip=op_src->val;
-	print_asm("call "str(op_src->str));
+	print_asm("call %s",op_src->str);
 	return 0;
 }
 
