@@ -53,7 +53,6 @@ uint32_t loader() {
 	}
 	uint32_t ph_size =elf->e_phentsize*real_phnum;
 	ph=(void*)(buf+elf->e_phoff);
-	set_bp();
 
 	/*load ph*/
 	ramdisk_read((void *)ph,elf->e_phoff,ph_size);
@@ -93,7 +92,8 @@ uint32_t loader() {
 	}
 
 	volatile uint32_t entry = elf->e_entry;
-
+	set_bp();
+	
 #ifdef IA32_PAGE
 	mm_malloc(KOFFSET - STACK_SIZE, STACK_SIZE);
 
