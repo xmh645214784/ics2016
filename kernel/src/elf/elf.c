@@ -2,6 +2,7 @@
 #include "memory.h"
 #include <string.h>
 #include <elf.h>
+#include <stdlib.h>
 
 #define ELF_OFFSET_IN_DISK 0
 
@@ -9,6 +10,7 @@
 void ide_read(uint8_t *, uint32_t, uint32_t);
 #else
 void ramdisk_read(uint8_t *, uint32_t, uint32_t);
+void ramdisk_write(uint8_t *, uint32_t, uint32_t);
 #endif
 
 #define STACK_SIZE (1 << 20)
@@ -40,21 +42,21 @@ uint32_t loader() {
 
 
 	/*new room*/
-	int real_phnum=elf->phnum;
+	uint16_t real_phnum=elf->e_phnum;
 	//if bigger or equal XNUM 
 	//	real number of entries is held in the sh_info member of the initial enrty 
 	//	in section  header table  man 5 elf
 
-	if(elf->e_phnum==PH_XNUM)
+	if(elf->e_phnum==0xffff)
 	{
-		Elf32_Shdr *initial_entry=elf+elf->e_shoff;
+		Elf32_Shdr *initial_entry=(void *)elf+elf->e_shoff;
 		real_phnum=initial_entry->sh_info;
 	}
 	uint32_t ph_size =elf->e_phentsize*real_phnum;
 	ph=malloc(ph_size);
 
 	/*load ph*/
-	ramdisk_read((void *)ph,elf->phoff,ph_size);
+	ramdisk_read((void *)ph,elf->e_phoff,ph_size);
 
 
 	for(int i=0;i<real_phnum;i++) {
