@@ -65,7 +65,6 @@ uint32_t loader() {
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
-			 	set_bp();
 			 
 			 Elf32_Off Offset=ph[i].p_offset;
 			 Elf32_Addr VirtAddr=ph[i].p_vaddr;
@@ -76,7 +75,7 @@ uint32_t loader() {
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
-
+			 	set_bp();
 			 //WARNING:only >0 need zero memery
 			 //assert(MemSize-FileSiz>=0);
 			 if(MemSize-FileSiz>0)
