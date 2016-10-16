@@ -82,7 +82,7 @@ uint32_t loader() {
 			 */
 
 			 //WARNING:only >0 need zero memery
-			 assert(MemSize-FileSiz>=0);
+			 //assert(MemSize-FileSiz>=0);
 			 if(MemSize-FileSiz>0)
 			 {
 				 uint8_t *zero=malloc(MemSize-FileSiz);
