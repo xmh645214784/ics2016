@@ -13,7 +13,7 @@ $(testcase_BIN): % : $(testcase_START_OBJ) %.o $(FLOAT) $(LIBC)
 	@objdump -d $@ > $@.txt
 
 $(testcase_OBJ_DIR)/mov: % : %.o
-	$(call make_command, $(LD), -m elf_i386 -T text=0x100000, ld $@, $^)
+	$(call make_command, $(LD), -m elf_i386 -Ttext=0x100000, ld $@, $^)
 	@objdump -d $@ > $@.txt
 
 # We use -O2 to compile these two source files to eliminate floating
