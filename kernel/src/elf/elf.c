@@ -87,13 +87,13 @@ uint32_t loader() {
 			extern uint32_t cur_brk, max_brk;
 			uint32_t new_brk = ph->p_vaddr + ph->p_memsz - 1;
 			if(cur_brk < new_brk) { max_brk = cur_brk = new_brk; }
+	set_bp();
+			
 #endif
 		}
 	}
 
 	volatile uint32_t entry = elf->e_entry;
-	set_bp();
-	
 #ifdef IA32_PAGE
 	mm_malloc(KOFFSET - STACK_SIZE, STACK_SIZE);
 
