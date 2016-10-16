@@ -51,9 +51,9 @@ uint32_t loader() {
 		Elf32_Shdr *initial_entry=(void *)elf+elf->e_shoff;
 		real_phnum=initial_entry->sh_info;
 	}
-	set_bp();
 	uint32_t ph_size =elf->e_phentsize*real_phnum;
 	ph=(void*)(buf+elf->e_phoff);
+	set_bp();
 
 	/*load ph*/
 	ramdisk_read((void *)ph,elf->e_phoff,ph_size);
