@@ -17,6 +17,7 @@ make_helper(push_ib_w)
 	int b=a;
 	cpu.esp-=2;
 	swaddr_write(cpu.esp,2,b);
+	print_asm("push %s",op_src->str);
 	return 2;
 }
 make_helper(push_ib_l)
@@ -26,6 +27,7 @@ make_helper(push_ib_l)
 	int b=a;
 	cpu.esp-=4;
 	swaddr_write(cpu.esp,4,b);
+	print_asm("push %s",op_src->str);
 	return 2;
 }
 
