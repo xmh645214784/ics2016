@@ -31,25 +31,63 @@ uint32_t loader() {
 	elf = (void*)buf;
 
 	/* TODO: fix the magic number with the correct one */
-	const uint32_t elf_magic = 0xBadC0de;
+	const uint32_t elf_magic = 0x464c457f;
 	uint32_t *p_magic = (void *)buf;
 	nemu_assert(*p_magic == elf_magic);
 
 	/* Load each program segment */
-	panic("please implement me");
-	for(; true; ) {
+	//panic("please implement me");
+
+
+	/*new room*/
+	int real_phnum=elf->phnum;
+	//if bigger or equal XNUM 
+	//	real number of entries is held in the sh_info member of the initial enrty 
+	//	in section  header table  man 5 elf
+
+	if(elf->e_phnum==PH_XNUM)
+	{
+		Elf32_Shdr *initial_entry=elf+elf->e_shoff;
+		real_phnum=initial_entry->sh_info;
+	}
+	uint32_t ph_size =elf->e_phentsize*real_phnum;
+	ph=malloc(ph_size);
+
+	/*load ph*/
+	ramdisk_read((void *)ph,elf->phoff,ph_size);
+
+
+	for(int i=0;i<real_phnum;i++) {
 		/* Scan the program header table, load each segment into memory */
-		if(ph->p_type == PT_LOAD) {
+		if(ph[i].p_type == PT_LOAD) {
 
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
-			 
-			 
+			 Elf32_Off Offset=ph[i].p_offset;
+			 Elf32_Addr VirtAddr=ph[i].p_vaddr;
+			 uint32_t FileSiz=ph[i].p_filesz;
+			 uint32_t MemSize=ph[i].p_memsz;
+
+			 uint8_t * value=malloc(FileSiz);
+			 ramdisk_read(value,Offset,FileSiz);
+			 ramdisk_write(value,VirtAddr,FileSiz);
+
+			 free(value);
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
 
+			 //WARNING:only >0 need zero memery
+			 assert(MemSize-FileSiz>=0);
+			 if(MemSize-FileSiz>0)
+			 {
+				 uint8_t *zero=malloc(MemSize-FileSiz);
+				 for(int j=0;j<MemSize-FileSiz;j++)
+				 	zero[j]=0;
+				 ramdisk_write(zero,VirtAddr+FileSiz,MemSize-FileSiz);
+				 free(zero);
+			 }
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use. */
@@ -59,6 +97,10 @@ uint32_t loader() {
 #endif
 		}
 	}
+
+	/*free point*/
+	free(ph);
+
 
 	volatile uint32_t entry = elf->e_entry;
 
