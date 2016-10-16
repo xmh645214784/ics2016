@@ -70,12 +70,12 @@ uint32_t loader() {
 			 Elf32_Addr VirtAddr=ph[i].p_vaddr;
 			 uint32_t FileSiz=ph[i].p_filesz;
 			 uint32_t MemSize=ph[i].p_memsz;
+			 	set_bp();
 
 			 ramdisk_write((void *)(buf+Offset),VirtAddr,FileSiz);
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
-			 	set_bp();
 			 //WARNING:only >0 need zero memery
 			 //assert(MemSize-FileSiz>=0);
 			 if(MemSize-FileSiz>0)
