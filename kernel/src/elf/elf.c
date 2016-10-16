@@ -36,7 +36,6 @@ uint32_t loader() {
 	const uint32_t elf_magic = 0x464c457f;//0x464c457f;
 	uint32_t *p_magic = (void *)buf;
 	nemu_assert(*p_magic == elf_magic);
-	set_bp();
 	/* Load each program segment */
 	//panic("please implement me");
 
@@ -52,6 +51,7 @@ uint32_t loader() {
 		Elf32_Shdr *initial_entry=(void *)elf+elf->e_shoff;
 		real_phnum=initial_entry->sh_info;
 	}
+	set_bp();
 	uint32_t ph_size =elf->e_phentsize*real_phnum;
 	ph=(void*)(buf+elf->e_phoff);
 
