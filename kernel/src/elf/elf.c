@@ -65,6 +65,8 @@ uint32_t loader() {
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
+			 	set_bp();
+			 
 			 Elf32_Off Offset=ph[i].p_offset;
 			 Elf32_Addr VirtAddr=ph[i].p_vaddr;
 			 uint32_t FileSiz=ph[i].p_filesz;
@@ -81,7 +83,6 @@ uint32_t loader() {
 			 {
 				 memset((void *)(buf+VirtAddr+FileSiz),0,MemSize-FileSiz);
 			 }
-			 	set_bp();
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use. */
