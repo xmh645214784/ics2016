@@ -46,7 +46,7 @@ uint32_t loader() {
 	//	real number of entries is held in the sh_info member of the initial enrty 
 	//	in section  header table  man 5 elf
 
-	if(elf->e_phnum==0xffff)
+	if(elf->e_phnum==0xffffU)
 	{
 		Elf32_Shdr *initial_entry=(void *)elf+elf->e_shoff;
 		real_phnum=initial_entry->sh_info;
