@@ -352,7 +352,8 @@ uint32_t eval(int p,int q,bool *success)
 		}
 		if(tokens[p].type==SYMBOL)
 		{
-			for(int i=0;i<nr_symtab_entry;i++)
+			int i=0;
+			for(;i<nr_symtab_entry;i++)
 			{
 				//Log("symbol[%d] st_info is %d ",i,symtab[i].st_info);
 				if(ELF32_ST_TYPE(symtab[i].st_info)==STT_OBJECT)

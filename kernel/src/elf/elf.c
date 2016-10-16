@@ -57,8 +57,8 @@ uint32_t loader() {
 	///*load ph*/
 //	ramdisk_read((void *)ph,elf->e_phoff,ph_size);
 
-
-	for(int i=0;i<real_phnum;i++) {
+	int i=0;
+	for(;i<real_phnum;i++) {
 		/* Scan the program header table, load each segment into memory */
 		if(ph[i].p_type == PT_LOAD) {
 
@@ -70,8 +70,6 @@ uint32_t loader() {
 			 Elf32_Addr VirtAddr=ph[i].p_vaddr;
 			 int FileSiz=ph[i].p_filesz;
 			 int MemSize=ph[i].p_memsz;
-			 set_bp();
-			 
 			 ramdisk_write((void *)(buf+Offset),VirtAddr,FileSiz);
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)

@@ -261,14 +261,15 @@ static int cmd_bt(char *args)
 		/*hand prev_ebp ret args*/
 		sf[framenum].prev_ebp=swaddr_read(ebp_temp,4);
 		sf[framenum].ret_addr=swaddr_read(ebp_temp+4,4);
-		for(int i=0;i<4;i++)
+		int i=0;
+		for(;i<4;i++)
 			sf[framenum].args[i]=swaddr_read(ebp_temp+8+4*i,4);
 
 		/*update ebp_temp*/
 		ebp_temp=sf[framenum].prev_ebp;
 
 		/*search func_addr and func_name*/
-		for(int i=0;i<nr_symtab_entry;i++)
+		for( i=0;i<nr_symtab_entry;i++)
 		{
 			if(ELF32_ST_TYPE(symtab[i].st_info)==STT_FUNC)
 			{
@@ -287,9 +288,9 @@ static int cmd_bt(char *args)
 		}
 		Assert(framenum<=100,"stackframe overflow");
 	}while(sf[framenum++].prev_ebp!=0);
-
+	int i;
 	/*print nr=framenum*/
-	for(int i=framenum-1;i>=0;i--)
+	for(i=framenum-1;i>=0;i--)
 	{
 		printf("#%d 0x%08x in %s (argv[0]=0x%08x argv[1]=0x%08x argv[2]=0x%08x argv[3]=0x%08x)\n",framenum-1-i,sf[i].func_addr,sf[i].funcname,sf[i].args[0],sf[i].args[1],sf[i].args[2],sf[i].args[3]);
 	}
