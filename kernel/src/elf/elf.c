@@ -54,7 +54,7 @@ uint32_t loader() {
 		real_phnum=initial_entry->sh_info;
 	}
 	uint32_t ph_size =elf->e_phentsize*real_phnum;
-	ph=malloc(ph_size);
+	ph=(void*)(buf+elf->e_phoff);
 
 	/*load ph*/
 	ramdisk_read((void *)ph,elf->e_phoff,ph_size);
@@ -72,11 +72,7 @@ uint32_t loader() {
 			 uint32_t FileSiz=ph[i].p_filesz;
 			 uint32_t MemSize=ph[i].p_memsz;
 
-			 uint8_t * value=malloc(FileSiz);
-			 ramdisk_read(value,Offset,FileSiz);
-			 ramdisk_write(value,VirtAddr,FileSiz);
-
-			 free(value);
+			 ramdisk_write((void *)(buf+Offset),VirtAddr,FileSiz);
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
@@ -85,11 +81,7 @@ uint32_t loader() {
 			 //assert(MemSize-FileSiz>=0);
 			 if(MemSize-FileSiz>0)
 			 {
-				 uint8_t *zero=malloc(MemSize-FileSiz);
-				 for(int j=0;j<MemSize-FileSiz;j++)
-				 	zero[j]=0;
-				 ramdisk_write(zero,VirtAddr+FileSiz,MemSize-FileSiz);
-				 free(zero);
+				 memset((void *)(buf+VirtAddr+FileSiz),0,MemSize-FileSiz);
 			 }
 
 #ifdef IA32_PAGE
@@ -100,10 +92,6 @@ uint32_t loader() {
 #endif
 		}
 	}
-
-	/*free point*/
-	free(ph);
-
 
 	volatile uint32_t entry = elf->e_entry;
 
