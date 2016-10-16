@@ -70,8 +70,9 @@ uint32_t loader() {
 			 Elf32_Addr VirtAddr=ph[i].p_vaddr;
 			 int FileSiz=ph[i].p_filesz;
 			 int MemSize=ph[i].p_memsz;
-			 ramdisk_write((void *)(buf+Offset),VirtAddr,FileSiz);
 			 set_bp();
+			 
+			 ramdisk_write((void *)(buf+Offset),VirtAddr,FileSiz);
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
