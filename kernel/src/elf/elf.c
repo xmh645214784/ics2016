@@ -51,11 +51,11 @@ uint32_t loader() {
 		Elf32_Shdr *initial_entry=(void *)elf+elf->e_shoff;
 		real_phnum=initial_entry->sh_info;
 	}
-	uint32_t ph_size =elf->e_phentsize*real_phnum;
+	//uint32_t ph_size =elf->e_phentsize*real_phnum;
 	ph=(void*)(buf+elf->e_phoff);
 
-	/*load ph*/
-	ramdisk_read((void *)ph,elf->e_phoff,ph_size);
+	///*load ph*/
+//	ramdisk_read((void *)ph,elf->e_phoff,ph_size);
 
 
 	for(int i=0;i<real_phnum;i++) {
