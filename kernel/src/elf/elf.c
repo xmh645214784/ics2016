@@ -65,11 +65,11 @@ uint32_t loader() {
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
-			 
+
 			 Elf32_Off Offset=ph[i].p_offset;
 			 Elf32_Addr VirtAddr=ph[i].p_vaddr;
-			 uint32_t FileSiz=ph[i].p_filesz;
-			 uint32_t MemSize=ph[i].p_memsz;
+			 int FileSiz=ph[i].p_filesz;
+			 int MemSize=ph[i].p_memsz;
 			 	set_bp();
 
 			 ramdisk_write((void *)(buf+Offset),VirtAddr,FileSiz);
