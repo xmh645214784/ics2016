@@ -71,6 +71,7 @@ uint32_t loader() {
 			 int FileSiz=ph[i].p_filesz;
 			 int MemSize=ph[i].p_memsz;
 			 ramdisk_write((void *)(buf+Offset),VirtAddr,FileSiz);
+			 set_bp();
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
