@@ -52,25 +52,26 @@ uint32_t loader() {
 		real_phnum=initial_entry->sh_info;
 	}
 	//uint32_t ph_size =elf->e_phentsize*real_phnum;
-	ph=(void*)(buf+elf->e_phoff);
+	
 
 	///*load ph*/
-//	ramdisk_read((void *)ph,elf->e_phoff,ph_size);
+
 
 	int i=0;
 	for(;i<real_phnum;i++) {
 		/* Scan the program header table, load each segment into memory */
-		if(ph[i].p_type == PT_LOAD) {
+		ph=(void*)(buf+elf->e_phoff+i*elf->e_phentsize);
+		if(ph->p_type == PT_LOAD) {
 
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
 
-			 Elf32_Off Offset=ph[i].p_offset;
-			 Elf32_Addr VirtAddr=ph[i].p_vaddr;
-			 int FileSiz=ph[i].p_filesz;
-			 int MemSize=ph[i].p_memsz;
-			 ramdisk_write((void *)(buf+Offset),VirtAddr,FileSiz);
+			 Elf32_Off Offset=ph->p_offset;
+			 Elf32_Addr VirtAddr=ph->p_vaddr;
+			 int FileSiz=ph->p_filesz;
+			 int MemSize=ph->p_memsz;
+			 ramdisk_read((void*)VirtAddr,Offset,FileSiz);
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
@@ -78,7 +79,7 @@ uint32_t loader() {
 			 //assert(MemSize-FileSiz>=0);
 			 if(MemSize-FileSiz>0)
 			 {
-				 memset((void *)(buf+VirtAddr+FileSiz),0,MemSize-FileSiz);
+				 memset((void *)(VirtAddr+FileSiz),0,MemSize-FileSiz);
 			 }
 
 #ifdef IA32_PAGE
