@@ -71,7 +71,7 @@ uint32_t loader() {
 			 Elf32_Addr VirtAddr=ph->p_vaddr;
 			 int FileSiz=ph->p_filesz;
 			 int MemSize=ph->p_memsz;
-			 ramdisk_read((void*)VirtAddr,Offset,FileSiz);
+			 ramdisk_read((void*)(ELF_OFFSET_IN_DISK+VirtAddr),Offset,FileSiz);
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
@@ -79,7 +79,7 @@ uint32_t loader() {
 			 //assert(MemSize-FileSiz>=0);
 			 if(MemSize-FileSiz>0)
 			 {
-				 memset((void *)(VirtAddr+FileSiz),0,MemSize-FileSiz);
+				 memset((void *)(ELF_OFFSET_IN_DISK+VirtAddr+FileSiz),0,MemSize-FileSiz);//BUG?
 			 }
 
 #ifdef IA32_PAGE
