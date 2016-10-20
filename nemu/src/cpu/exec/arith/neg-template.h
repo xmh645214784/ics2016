@@ -9,7 +9,10 @@ static void do_execute() {
 	/* There is no need to update EFLAGS, since no other instructions 
 	 * in PA will test the flags updated by this instruction.
 	 */
-
+	 if(op_src->val==0)
+	 	cpu.CF=0;
+	 else
+	 	cpu.CF=1;
 	print_asm_template1();
 }
 
