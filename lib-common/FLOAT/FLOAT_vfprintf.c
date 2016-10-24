@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <sys/mman.h>
 #include "FLOAT.h"
 
 extern char _vfprintf_internal;
@@ -26,7 +27,15 @@ static void modify_vfprintf() {
 	 * is the code section in _vfprintf_internal() relative to the
 	 * hijack.
 	 */
-
+	 //printf("%08x %08x\n", &_fpmaxtostr,&_vfprintf_internal);
+	 mprotect((void	*)(((int)&_vfprintf_internal+775-1-100)	&	0xfffff000),	4096*2,	PROT_READ	|	PROT_WRITE	|	PROT_EXEC);
+	 int a=*(int *)(&_vfprintf_internal+775);
+	 //printf("before hijack:%08x\n",*(int *)(&_vfprintf_internal+775));
+	 //printf("old jup=%d  %08x\n",4+(int)(&_vfprintf_internal+775)+a,4+(int)(&_vfprintf_internal+775)+a);
+	 //printf("format_FLOAT-_fpmaxtostr=%d %08x\n",(int)&format_FLOAT-(int)&_fpmaxtostr,(int)&format_FLOAT-(int)&_fpmaxtostr);
+	 *(int *)(&_vfprintf_internal+775)=(a+(int)&format_FLOAT-(int)&_fpmaxtostr);
+	 //printf("after hijack:%d %08x\n",*(int *)(&_vfprintf_internal+775),*(int *)(&_vfprintf_internal+775));
+	 //printf("hijack jump=%08x\n\n\n\n",(int)&_vfprintf_internal+775+*(int *)(&_vfprintf_internal+775)+4);
 #if 0
 	else if (ppfs->conv_num <= CONV_A) {  /* floating point */
 		ssize_t nf;

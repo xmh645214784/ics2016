@@ -12,7 +12,7 @@ static void do_execute() {
 	 if(op_src->val==0)
 	 	cpu.CF=0;
 	 else
-	 	cpu.CF=1;
+	 	cpu.CF=1;	
 	print_asm_template1();
 }
 
