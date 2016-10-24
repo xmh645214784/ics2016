@@ -36,6 +36,19 @@ static void modify_vfprintf() {
 	 *(int *)(&_vfprintf_internal+775)=(a+(int)&format_FLOAT-(int)&_fpmaxtostr);
 	 //printf("after hijack:%d %08x\n",*(int *)(&_vfprintf_internal+775),*(int *)(&_vfprintf_internal+775));
 	 //printf("hijack jump=%08x\n\n\n\n",(int)&_vfprintf_internal+775+*(int *)(&_vfprintf_internal+775)+4);
+	 
+
+	 //PUSH (%EDX) ff32   NOP 90
+
+	 *(char *)(&_vfprintf_internal+764)=0xFF;
+	 *(char *)(&_vfprintf_internal+765)=0x32;
+	 *(char *)(&_vfprintf_internal+766)=0x90;
+
+	 //to fix stacksize
+	 *(char *)(&_vfprintf_internal+763)=0x08;
+
+
+
 #if 0
 	else if (ppfs->conv_num <= CONV_A) {  /* floating point */
 		ssize_t nf;
