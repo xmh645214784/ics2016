@@ -17,10 +17,11 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	 */
 
 	char buf[80];
+	int len;
 	if(f>>31==0)// +
 	{
 		int integer=f>>16;
-		int point_sum=0;
+		long long point_sum=0;
 		int i;
 		for(i=0;i<16;i++)
 		{
@@ -29,15 +30,14 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 		}
 		for(i=0;i<6;i++)
 			point_sum*=10;
-		for(i=0;i<16;i++)
-			point_sum/=2;
-		int len=sprintf(buf,"%d.%d",integer,point_sum);
+		point_sum/=65536;
+		len=sprintf(buf,"%d.%06d",integer,point_sum);
 	}
 	else//-
 	{
 		f=-f;
 		int integer=f>>16;
-		int point_sum=0;
+		long long point_sum=0;
 		int i;
 		for(i=0;i<16;i++)
 		{
@@ -48,7 +48,7 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 			point_sum*=10;
 		for(i=0;i<16;i++)
 			point_sum/=2;
-		int len=sprintf(buf,"-%d.%d",integer,point_sum);
+		len=sprintf(buf,"-%d.%06d",integer,point_sum);
 	}
 
 //	int len = sprintf(buf, "0x%08x", f);
@@ -62,7 +62,7 @@ static void modify_vfprintf() {
 	 * hijack.
 	 */
 	 //printf("%08x %08x\n", &_fpmaxtostr,&_vfprintf_internal);
-	 mprotect((void	*)(((int)&_vfprintf_internal+775-1-100)	&	0xfffff000),	4096*2,	PROT_READ	|	PROT_WRITE	|	PROT_EXEC);
+//	 mprotect((void	*)(((int)&_vfprintf_internal+775-1-100)	&	0xfffff000),	4096*2,	PROT_READ	|	PROT_WRITE	|	PROT_EXEC);
 	 int a=*(int *)(&_vfprintf_internal+775);
 	 //printf("before hijack:%08x\n",*(int *)(&_vfprintf_internal+775));
 	 //printf("old jup=%d  %08x\n",4+(int)(&_vfprintf_internal+775)+a,4+(int)(&_vfprintf_internal+775)+a);
@@ -81,7 +81,12 @@ static void modify_vfprintf() {
 	 //to fix stacksize
 	 *(char *)(&_vfprintf_internal+763)=0x08;
 
+	 //other float instruction
+	 *(char *)(&_vfprintf_internal+740)=0x90;
+	 *(char *)(&_vfprintf_internal+741)=0x90;
 
+	 *(char *)(&_vfprintf_internal+744)=0x90;
+	 *(char *)(&_vfprintf_internal+745)=0x90;
 
 #if 0
 	else if (ppfs->conv_num <= CONV_A) {  /* floating point */
