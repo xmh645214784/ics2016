@@ -17,7 +17,41 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	 */
 
 	char buf[80];
-	int len = sprintf(buf, "0x%08x", f);
+	if(f>>31==0)// +
+	{
+		int integer=f>>16;
+		int point_sum=0;
+		int i;
+		for(i=0;i<16;i++)
+		{
+			int point=(f>>(15-i))&1;
+			point_sum=point_sum*2+point;
+		}
+		for(i=0;i<6;i++)
+			point_sum*=10;
+		for(i=0;i<16;i++)
+			point_sum/=2;
+		int len=sprintf(buf,"%d.%d",integer,point_sum);
+	}
+	else//-
+	{
+		f=-f;
+		int integer=f>>16;
+		int point_sum=0;
+		int i;
+		for(i=0;i<16;i++)
+		{
+			int point=(f>>(15-i))&1;
+			point_sum=point_sum*2+point;
+		}
+		for(i=0;i<6;i++)
+			point_sum*=10;
+		for(i=0;i<16;i++)
+			point_sum/=2;
+		int len=sprintf(buf,"-%d.%d",integer,point_sum);
+	}
+
+//	int len = sprintf(buf, "0x%08x", f);
 	return __stdio_fwrite(buf, len, stream);
 }
 
