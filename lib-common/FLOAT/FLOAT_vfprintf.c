@@ -22,7 +22,7 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	if(f>>31==0)// +
 	{
 		int integer=f>>16;
-		long long point_sum=0;
+		int point_sum=0;
 		int i;
 		for(i=0;i<16;i++)
 		{
@@ -30,15 +30,15 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 			point_sum=point_sum*2+point;
 		}
 		for(i=0;i<6;i++)
-			point_sum*=10;
-		point_sum/=65536;
+			point_sum*=5;
+		point_sum/=1024;
 		len=sprintf(buf,"%d.%06d",integer,point_sum);
 	}
 	else//-
 	{
 		f=-f;
 		int integer=f>>16;
-		long long point_sum=0;
+		int point_sum=0;
 		int i;
 		for(i=0;i<16;i++)
 		{
@@ -46,9 +46,8 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 			point_sum=point_sum*2+point;
 		}
 		for(i=0;i<6;i++)
-			point_sum*=10;
-		for(i=0;i<16;i++)
-			point_sum/=2;
+			point_sum*=5;
+		point_sum/=1024;
 		len=sprintf(buf,"-%d.%06d",integer,point_sum);
 	}
 
