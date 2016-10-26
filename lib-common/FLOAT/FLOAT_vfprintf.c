@@ -134,8 +134,8 @@ static void modify_ppfs_setargs() {
 	 * Below is the code section in _vfprintf_internal() relative to
 	 * the modification.
 	 */
-	 *(char *)(&_ppfs_setargs+71)=0xeb;
-	 *(char *)(&_ppfs_setargs+72)=0x30;
+	 *(char *)(&_ppfs_setargs+113)=0xeb;
+	 *(char *)(&_ppfs_setargs+114)=0x30;
 
 #if 0
 	enum {                          /* C type: */
