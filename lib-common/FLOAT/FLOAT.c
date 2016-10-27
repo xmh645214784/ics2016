@@ -49,7 +49,7 @@ FLOAT f2F(float a) {
 	unsigned e=float_int&0x7FFFFF;
 	e=e|0x800000;// 1+23  duo<<le 7   1---24   1 should be at 17
 	exp=exp-7;
-	if(exp>>7&1)//-exp
+	if((exp>>7)&1)//-exp
 	{
 		e=e>>((-exp)&0xFF);
 	}
