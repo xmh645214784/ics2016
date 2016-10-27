@@ -51,11 +51,11 @@ FLOAT f2F(float a) {
 	exp=exp-7;
 	if((exp>>7)&1)//-exp
 	{
-		e=e>>((-exp)&0xFF);
+		e>>=((-exp)&0xFF);
 	}
 	else//+exp
 	{
-		e=e<<(exp&&0xFF);
+		e<<=(exp&&0xFF);
 	}
 
 	return sign==0?e:-e;
