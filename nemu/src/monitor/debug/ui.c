@@ -288,6 +288,7 @@ static int cmd_bt(char *args)
 		}
 		Assert(framenum<=100,"stackframe overflow");
 	}while(sf[framenum++].prev_ebp!=0);
+	Log("%d",framenum );
 	int i;
 	/*print nr=framenum*/
 	for(i=framenum-1;i>=0;i--)
