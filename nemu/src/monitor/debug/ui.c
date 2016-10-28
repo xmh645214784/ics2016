@@ -297,9 +297,9 @@ static int cmd_bt(char *args)
 	Log("%d",framenum );
 	int i;
 	/*print nr=framenum*/
-	for(i=framenum-1;i>=0;i--)
+	for(i=0;i<framenum;i++)
 	{
-		printf("#%d 0x%08x in %s (argv[0]=0x%08x argv[1]=0x%08x argv[2]=0x%08x argv[3]=0x%08x)\n",framenum-1-i,sf[i].func_addr,sf[i].funcname,sf[i].args[0],sf[i].args[1],sf[i].args[2],sf[i].args[3]);
+		printf("#%d 0x%08x in %s (argv[0]=0x%08x argv[1]=0x%08x argv[2]=0x%08x argv[3]=0x%08x)\n",i,sf[i].func_addr,sf[i].funcname,sf[i].args[0],sf[i].args[1],sf[i].args[2],sf[i].args[3]);
 	}
 	return 0;
 }
