@@ -55,7 +55,7 @@ FLOAT f2F(float a) {
 	}
 	else//+exp
 	{
-		e<<=(exp&&0xFF);
+		e<<=(exp&0xFF);
 	}
 
 	return sign==0?e:-e;
