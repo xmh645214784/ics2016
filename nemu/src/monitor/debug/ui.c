@@ -275,12 +275,18 @@ static int cmd_bt(char *args)
 			{
 				int process_point;
 				if(framenum==0)
+				{
 					process_point=cpu.eip;
+					
+				}
 				else
 					process_point=sf[framenum-1].ret_addr;
 				if (process_point>=symtab[i].st_value&&process_point<symtab[i].st_value+symtab[i].st_size)
 				{
-					sf[framenum].func_addr=symtab[i].st_value;
+					if(framenum==0)
+						sf[framenum].func_addr=cpu.eip;
+					else
+						sf[framenum].func_addr=symtab[i].st_value;
 					Assert(snprintf(sf[framenum].funcname,20,"%s",strtab+symtab[i].st_name)<20,"bt buffer overflow");
 				}
 			}
