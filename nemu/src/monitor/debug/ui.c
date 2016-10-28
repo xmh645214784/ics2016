@@ -260,7 +260,7 @@ static int cmd_bt(char *args)
 	{
 		/*hand prev_ebp ret args*/
 		sf[framenum].prev_ebp=swaddr_read(ebp_temp,4);
-		Log("sf[framenum].prev_ebp=%08x",sf[framenum].prev_ebp);
+		//Log("sf[framenum].prev_ebp=%08x",sf[framenum].prev_ebp);
 		sf[framenum].ret_addr=swaddr_read(ebp_temp+4,4);
 		int i=0;
 		for(;i<4;i++)
@@ -295,7 +295,7 @@ static int cmd_bt(char *args)
 		}
 		Assert(framenum<=100,"stackframe overflow");
 	}while(sf[framenum++].prev_ebp!=0);
-	Log("%d",framenum );
+	//Log("%d",framenum );
 	int i;
 	/*print nr=framenum*/
 	for(i=0;i<framenum;i++)
