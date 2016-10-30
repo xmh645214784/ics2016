@@ -11,17 +11,15 @@ static void do_execute() {
 if(DATA_BYTE==2)
 {
 	cpu.esp-=2;
-
+	swaddr_write(cpu.esp,2,op_src->val);
 }
 else
 {
 	cpu.esp-=4;
+	swaddr_write(cpu.esp,4,op_src->val);
 }
 //注意 可能有BUG
-	op_dest->type=OP_TYPE_MEM;
-	op_dest->size=DATA_BYTE;
-	op_dest->addr=cpu.esp;
-	OPERAND_W(op_dest, op_src->val);
+
 	print_asm_template1();
 }
 
@@ -30,9 +28,11 @@ else
 #if DATA_BYTE==2||DATA_BYTE==4
 	make_instr_helper(r)
 	make_instr_helper(m)
+	make_instr_helper(i)
 #endif
 
-make_instr_helper(i)
+
+
 
 
 #include "cpu/exec/template-end.h"

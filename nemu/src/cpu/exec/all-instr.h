@@ -43,6 +43,19 @@ make_helper(leave_v);
 #include "data-mov/cwdcdq.h"
 
 
-#include "binary-arithmetic/add.h"
-#include "binary-arithmetic/adc.h"
-#include "binary-arithmetic/sub.h"
+#include "arith/add.h"
+#include "arith/adc.h"
+#include "arith/sub.h"
+#include "arith/sbb.h"
+
+#include "set/set.h"
+#include "jmp/jmp.h"
+
+#include "data-mov/movs.h"
+#include "data-mov/stos.h"
+#include "data-mov/lods.h"
+
+#include "cmp/scas.h"
+
+#include "loop/loop.h"
+

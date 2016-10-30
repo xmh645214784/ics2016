@@ -117,6 +117,7 @@ typedef struct {
 			uint16_t nodef18:14;
 		};
 	};
+
 	union
 	{
 		swaddr_t eip;

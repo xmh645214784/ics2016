@@ -12,6 +12,7 @@ void init_wp_pool() {
 		wp_pool[i].NO = i;
 		wp_pool[i].next = &wp_pool[i + 1];
 		wp_pool[i].isfirstfigure=1;//默认未求值 
+		wp_pool[i].enable='y';//默认使能
 	}
 	wp_pool[NR_WP - 1].next = NULL;
 
@@ -23,7 +24,11 @@ void init_wp_pool() {
 
 WP* new_wp()
 {
-	assert(free_!=NULL);//有节点可以申请
+	if(free_==NULL)
+	{
+		Log("no free watchpoint can be set");
+		return NULL;
+	}//无节点可以申请
 	if(head==NULL)
 	{
 		head=free_;
@@ -54,14 +59,19 @@ void  free_wp(int id)
 {
 	if(head==NULL)
 	{
-		Log("使用中的链表为空\n");
+		printf("NO such watchpoint\n");
 		return ;
 	}
 
 
 	WP *headtemp=head;
-	for(;headtemp->NO!=id;headtemp=headtemp->next)
+	for(;headtemp!=NULL&&headtemp->NO!=id;headtemp=headtemp->next)
 		;
+	if(headtemp==NULL)
+	{
+		printf("NO such watchpoint\n");
+		return ;
+	}
 	WP *wp=headtemp;//找到要删除的节点是wp
 
 

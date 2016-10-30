@@ -78,28 +78,21 @@ void cpu_exec(volatile uint32_t n) {
 	WP *temp=returnhead();
 	for(;temp!=NULL;temp=temp->next)
 	{
-		/*
-		if(temp->isfirstfigure)
+		if(temp->enable=='y')
 		{
-			bool success=0;
-			temp->oldvalue=expr(temp->expr,&success);
-			assert(success);
-			temp->isfirstfigure=0;
-		}
-		else
-		{*/
-			bool success=0;
+
+			bool success=1;
 			int newvalue=expr(temp->expr,&success);
-			assert(success);
 			if(temp->oldvalue!=newvalue)
 			{
+				printf("EIP=%08x\n",cpu.eip);
 				printf("Watchpoint %d:%s\n",temp->NO,temp->expr );
 				printf("Old value = %d\t%x\n",temp->oldvalue,temp->oldvalue );
 				printf("New value = %d\t%x\n",newvalue,newvalue); 
 				temp->oldvalue=newvalue;
 				nemu_state=STOP;
 			}
-		
+		}
 	}
 
 

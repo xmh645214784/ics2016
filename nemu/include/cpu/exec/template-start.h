@@ -1,5 +1,6 @@
 #include "cpu/exec/helper.h"
-
+extern CPU_state cpu;
+bool is_even_number_of_1(uint32_t val);
 #if DATA_BYTE == 1
 
 #define SUFFIX b
@@ -33,3 +34,85 @@
 #define OPERAND_W(op, src) concat(write_operand_, SUFFIX) (op, src)
 
 #define MSB(n) ((DATA_TYPE)(n) >> ((DATA_BYTE << 3) - 1))
+
+
+#define CPU_AFFECT_OF(src,des,isADD) \
+do\
+{\
+if(isADD)\
+{\
+	DATA_TYPE_S sum=(DATA_TYPE_S)src+(DATA_TYPE_S)des;\
+	long long a_=(DATA_TYPE_S)src;\
+	long long b_=(DATA_TYPE_S)des;\
+	long long sum2=a_+b_;\
+	cpu.OF=sum!=sum2;\
+}\
+else\
+{\
+	long long a_=(DATA_TYPE_S)src;\
+	long long b_=(DATA_TYPE_S)des;\
+	long long sum2=b_-a_;\
+	DATA_TYPE_S sum=-(DATA_TYPE_S)src+(DATA_TYPE_S)des;\
+	cpu.OF=sum!=sum2;\
+}\
+}while(0);
+
+#define CPU_AFFECT_SF(src,des,isADD) \
+do\
+{\
+	if(isADD)\
+	{\
+		cpu.SF=MSB(src+des);\
+	}\
+	else\
+	{\
+		cpu.SF=MSB(-src+des);\
+	}\
+}while(0);
+
+#define CPU_AFFECT_ZF(src,des,isADD) \
+do\
+{\
+	if(isADD)\
+	{\
+		cpu.ZF=(src+des)==0;\
+	}\
+	else\
+	{\
+		cpu.ZF=(-src+des)==0;\
+	}\
+}while(0);
+
+//PF
+#define CPU_AFFECT_PF(src,des,isADD) \
+do\
+{\
+	if(isADD)\
+		cpu.PF=is_even_number_of_1(src+des);\
+	else\
+		cpu.PF=is_even_number_of_1(-src+des);\
+}while(0);
+
+
+
+#define CPU_AFFECT_CF(src,des,isADD) \
+do\
+{\
+	if(isADD)\
+	{\
+		DATA_TYPE sum=src+des;\
+		if(sum>=src&&sum>=des)\
+			cpu.CF=0;\
+		else\
+			cpu.CF=1;\
+	}\
+	else\
+	{\
+		DATA_TYPE src__neg=src;\
+		if(des>=src__neg)\
+			cpu.CF=0;\
+		else\
+			cpu.CF=1;\
+	}\
+}while(0);
+

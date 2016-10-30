@@ -6,6 +6,15 @@
 #include <sys/types.h>
 #include <regex.h>
 #include <stdlib.h>
+#include <string.h>
+#include <elf.h>
+
+/*Symbol table*/
+ extern char *strtab;
+ extern Elf32_Sym *symtab ; 
+ extern int nr_symtab_entry;
+
+
 uint32_t eval(int p,int q,bool *success);
 
 #define maxtokens 32
@@ -14,7 +23,7 @@ extern CPU_state cpu;
 
 enum {
 	NOTYPE = 256, EQ,/* TODO: Add more token types */
-	NUM,HEXNUM,NEG,DEREF,NEQ,AND,OR,NOT,REG
+	NUM,HEXNUM,NEG,DEREF,NEQ,AND,OR,NOT,REG,SYMBOL
 };
 
 static struct rule {
@@ -44,7 +53,8 @@ static struct rule {
 	{"&&",AND},
 	{"\\|\\|",OR},
 	{"!",NOT},
-	{"\\$[a-z]+",REG}
+	{"\\$[a-zA-Z]+",REG},
+	{"\\w+",SYMBOL}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -126,16 +136,15 @@ uint32_t expr(char *e, bool *success)
 		*success = false;
 		return 0;
 	}
-	//Log("match successfully");
 	//*success=true;
 	/* TODO: Insert codes to evaluate the expression. */
 	//panic("please implement me");
 	int i;
 	for(i = 0; i < nr_token; i ++) {
-		if(tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
+		if(tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i - 1].type !=REG&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
 			tokens[i].type = DEREF;
 		}
-		if(tokens[i].type == '-' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
+		if(tokens[i].type == '-' && (i == 0 || (tokens[i - 1].type !=NUM&&tokens[i - 1].type !=REG&&tokens[i-1].type!=HEXNUM) )&&/*tokens[i-1].type!='('&&*/tokens[i-1].type!=')') {
 			tokens[i].type = NEG;	
 		}
 	}
@@ -256,31 +265,6 @@ int findthedominantoperatorposition(int p,int q,bool *success)
 		}
 	}
 
-
-	/*
-	//如果是单目运算符 为统治运算符 顺序应该为第一个
-	if(getpriority(tokens[flag+p].type)==6)
-	{
-		Log("dominate在%d",danmu+p);
-		if(danmu+p<0)
-		{
-			Log("算术式解析错误\n");
-			*success=0;
-		}
-
-		//assert(danmu+p>=0);
-		return danmu+p;
-	}
-	else
-	{
-		Log("dominate在%d",flag+p);
-		if(flag+p<0)
-		{
-			Log("算术式解析错误\n");
-			*success=0;
-		}
-		//
-		*/
 		assert(flag+p>=0);
 		//Log("dominate在%d",flag+p);
 		return flag+p;
@@ -296,7 +280,8 @@ uint32_t eval(int p,int q,bool *success)
 	}
 	if(p > q) {
 		/* Bad expression */
-		panic("p>q");
+		*success=0;
+		return 0;
 	}
 	else if(p == q) { 
 		/* Single token.
@@ -311,59 +296,77 @@ uint32_t eval(int p,int q,bool *success)
 		}
 		if(tokens[p].type==REG)
 		{
-			if(strcmp(tokens[p].str,"$eax")==0)
+			if(strcasecmp(tokens[p].str,"$eax")==0)
 				return cpu.eax;
-			if(strcmp(tokens[p].str,"$edx")==0)
+			if(strcasecmp(tokens[p].str,"$edx")==0)
 				return cpu.edx;
-			if(strcmp(tokens[p].str,"$ecx")==0)
+			if(strcasecmp(tokens[p].str,"$ecx")==0)
 				return cpu.ecx;
-			if(strcmp(tokens[p].str,"$ebx")==0)
+			if(strcasecmp(tokens[p].str,"$ebx")==0)
 				return cpu.ebx;
-			if(strcmp(tokens[p].str,"$ebp")==0)
+			if(strcasecmp(tokens[p].str,"$ebp")==0)
 				return cpu.ebp;
-			if(strcmp(tokens[p].str,"$esi")==0)
+			if(strcasecmp(tokens[p].str,"$esi")==0)
 				return cpu.esi;
-			if(strcmp(tokens[p].str,"$edi")==0)
+			if(strcasecmp(tokens[p].str,"$edi")==0)
 				return cpu.edi;
-			if(strcmp(tokens[p].str,"$esp")==0)
+			if(strcasecmp(tokens[p].str,"$esp")==0)
 				return cpu.esp;
-			if(strcmp(tokens[p].str,"$eip")==0)
+			if(strcasecmp(tokens[p].str,"$eip")==0)
 				return cpu.eip;
 
-			if(strcmp(tokens[p].str,"$ax")==0)
+			if(strcasecmp(tokens[p].str,"$ax")==0)
 				return cpu.ax;
-			if(strcmp(tokens[p].str,"$dx")==0)
+			if(strcasecmp(tokens[p].str,"$dx")==0)
 				return cpu.dx;
-			if(strcmp(tokens[p].str,"$cx")==0)
+			if(strcasecmp(tokens[p].str,"$cx")==0)
 				return cpu.cx;
-			if(strcmp(tokens[p].str,"$bx")==0)
+			if(strcasecmp(tokens[p].str,"$bx")==0)
 				return cpu.bx;
-			if(strcmp(tokens[p].str,"$bp")==0)
+			if(strcasecmp(tokens[p].str,"$bp")==0)
 				return cpu.bp;
-			if(strcmp(tokens[p].str,"$si")==0)
+			if(strcasecmp(tokens[p].str,"$si")==0)
 				return cpu.si;
-			if(strcmp(tokens[p].str,"$di")==0)
+			if(strcasecmp(tokens[p].str,"$di")==0)
 				return cpu.di;
-			if(strcmp(tokens[p].str,"$sp")==0)
+			if(strcasecmp(tokens[p].str,"$sp")==0)
 				return cpu.sp;
 
-			if(strcmp(tokens[p].str,"$al")==0)
+			if(strcasecmp(tokens[p].str,"$al")==0)
 				return cpu.al;
-			if(strcmp(tokens[p].str,"$dl")==0)
+			if(strcasecmp(tokens[p].str,"$dl")==0)
 				return cpu.dl;
-			if(strcmp(tokens[p].str,"$cl")==0)
+			if(strcasecmp(tokens[p].str,"$cl")==0)
 				return cpu.cl;
-			if(strcmp(tokens[p].str,"$bl")==0)
+			if(strcasecmp(tokens[p].str,"$bl")==0)
 				return cpu.bl;
-			if(strcmp(tokens[p].str,"$ah")==0)
+			if(strcasecmp(tokens[p].str,"$ah")==0)
 				return cpu.ah;
-			if(strcmp(tokens[p].str,"$dh")==0)
+			if(strcasecmp(tokens[p].str,"$dh")==0)
 				return cpu.dh;
-			if(strcmp(tokens[p].str,"$ch")==0)
+			if(strcasecmp(tokens[p].str,"$ch")==0)
 				return cpu.ch;
-			if(strcmp(tokens[p].str,"$bh")==0)
+			if(strcasecmp(tokens[p].str,"$bh")==0)
 				return cpu.bh;
 
+		}
+		if(tokens[p].type==SYMBOL)
+		{
+			int i=0;
+			for(;i<nr_symtab_entry;i++)
+			{
+				//Log("symbol[%d] st_info is %d ",i,symtab[i].st_info);
+				if(ELF32_ST_TYPE(symtab[i].st_info)==STT_OBJECT)
+				{
+					char *symbolStrName=strtab+symtab[i].st_name;
+					//Log("%s",symbolStrName);
+					if(strcmp(tokens[p].str,symbolStrName)==0)
+					{
+						//Log("size=%d",symtab[i].st_size);
+						return symtab[i].st_value;
+					}
+				}
+			}
 		}
 		if(tokens[p].type==NEG||tokens[p].type==NOT||tokens[p].type==DEREF)//单目运算符
 			return 0;
@@ -384,7 +387,7 @@ uint32_t eval(int p,int q,bool *success)
 		int op = findthedominantoperatorposition(p, q,success);
 		uint32_t val1 = 0;
 		if(p<=op-1)//为单目运算符上的保险 由于不用算单目dominant运算符之前的东西
-			val1=eval(p, op - 1,success); 
+			val1=eval(p, op - 1,success);
 		uint32_t val2 = eval(op + 1, q,success);
 		//Log("%x %d",val2,val2);
 		switch(tokens[op].type) {

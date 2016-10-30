@@ -8,7 +8,7 @@
 #define decode_i concat(decode_i_, SUFFIX)
 #define decode_a concat(decode_a_, SUFFIX)
 #define decode_r2rm concat(decode_r2rm_, SUFFIX)
-
+#define decode_none concat(decode_none_, SUFFIX)
 
 /* Ib, Iv */
 make_helper(concat(decode_i_, SUFFIX)) {
@@ -191,17 +191,7 @@ void concat(write_operand_, SUFFIX) (Operand *op, DATA_TYPE src) {
 	else { assert(0); }
 }
 
-/*
-void concat(myclever_write_operand,SUFFIX) (Operand *op,Operand *src){
-	if(src->type == OP_TYPE_IMM)
-		write_operand_SUFFIX(op,src->imm);
-	else if(src->type ==OP_TYPE_REG)
-		write_operand_SUFFIX(op,REG(src->reg));
-	else if(src->type == OP_TYPE_MEM)
-		write_operand_SUFFIX(op,swaddr_read(src->addr,DATA_TYPE));
-	else
-		panic("解析错误");
-}*/
+
 
 
 //my docode↓
@@ -209,18 +199,17 @@ void concat(myclever_write_operand,SUFFIX) (Operand *op,Operand *src){
 //call 中的rel  译码时目的操作数为地址
 make_helper(concat(decode_rel_,SUFFIX)){
 	op_src->type = OP_TYPE_IMM;
-	#if DATA_BYTE==4
-		op_src->simm = instr_fetch(eip, DATA_BYTE);//应该用一个sign ime
-	#elif DATA_BYTE==2
-		int16_t temp=instr_fetch(eip, DATA_BYTE);
-		op_src->simm=temp;
-	#elif DATA_BYTE==1
-		int8_t temp=instr_fetch(eip, DATA_BYTE);
-		op_src->simm=temp;
-	#endif
 
+	/* TODO: Use instr_fetch() to read `DATA_BYTE' bytes of memory pointed
+	 * by `eip'. Interpret the result as an signed immediate, and assign
+	 * it to op_src->simm.
+	 *
+	op_src->simm = ???
+	 */
+	DATA_TYPE_S a = instr_fetch(eip, DATA_BYTE);
+	op_src->simm=a;
+	//panic("please implement me");
 	op_src->val=op_src->simm;
-
 #ifdef DEBUG
 	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->simm);
 #endif
@@ -228,17 +217,16 @@ make_helper(concat(decode_rel_,SUFFIX)){
 }
 
 make_helper(concat(decode_m_, SUFFIX)) {
-	/* eip here is pointing to the immediate */
-	op_src->type = OP_TYPE_MEM;
-	op_src->imm = instr_fetch(eip, DATA_BYTE);
-
-	
-	op_src->val = swaddr_read(op_src->addr,DATA_BYTE);
-
-#ifdef DEBUG
-	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->imm);
-#endif
-	return DATA_BYTE;
+	 return decode_rm_internal(eip, op_src, op_dest);
 }
+
+
+//伪译码
+make_helper(concat(decode_none_, SUFFIX)) {
+	
+	return 0;
+}
+
+
 
 #include "cpu/exec/template-end.h"

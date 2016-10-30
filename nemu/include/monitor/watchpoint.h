@@ -11,7 +11,7 @@ typedef struct watchpoint {
 	char expr[50];
 	int oldvalue;
 	bool isfirstfigure;//是首次求值
-
+	char enable;
 } WP;
 WP* new_wp();
 void  free_wp(int id);

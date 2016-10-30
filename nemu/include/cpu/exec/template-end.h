@@ -11,3 +11,9 @@
 #undef OPERAND_W
 
 #undef MSB
+
+#undef CPU_AFFECT_OF
+#undef CPU_AFFECT_PF
+#undef CPU_AFFECT_CF
+#undef CPU_AFFECT_ZF
+#undef CPU_AFFECT_SF

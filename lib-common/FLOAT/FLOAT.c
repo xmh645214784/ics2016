@@ -1,8 +1,7 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	nemu_assert(0);
-	return 0;
+	return (a*b)>>16;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
@@ -23,9 +22,13 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	 * It is OK not to use the template above, but you should figure
 	 * out another way to perform the division.
 	 */
-
-	nemu_assert(0);
-	return 0;
+	long long bcs=a<<16;
+	int low_32=bcs&0xFFFFFFFF;
+	int high_32=(bcs>>32)&0xFFFFFFFF;
+	FLOAT result;
+	int yushu;
+	asm volatile ("idiv %2" : "=a"(result), "=d"(yushu) : "r"(b), "a"(low_32), "d"(high_32));
+	return result;
 }
 
 FLOAT f2F(float a) {
@@ -39,13 +42,29 @@ FLOAT f2F(float a) {
 	 * performing arithmetic operations on it directly?
 	 */
 
-	nemu_assert(0);
-	return 0;
+	void* point=&a;
+	int float_int=*(int *)point;
+	unsigned exp=(float_int>>23)&0xFF-127;
+	int sign=(float_int>>31)&1;
+	unsigned e=float_int&0x7FFFFF;
+	e=e|0x800000;// 1+23  duo<<le 7   1---24   1 should be at 17
+	exp=exp-7;
+	if((exp>>7)&1)//-exp
+	{
+		e>>=((-exp)&0xFF);
+	}
+	else//+exp
+	{
+		e<<=(exp&0xFF);
+	}
+
+	return sign==0?e:-e;
+
 }
 
 FLOAT Fabs(FLOAT a) {
-	nemu_assert(0);
-	return 0;
+	
+	return a>=0?a:-a;
 }
 
 /* Functions below are already implemented */

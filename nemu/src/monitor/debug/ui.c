@@ -1,12 +1,21 @@
 #include "monitor/monitor.h"
 #include "monitor/expr.h"
 #include "monitor/watchpoint.h"
+#include "monitor/stackframe.h"
+
 #include "nemu.h"
 #include "memory/memory.h"
 
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <elf.h>
+
+/*Symbol table*/
+extern char *strtab;
+extern Elf32_Sym *symtab ; 
+extern int nr_symtab_entry;
+
 
 void cpu_exec(uint32_t);
 extern CPU_state cpu;
@@ -41,9 +50,9 @@ static int cmd_help(char *args);
 
 
 static int cmd_info(char *args){
-
+	char *p=strtok(NULL," ");
 	//显示寄存器
-	if(strcmp(args,"r")==0)
+	if(strcmp(p,"r")==0)
 	{
 		printf("eax\t0x%x\t%d\n",cpu.eax,cpu.eax);
 		printf("ecx\t0x%x\t%d\n",cpu.ecx,cpu.ecx);
@@ -69,19 +78,78 @@ static int cmd_info(char *args){
 	}
 
 	//打印监视点信息
-	if(strcmp(args,"w")==0)
+	if(strcmp(p,"w")==0||strcmp(p,"watchpoint")==0)
 	{
 		WP *head=returnhead();
 		if(!head)
-			printf("当前监视点信息\n");
-		for(;head!=NULL;head=head->next)
+
+		{	
+			printf("NO Watchpoint\n");
+			return 0;
+		}
+		char *q=strtok(NULL," ");
+		if(q==NULL)
+			for(;head!=NULL;head=head->next)
+			{
+				printf("Num\tType\t\tDisp\tEnb\tWhat\n");
+				printf("%d\twatchpoint\tkeep\t%c\t%s\n",head->NO,head->enable,head->expr );
+			}
+		else
 		{
-			printf("Num\tType\tDisp\tEnb\tAddress\tWhat\n");
-			printf("%d\twatchpoint\tkeep\ty\t\t%s\n",head->NO,head->expr );
+			for(;head!=NULL;head=head->next)
+				if(head->NO==atoi(q))
+				{
+					printf("Num\tType\t\tDisp\tEnb\tWhat\n");
+					printf("%d\twatchpoint\tkeep\t%c\t%s\n",head->NO,head->enable,head->expr );
+				}
 		}
 	}
 	return 0;
 }
+
+
+static int cmd_enable(char *args){
+	char *p=strtok(NULL," ");
+	p=strtok(NULL," ");
+	WP *head=returnhead();
+		if(!head)
+		{	
+			printf("NO Watchpoint\n");
+			return 0;
+		}
+	while(p!=NULL)
+	{
+		for(head=returnhead();head!=NULL;head=head->next)
+		if(head->NO==atoi(p))
+		{
+			head->enable='y';
+		}
+	p=strtok(NULL," ");
+	}
+	return 0;
+}
+
+static int cmd_disable(char *args){
+	char *p=strtok(NULL," ");
+	p=strtok(NULL," ");
+	WP *head=returnhead();
+		if(!head)
+		{	
+			printf("NO Watchpoint\n");
+			return 0;
+		}
+	while(p!=NULL)
+	{
+		for(head=returnhead();head!=NULL;head=head->next)
+		if(head->NO==atoi(p))
+		{
+			head->enable='n';
+		}
+		p=strtok(NULL," ");
+	}
+	return 0;
+}
+
 
 static int cmd_si(char *args)
 {
@@ -99,6 +167,17 @@ static int cmd_x(char *args)
 {
 	char *num=strtok(NULL," ");
 	char *e=strtok(NULL," ");
+	//缺省情况
+	if(e==NULL)
+	{
+		bool success =1;
+		int exp=expr(num,&success);
+		if(!success)
+			return 0;
+		printf("首地址为:0x%08x\n",exp );
+		printf("0x%08x  \n",swaddr_read(exp,4));
+		return 0;
+	}
 	int num_int=atoi(num);
 	bool success =1;
 	int exp=expr(e,&success);
@@ -141,12 +220,13 @@ static int cmd_px(char *args)
 static int cmd_w(char *args)
 {
 	char *e=strtok(NULL," ");
-	bool success=0;
-
+	bool success=1;
 	int oldvalue=expr(e,&success);
 	if(success)
 	{
 		WP* w=new_wp();
+		if(w==NULL)
+			return  0;
 		strcpy(w->expr,e);
 		w->oldvalue=oldvalue;
 		printf("Watchpoint %d:%s\n",w->NO,e);
@@ -158,10 +238,72 @@ static int cmd_w(char *args)
 static int cmd_d(char *args)
 {
 	char *e=strtok(NULL," ");
-	free_wp(atoi(e));
+	while(e!=NULL)
+	{
+		free_wp(atoi(e));
+		e=strtok(NULL," ");
+	}
 	return 0;
 }
 
+static int cmd_bt(char *args)
+{
+	PartOfStackFrame sf[100];//BUG!
+	int framenum=0;
+
+	/*handle now frame/first */
+	int ebp_temp=cpu.ebp;
+
+ 
+	/*handle remain*/
+	do
+	{
+		/*hand prev_ebp ret args*/
+		sf[framenum].prev_ebp=swaddr_read(ebp_temp,4);
+		//Log("sf[framenum].prev_ebp=%08x",sf[framenum].prev_ebp);
+		sf[framenum].ret_addr=swaddr_read(ebp_temp+4,4);
+		int i=0;
+		for(;i<4;i++)
+			sf[framenum].args[i]=swaddr_read(ebp_temp+8+4*i,4);
+
+		/*update ebp_temp*/
+		ebp_temp=sf[framenum].prev_ebp;
+
+		/*search func_addr and func_name*/
+		for( i=0;i<nr_symtab_entry;i++)
+		{
+			if(ELF32_ST_TYPE(symtab[i].st_info)==STT_FUNC)
+			{
+				int process_point;
+				if(framenum==0)
+				{
+					process_point=cpu.eip;
+					
+				}
+				else
+					process_point=sf[framenum-1].ret_addr;
+				if (process_point>=symtab[i].st_value&&process_point<symtab[i].st_value+symtab[i].st_size)
+				{
+					if(framenum==0)
+						sf[framenum].func_addr=cpu.eip;
+					else
+						sf[framenum].func_addr=symtab[i].st_value;
+					Assert(snprintf(sf[framenum].funcname,20,"%s",strtab+symtab[i].st_name)<20,"bt buffer overflow");
+				}
+			}
+
+		}
+		Assert(framenum<=100,"stackframe overflow");
+	}while(sf[framenum++].prev_ebp!=0);
+	//Log("%d",framenum );
+	int i;
+	/*print nr=framenum*/
+	for(i=0;i<framenum;i++)
+	{
+		printf("#%d 0x%08x in %s (argv[0]=0x%08x argv[1]=0x%08x argv[2]=0x%08x argv[3]=0x%08x)\n",i,sf[i].func_addr,sf[i].funcname,sf[i].args[0],sf[i].args[1],sf[i].args[2],sf[i].args[3]);
+	}
+	return 0;
+}
 
 static struct {
 	char *name;
@@ -180,7 +322,12 @@ static struct {
 	{"p","print",cmd_p},
 	{"w","set watchpoint",cmd_w},
 	{"d","delete",cmd_d},
-	{"p/x","print as hex",cmd_px}
+
+	{"delete","delete",cmd_d},
+	{"p/x","print as hex",cmd_px},
+	{"enable","enable watchpoint",cmd_enable},
+	{"disable","disable watchpoint",cmd_disable},
+	{"bt","print stackframe",cmd_bt}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))

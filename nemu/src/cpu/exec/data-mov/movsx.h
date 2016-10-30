@@ -1,7 +1,7 @@
-#ifndef __MOVZX_H__
-#define __MOVZX_H__
+#ifndef __MOVSX_H__
+#define __MOVSX_H__
 
-	make_helper(movzx_rmb2r_v);
-	make_helper(movzx_rmw2r_l);
+	make_helper(movsx_rmb2r_v);
+	make_helper(movsx_rmw2r_l);
 
 #endif
