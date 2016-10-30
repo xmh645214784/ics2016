@@ -63,7 +63,7 @@ static void modify_vfprintf() {
 	 */
 	 //printf("%08x %08x\n", &_fpmaxtostr,&_vfprintf_internal);
 	
-mprotect((void *)(((unsigned int)&_vfprintf_internal + 0x306 - 100) & 0xfffff000), 4096*2, PROT_READ | PROT_WRITE | PROT_EXEC);
+//mprotect((void *)(((unsigned int)&_vfprintf_internal + 0x306 - 100) & 0xfffff000), 4096*2, PROT_READ | PROT_WRITE | PROT_EXEC);
 	 int a=*(int *)(&_vfprintf_internal+775);
 	 //printf("before hijack:%08x\n",*(int *)(&_vfprintf_internal+775));
 	 //printf("old jup=%d  %08x\n",4+(int)(&_vfprintf_internal+775)+a,4+(int)(&_vfprintf_internal+775)+a);
