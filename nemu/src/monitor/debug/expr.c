@@ -362,7 +362,7 @@ uint32_t eval(int p,int q,bool *success)
 					//Log("%s",symbolStrName);
 					if(strcmp(tokens[p].str,symbolStrName)==0)
 					{
-						Log("size=%d",symtab[i].st_size);
+						//Log("size=%d",symtab[i].st_size);
 						return symtab[i].st_value;
 					}
 				}
