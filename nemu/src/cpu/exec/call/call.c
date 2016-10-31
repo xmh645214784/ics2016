@@ -22,9 +22,9 @@ make_helper(call_rel_l)
 
 make_helper(call_rm_w)
 {
-	decode_rm2r_w(eip+1);
+	int len=decode_rm2r_w(eip+1);
 	cpu.esp-=2;
-	swaddr_write(cpu.esp,2,cpu.ip+2);
+	swaddr_write(cpu.esp,2,cpu.ip+len+1);
 	cpu.eip=op_src->val&0x0000FFFFF;
 	print_asm("call %s",op_src->str);
 	return 0;
@@ -32,9 +32,9 @@ make_helper(call_rm_w)
 
 make_helper(call_rm_l)
 {
-	decode_rm2r_l(eip+1);
+	int len=decode_rm2r_l(eip+1);
 	cpu.esp-=4;
-	swaddr_write(cpu.esp,4,cpu.eip+2);
+	swaddr_write(cpu.esp,4,cpu.eip+len+1);
 	cpu.eip=op_src->val;
 	print_asm("call %s",op_src->str);
 	return 0;
