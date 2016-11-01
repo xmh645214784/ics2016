@@ -1,10 +1,11 @@
 #include "nemu.h"
-
+#include "memory/cache.h"
 #define ENTRY_START 0x100000
 
 extern uint8_t entry [];
 extern uint32_t entry_len;
 extern char *exec_file;
+
 
 void load_elf_tables(int, char *[]);
 void init_regex();
@@ -76,7 +77,11 @@ static void load_entry() {
 
 void restart() {
 	/* Perform some initialization to restart a program */
+
+	/* Initialize EFLAGS. */
 	cpu.EFLAGS=0x00000002;
+
+
 #ifdef USE_RAMDISK
 	/* Read the file with name `argv[1]' into ramdisk. */
 	init_ramdisk();
@@ -90,4 +95,10 @@ void restart() {
 
 	/* Initialize DRAM. */
 	init_ddr3();
+
+	/* Initialize CACHE. */
+	extern void init_L1Cache();
+	init_L1Cache();
+	extern void init_L2Cache();
+	init_L2Cache();
 }
