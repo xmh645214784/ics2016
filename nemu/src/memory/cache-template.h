@@ -68,7 +68,7 @@ static uint8_t * concat(find_data_point_,CACHE_NAME)(hwaddr_t addr)
 {
 	int i=0;
 	uint32_t groupindex=get_group_index;
-	Assert(groupindex>=0&&groupindex<NR_GROUP-WAY,"group index caculate failed");
+	Assert(groupindex>=0&&groupindex<NR_GROUP*WAY-WAY,"group index caculate failed");
 	for(i=0;i<WAY;i++)
 	{
 		if(CACHE_OBJECT.cacheline[groupindex+i].valid==1&&CACHE_OBJECT.cacheline[groupindex+i].addrnote==get_cache_note)
@@ -89,7 +89,7 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 {
 	int i;
 	uint32_t groupindex=get_group_index;
-	Assert(groupindex>=0&&groupindex<NR_GROUP-WAY,"group index caculate failed");
+	Assert(groupindex>=0&&groupindex<NR_GROUP*WAY-WAY,"group index caculate failed");
 	for(i=0;i<WAY;i++)
 	{
 		//have unused cachline
@@ -146,7 +146,7 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 {
 	int i;
 	uint32_t groupindex=get_group_index;
-	Assert(groupindex>=0&&groupindex<NR_GROUP-WAY,"group index caculate failed");
+	Assert(groupindex>=0&&groupindex<NR_GROUP*WAY-WAY,"group index caculate failed");
 
 	uint8_t *find=concat(find_data_point_,CACHE_NAME)(addr);
 
@@ -220,7 +220,7 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 		Log("addr=%08x",addr);
 		Log("groupindex=%d",groupindex);
 		Log("group=%d",NR_GROUP);
-	Assert(groupindex>=0&&groupindex<NR_GROUP-WAY,"group index caculate failed");
+	Assert(groupindex>=0&&groupindex<NR_GROUP*WAY-WAY,"group index caculate failed");
 	/*each group first element's index*/
 
 	uint8_t *find=concat(find_data_point_,CACHE_NAME)(addr);
@@ -271,7 +271,7 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 void concat(debug_,CACHE_NAME) (uint32_t addr)
 {
 	uint32_t groupindex=get_group_index;
-	Assert(groupindex>=0&&groupindex<NR_GROUP-WAY,"group index caculate failed");
+	Assert(groupindex>=0&&groupindex<NR_GROUP*WAY-WAY,"group index caculate failed");
 	/*each group first element's index*/
 
 	int i=0;
