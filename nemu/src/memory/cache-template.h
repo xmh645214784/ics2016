@@ -148,7 +148,8 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 {
 	int i;
 	uint32_t groupindex=get_group_index_in_array;
-	Log("%d",groupindex);
+
+	Log("groupindex=%d  get_group_index_in_array=%d",groupindex,get_group_index_in_array);
 	Log("%d  %d",NR_GROUP,WAY);
 	Assert(groupindex>=0&&groupindex<NR_GROUP*WAY-WAY,"group index caculate failed");
 
