@@ -48,7 +48,7 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 		for(i=0;i<6;i++)
 			point_sum*=5;
 		point_sum/=1024;
-		len=sprintf(buf,"-%d.%06d",integer,point_sum);
+		len=sprintf(buf,"%d.%06d",-integer,point_sum);
 	}
 
 //	int len = sprintf(buf, "0x%08x", f);

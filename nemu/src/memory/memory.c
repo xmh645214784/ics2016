@@ -6,7 +6,10 @@ void dram_write(hwaddr_t, size_t, uint32_t);
 /* Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
+
 	return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+//	extern uint32_t read_L1Cache(hwaddr_t,size_t);
+//	return temp;
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
