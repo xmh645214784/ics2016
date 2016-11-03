@@ -52,7 +52,7 @@ void concat(init_,CACHE_NAME)()
 }
 
 /*each group first element's index*/
-#define get_group_index (((addr>>LOG2_BLOCK_SIZE)%NR_GROUP)*NR_GROUP)
+#define get_group_index (((addr>>LOG2_BLOCK_SIZE)%NR_GROUP)*WAY)
 
 /*each addr last LOG2BLOCK_SIZE BIT*/
 #define get_offset (addr%BLOCK_SIZE)
