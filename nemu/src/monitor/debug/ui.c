@@ -305,6 +305,19 @@ static int cmd_bt(char *args)
 	return 0;
 }
 
+
+static int cmd_cache (char *args)
+{
+	bool success=1;
+	char *e=strtok(NULL," ");
+	uint32_t addr=expr(e,&success);
+	printf("addr :0x%08x",addr);
+	extern void debug_L1Cache(uint32_t);
+	extern void debug_L2Cache(uint32_t);
+	debug_L1Cache(addr);
+	return 0;
+}
+
 static struct {
 	char *name;
 	char *description;
@@ -327,7 +340,8 @@ static struct {
 	{"p/x","print as hex",cmd_px},
 	{"enable","enable watchpoint",cmd_enable},
 	{"disable","disable watchpoint",cmd_disable},
-	{"bt","print stackframe",cmd_bt}
+	{"bt","print stackframe",cmd_bt},
+	{"cache","cache addr",cmd_cache}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))

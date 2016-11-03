@@ -267,6 +267,31 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 }
 
 
+void concat(debug_,CACHE_NAME) (uint32_t addr)
+{
+	uint32_t groupindex=get_group_index;
+	Assert(groupindex>=0&&groupindex<NR_GROUP-WAY,"group index caculate failed");
+	/*each group first element's index*/
+
+	int i=0;
+	for(i=0;i<WAY;i++)
+	{
+		if(CACHE_OBJECT.cacheline[groupindex+i].valid==1&&CACHE_OBJECT.cacheline[groupindex+i].addrnote==get_cache_note)
+		{
+			printf("HIT\n");
+			 printf("%02x\n",CACHE_OBJECT.cacheline[groupindex+i].data[get_offset]);
+			 #ifdef WRITE_BACK
+			 	printf("FLAG:valid=%d dirty=%d\n",1,CACHE_OBJECT.cacheline[groupindex+i].dirty);
+			 #endif
+			 return ;
+		}
+	}
+	
+	printf("MISS\n");
+}
+
+
+
 #undef CACHE_OBJECT
 
 #undef LEVEL
@@ -304,3 +329,10 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 #ifdef WRITE_BACK
 #undef WRITE_BACK 
 #endif
+
+
+#undef get_group_index
+
+#undef get_offset
+
+#undef get_cache_note
