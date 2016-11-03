@@ -7,13 +7,17 @@ void dram_write(hwaddr_t, size_t, uint32_t);
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 
-	return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-//	extern uint32_t read_L1Cache(hwaddr_t,size_t);
-//	return temp;
+//old :return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+	
+	extern uint32_t read_L1Cache(hwaddr_t,size_t);
+	return read_L1Cache(addr,len);
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
-	dram_write(addr, len, data);
+	extern void write_L1Cache(uint32_t src,hwaddr_t addr,size_t len);
+
+//old: dram_write(addr, len, data);
+	write_L1Cache(data,addr,len);
 }
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {

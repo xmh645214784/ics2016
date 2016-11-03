@@ -78,9 +78,12 @@ static uint8_t * concat(find_data_point_,CACHE_NAME)(hwaddr_t addr)
 }
 
 
-/*allocate new cacheline due to addr*/
-/*return: result					*/
-inline uint32_t concat(read_allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size_t len)
+/*
+	allocate new cacheline due to addr
+	and copy the block into cacheline
+	return: result
+ */
+static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size_t len)
 {
 	int i;
 	uint32_t groupindex=get_group_index;
@@ -119,12 +122,17 @@ inline uint32_t concat(read_allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size_t
 	 */
 	Assert(CACHE_OBJECT.cacheline[groupindex].valid==1,"..");
 	CACHE_OBJECT.cacheline[groupindex].addrnote=get_cache_note;
+
+	#ifdef WRITE_ALLOCATE
+		CACHE_OBJECT.cacheline[groupindex].dirty=0;
+	#endif
+	
 	int j;
 	for(j=0;j<BLOCK_SIZE;j++)
 	{
 		CACHE_OBJECT.cacheline[groupindex].data[j]=dram_read((get_group_index<<LOG2_BLOCK_SIZE)+j, 1);
 	}
-
+Assert(addr==(get_group_index<<LOG2_BLOCK_SIZE)+get_offset,"caculate failed");
 	return result;
 
 }
@@ -142,7 +150,18 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 	uint8_t *find=concat(find_data_point_,CACHE_NAME)(addr);
 
 	if(find)//HIT
-	{
+	{	
+
+		//ifdef WRITE_BACK modify the dirty bit
+		#ifdef WRITE_BACK	
+		for(i=0;i<WAY;i++)
+			if(CACHE_OBJECT.cacheline[groupindex+i].valid==1&&CACHE_OBJECT.cacheline[groupindex+i].addrnote==get_cache_note)
+			{
+				CACHE_OBJECT.cacheline[groupindex+i].dirty=1;
+				break;
+			}
+		#endif
+
 		if(addr%BLOCK_SIZE+len<=BLOCK_SIZE)//align_write
 		{
 			//write cache
@@ -172,13 +191,19 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 
 ////////////////////////////////
 	//MISS
+	//
+	#ifdef WRITE_ALLOCATE
+	//first update
+		dram_write(addr, len,src);
+	//allocate a new cacheline
+		concat(allocate_cacheline_,CACHE_NAME)(addr,len);
+	#endif
+	
 	#ifdef NOT_WRITE_ALLOCATE
 		dram_write(addr, len,src);
 	#endif
-	#ifdef WRITE_ALLOCATE
-		concat(read_allocate_cacheline_,CACHE_NAME)(addr,len);
-	#endif
-	Assert(0,"1");
+
+	
 	return;
 }
 
@@ -233,7 +258,7 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 	//MISS
 	else
 	{
-		return concat(read_allocate_cacheline_,CACHE_NAME)(addr,len);
+		return concat(allocate_cacheline_,CACHE_NAME)(addr,len);
 	}
 
 }

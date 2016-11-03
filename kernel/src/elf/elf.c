@@ -33,14 +33,15 @@ uint32_t loader() {
 	elf = (void*)buf;
 
 	/* TODO: fix the magic number with the correct one */
-	const uint32_t elf_magic = 0x464c457f;//0x464c457f;
+	const uint32_t elf_magic = 0x464c457f;
 	uint32_t *p_magic = (void *)buf;
 	nemu_assert(*p_magic == elf_magic);
+
 	/* Load each program segment */
-	//panic("please implement me");
 
 
-	/*new room*/
+
+
 	uint16_t real_phnum=elf->e_phnum;
 	//if bigger or equal XNUM 
 	//	real number of entries is held in the sh_info member of the initial enrty 
@@ -51,7 +52,6 @@ uint32_t loader() {
 		Elf32_Shdr *initial_entry=(void *)elf+elf->e_shoff;
 		real_phnum=initial_entry->sh_info;
 	}
-	//uint32_t ph_size =elf->e_phentsize*real_phnum;
 	
 
 	///*load ph*/
