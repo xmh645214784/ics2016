@@ -144,7 +144,7 @@ Assert(addr==((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index<
 
 }
 
-
+	
 /*prototype :write_L1Cache write_L2Cache*/
 void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 {
@@ -153,7 +153,7 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 	uint32_t groupindex=get_group_index_in_array;
 
 	Log("groupindex=%d  get_group_index_in_array=%d",get_group_index,get_group_index_in_array);
-	Log("%d  %d",NR_GROUP,WAY);
+	Log("NR_GROUP=%d  WAY=%d",NR_GROUP,WAY);
 	Assert(groupindex>=0&&groupindex<=NR_GROUP*WAY-WAY,"group index caculate failed");
 
 	uint8_t *find=concat(find_data_point_,CACHE_NAME)(addr);
