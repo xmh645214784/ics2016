@@ -96,6 +96,7 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 		//have unused cachline
 		if(CACHE_OBJECT.cacheline[groupindex+i].valid==0) 
 		{
+			printf("allocate:have unused cacheline\n");
 			uint32_t result=dram_read(addr, len)& (~0u >> ((4 - len) << 3));
 			CACHE_OBJECT.cacheline[groupindex+i].valid=1;
 			CACHE_OBJECT.cacheline[groupindex+i].addrnote=get_addr_note;
@@ -113,6 +114,7 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 /////////////////////////////////////////////////
 	/*have no unused cachline*/
 	/*ti huan!*/
+	printf("allocate:have no unused cacheline and tihuan!\n");
 	uint32_t result=dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	#ifdef WRITE_BACK	
 		if(CACHE_OBJECT.cacheline[groupindex].dirty==1)
@@ -157,7 +159,7 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 
 	if(find)//HIT
 	{	
-
+		printf("HIT cacheline\n");
 		//ifdef WRITE_BACK modify the dirty bit
 		#ifdef WRITE_BACK	
 		for(i=0;i<WAY;i++)
@@ -198,6 +200,7 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 ////////////////////////////////
 	//MISS
 	//
+	printf("MISS cacheline\n");
 	#ifdef WRITE_ALLOCATE
 	//first update
 		dram_write(addr, len,src);
@@ -222,9 +225,6 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 {
 	uint32_t groupindex=get_group_index_in_array;
-		Log("addr=%08x",addr);
-		Log("groupindex=%d",groupindex);
-		Log("group=%d",NR_GROUP);
 	Assert(groupindex>=0&&groupindex<=NR_GROUP*WAY-WAY,"group index caculate failed");
 	/*each group first element's index*/
 
@@ -234,6 +234,7 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 	//HIT
 	if(find)
 	{
+		printf("HIT cacheline\n");
 		if(addr%BLOCK_SIZE+len<=BLOCK_SIZE)//align_read
 		{
 			switch(len)
@@ -267,6 +268,7 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 	//MISS
 	else
 	{
+		printf("MISS cacheline\n");
 		return concat(allocate_cacheline_,CACHE_NAME)(addr,len);
 	}
 
