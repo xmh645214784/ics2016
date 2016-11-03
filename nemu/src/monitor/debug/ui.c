@@ -311,7 +311,7 @@ static int cmd_cache (char *args)
 	bool success=1;
 	char *e=strtok(NULL," ");
 	uint32_t addr=expr(e,&success);
-	printf("addr :0x%08x",addr);
+	printf("addr :0x%08x\n",addr);
 	extern void debug_L1Cache(uint32_t);
 	extern void debug_L2Cache(uint32_t);
 	debug_L1Cache(addr);
