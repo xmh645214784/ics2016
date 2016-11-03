@@ -219,6 +219,7 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 	uint32_t groupindex=get_group_index;
 		Log("addr=%08x",addr);
 		Log("groupindex=%d",groupindex);
+		Log("group=%d",NR_GROUP);
 	Assert(groupindex>=0&&groupindex<NR_GROUP-WAY,"group index caculate failed");
 	/*each group first element's index*/
 
