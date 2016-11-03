@@ -104,10 +104,11 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 			int j;
 			for(j=0;j<BLOCK_SIZE;j++)
 			{
-				CACHE_OBJECT.cacheline[groupindex+i].data[j]=dram_read((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index_in_array<<LOG2_BLOCK_SIZE)|j, 1);
+				CACHE_OBJECT.cacheline[groupindex+i].data[j]=dram_read((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index<<LOG2_BLOCK_SIZE)|j, 1);
 				
 			}
-			Assert(((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index_in_array<<LOG2_BLOCK_SIZE)|get_offset)==addr,"for debug");
+
+			Assert(((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index<<LOG2_BLOCK_SIZE)|get_offset)==addr,"for debug");
 			return result;
 		}
 	}
@@ -137,7 +138,7 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 	int j;
 	for(j=0;j<BLOCK_SIZE;j++)
 	{
-		CACHE_OBJECT.cacheline[groupindex].data[j]=dram_read((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index_in_array<<LOG2_BLOCK_SIZE)|j, 1);
+		CACHE_OBJECT.cacheline[groupindex].data[j]=dram_read((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index<<LOG2_BLOCK_SIZE)|j, 1);
 	}
 Assert(addr==((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index<<LOG2_BLOCK_SIZE)|get_offset),"caculate failed");
 	return result;
