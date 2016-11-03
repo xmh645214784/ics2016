@@ -48,6 +48,7 @@ void concat(init_,CACHE_NAME)()
 	Assert((1<<LOG2_NR_GROUP)==NR_GROUP,"group index caculate failed");
 
 	memset(&CACHE_OBJECT,0,sizeof(CACHE_OBJECT));
+	Assert(sizeof(CACHE_OBJECT)>=4,"sizeof CACHE_OBJECT caculate failed");
 	/*prototype l1cache l2cache*/
 }
 
@@ -88,6 +89,7 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 {
 	int i;
 	uint32_t groupindex=get_group_index;
+	Log("addr=%08x",groupindex);
 	Assert(groupindex>=0&&groupindex<NR_GROUP-WAY,"group index caculate failed");
 	for(i=0;i<WAY;i++)
 	{
