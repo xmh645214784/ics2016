@@ -60,7 +60,7 @@ void concat(init_,CACHE_NAME)()
 #define get_offset (addr%BLOCK_SIZE)
 
 /*addrNOTE*/
-#define get_cache_note (addr>>(LOG2_NR_GROUP+LOG2_BLOCK_SIZE))
+#define get_addr_note (addr>>(LOG2_NR_GROUP+LOG2_BLOCK_SIZE))
 
 
 /*find pointer due to addr              */
@@ -72,7 +72,7 @@ static uint8_t * concat(find_data_point_,CACHE_NAME)(hwaddr_t addr)
 	Assert(groupindex>=0&&groupindex<NR_GROUP*WAY-WAY,"group index caculate failed");
 	for(i=0;i<WAY;i++)
 	{
-		if(CACHE_OBJECT.cacheline[groupindex+i].valid==1&&CACHE_OBJECT.cacheline[groupindex+i].addrnote==get_cache_note)
+		if(CACHE_OBJECT.cacheline[groupindex+i].valid==1&&CACHE_OBJECT.cacheline[groupindex+i].addrnote==get_addr_note)
 		{
 			return &CACHE_OBJECT.cacheline[groupindex+i].data[get_offset];
 		}
@@ -96,16 +96,17 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 		//have unused cachline
 		if(CACHE_OBJECT.cacheline[groupindex+i].valid==0) 
 		{
-			uint32_t result=dram_read(addr, len);
+			uint32_t result=dram_read(addr, len)& (~0u >> ((4 - len) << 3));
 			CACHE_OBJECT.cacheline[groupindex+i].valid=1;
-			CACHE_OBJECT.cacheline[groupindex+i].addrnote=get_cache_note;
+			CACHE_OBJECT.cacheline[groupindex+i].addrnote=get_addr_note;
 
 			int j;
 			for(j=0;j<BLOCK_SIZE;j++)
 			{
-				CACHE_OBJECT.cacheline[groupindex+i].data[j]=dram_read((get_cache_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index_in_array<<LOG2_BLOCK_SIZE)|j, 1);
+				CACHE_OBJECT.cacheline[groupindex+i].data[j]=dram_read((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index_in_array<<LOG2_BLOCK_SIZE)|j, 1);
 				
 			}
+			Assert(((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index_in_array<<LOG2_BLOCK_SIZE)|get_offset)==addr,"for debug");
 			return result;
 		}
 	}
@@ -117,7 +118,7 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 		if(CACHE_OBJECT.cacheline[groupindex].dirty==1)
 		{
 			for(i=0;i<BLOCK_SIZE;i++)
-				dram_write((get_cache_note<<LOG2_BLOCK_SIZE)+i,1,CACHE_OBJECT.cacheline[groupindex].data[i]);
+				dram_write((get_addr_note<<LOG2_BLOCK_SIZE)+i,1,CACHE_OBJECT.cacheline[groupindex].data[i]);
 		}
 	#endif
 
@@ -125,7 +126,7 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 	 * replace the first element in this group!  not random
 	 */
 	Assert(CACHE_OBJECT.cacheline[groupindex].valid==1,"..");
-	CACHE_OBJECT.cacheline[groupindex].addrnote=get_cache_note;
+	CACHE_OBJECT.cacheline[groupindex].addrnote=get_addr_note;
 
 	#ifdef WRITE_ALLOCATE
 		CACHE_OBJECT.cacheline[groupindex].dirty=0;
@@ -134,9 +135,9 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 	int j;
 	for(j=0;j<BLOCK_SIZE;j++)
 	{
-		CACHE_OBJECT.cacheline[groupindex].data[j]=dram_read((get_cache_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index_in_array<<LOG2_BLOCK_SIZE)|j, 1);
+		CACHE_OBJECT.cacheline[groupindex].data[j]=dram_read((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index_in_array<<LOG2_BLOCK_SIZE)|j, 1);
 	}
-Assert(addr==((get_cache_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index<<LOG2_BLOCK_SIZE)|get_offset),"caculate failed");
+Assert(addr==((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index<<LOG2_BLOCK_SIZE)|get_offset),"caculate failed");
 	return result;
 
 }
@@ -157,7 +158,7 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 		//ifdef WRITE_BACK modify the dirty bit
 		#ifdef WRITE_BACK	
 		for(i=0;i<WAY;i++)
-			if(CACHE_OBJECT.cacheline[groupindex+i].valid==1&&CACHE_OBJECT.cacheline[groupindex+i].addrnote==get_cache_note)
+			if(CACHE_OBJECT.cacheline[groupindex+i].valid==1&&CACHE_OBJECT.cacheline[groupindex+i].addrnote==get_addr_note)
 			{
 				CACHE_OBJECT.cacheline[groupindex+i].dirty=1;
 				break;
@@ -278,7 +279,7 @@ void concat(debug_,CACHE_NAME) (uint32_t addr)
 	int i=0;
 	for(i=0;i<WAY;i++)
 	{
-		if(CACHE_OBJECT.cacheline[groupindex+i].valid==1&&CACHE_OBJECT.cacheline[groupindex+i].addrnote==get_cache_note)
+		if(CACHE_OBJECT.cacheline[groupindex+i].valid==1&&CACHE_OBJECT.cacheline[groupindex+i].addrnote==get_addr_note)
 		{
 			printf("HIT\n");
 			 printf("%02x\n",CACHE_OBJECT.cacheline[groupindex+i].data[get_offset]);
@@ -337,4 +338,4 @@ void concat(debug_,CACHE_NAME) (uint32_t addr)
 
 #undef get_offset
 
-#undef get_cache_note
+#undef get_addr_note
