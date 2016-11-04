@@ -149,12 +149,12 @@ Assert(addr==((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index<
 /*prototype :write_L1Cache write_L2Cache*/
 void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 {
-	Log("write:len=%d addr=%08x",len,addr);
+	//Log("write:len=%d addr=%08x",len,addr);
 	int i;
 	uint32_t group_index_in_array=get_group_index_in_array;
 
-	Log("group_num=%d  get_group_index_in_array=%d",get_group_index,get_group_index_in_array);
-	Log("NR_GROUP=%d  WAY=%d",NR_GROUP,WAY);
+	//Log("group_num=%d  get_group_index_in_array=%d",get_group_index,get_group_index_in_array);
+	//Log("NR_GROUP=%d  WAY=%d",NR_GROUP,WAY);
 	Assert(group_index_in_array>=0&&group_index_in_array<=NR_GROUP*WAY-WAY,"group index caculate failed");
 
 	uint8_t *find=concat(find_data_point_,CACHE_NAME)(addr);
@@ -226,9 +226,9 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 /*prototype :read_L1Cache read_L2Cache*/
 uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 {
-	Log("read:len=%d addr=%08x",len,addr);
-	Log("group_num=%d  get_group_index_in_array=%d",get_group_index,get_group_index_in_array);
-	Log("%d  %d",NR_GROUP,WAY);
+	//Log("read:len=%d addr=%08x",len,addr);
+	//Log("group_num=%d  get_group_index_in_array=%d",get_group_index,get_group_index_in_array);
+	//Log("%d  %d",NR_GROUP,WAY);
 	uint32_t group_index_in_array=get_group_index_in_array;
 	Assert(group_index_in_array>=0&&group_index_in_array<=NR_GROUP*WAY-WAY,"group index caculate failed");
 	/*each group first element's index*/
