@@ -267,9 +267,9 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 				case 3:temp_= unalign_rw(find,3);break;
 				default:Assert(0,"switch");
 			}
-			
+				
 
-			return temp_|((concat(read_,CACHE_NAME)(addr+len1,len2))<<(8*len2));
+			return temp_|((concat(read_,CACHE_NAME)(addr+len1,len2))<<(8*len1));
 		}
 	}
 	//MISS
