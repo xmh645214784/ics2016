@@ -261,10 +261,10 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 			uint32_t temp_;
 			switch(len1)
 			{
-				case 4:return unalign_rw(find,4);
-				case 1:return unalign_rw(find,1);
-				case 2:return unalign_rw(find,2);
-				case 3:return unalign_rw(find,3);
+				case 4:temp_= unalign_rw(find,4);break;
+				case 1:temp_= unalign_rw(find,1);break;
+				case 2:temp_= unalign_rw(find,2);break;
+				case 3:temp_= unalign_rw(find,3);break;
 				default:Assert(0,"switch");
 			}
 			
