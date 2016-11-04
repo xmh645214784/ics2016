@@ -244,7 +244,7 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 		{
 			switch(len)
 			{
-				case 4:return unalign_rw(find,4);
+				case 4:printf("1");return unalign_rw(find,4);
 				case 1:return unalign_rw(find,1);
 				case 2:return unalign_rw(find,2);
 				case 3:return unalign_rw(find,3);
