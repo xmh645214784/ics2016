@@ -153,7 +153,7 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 	int i;
 	uint32_t group_index_in_array=get_group_index_in_array;
 
-	Log("group_index_in_array=%d  get_group_index_in_array=%d",get_group_index,get_group_index_in_array);
+	Log("group_num=%d  get_group_index_in_array=%d",get_group_index,get_group_index_in_array);
 	Log("NR_GROUP=%d  WAY=%d",NR_GROUP,WAY);
 	Assert(group_index_in_array>=0&&group_index_in_array<=NR_GROUP*WAY-WAY,"group index caculate failed");
 
@@ -227,7 +227,7 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 {
 	Log("read:len=%d addr=%08x",len,addr);
-	Log("group_index_in_array=%d  get_group_index_in_array=%d",get_group_index,get_group_index_in_array);
+	Log("group_num=%d  get_group_index_in_array=%d",get_group_index,get_group_index_in_array);
 	Log("%d  %d",NR_GROUP,WAY);
 	uint32_t group_index_in_array=get_group_index_in_array;
 	Assert(group_index_in_array>=0&&group_index_in_array<=NR_GROUP*WAY-WAY,"group index caculate failed");
