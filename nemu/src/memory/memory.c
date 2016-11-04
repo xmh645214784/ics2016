@@ -10,11 +10,12 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	//return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	
 	extern uint32_t read_L1Cache(hwaddr_t,size_t);
-	printf("\033[1;31;40m hwaddr_read addr=%08x len=%d \033[0m\n",addr,len);
-	uint32_t temp=read_L1Cache(addr,len)& (~0u >> ((4 - len) << 3));
-	Log("read_L1Cache(addr,len)&(~0u >> ((4 - len) << 3)))=%x\ndram_read(addr, len) & (~0u >> ((4 - len) << 3)))=%x",temp,dram_read(addr, len) & (~0u >> ((4 - len) << 3)));
-	assert(temp==(dram_read(addr, len) & (~0u >> ((4 - len) << 3))));
-	return temp;
+	// printf("\033[1;31;40m hwaddr_read addr=%08x len=%d \033[0m\n",addr,len);
+	// uint32_t temp=read_L1Cache(addr,len)& (~0u >> ((4 - len) << 3));
+	// Log("read_L1Cache(addr,len)&(~0u >> ((4 - len) << 3)))=%x\ndram_read(addr, len) & (~0u >> ((4 - len) << 3)))=%x",temp,dram_read(addr, len) & (~0u >> ((4 - len) << 3)));
+	// assert(temp==(dram_read(addr, len) & (~0u >> ((4 - len) << 3))));
+	// return temp;
+	return read_L1Cache(addr,len);
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
