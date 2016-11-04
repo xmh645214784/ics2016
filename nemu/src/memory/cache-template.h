@@ -161,7 +161,9 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 
 	if(find)//HIT
 	{	
+#if 0
 		printf("write:HIT cacheline"str(CACHE_NAME)"\n");
+#endif
 		//ifdef WRITE_BACK modify the dirty bit
 		#ifdef WRITE_BACK	
 		for(i=0;i<WAY;i++)
@@ -201,9 +203,9 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 
 ////////////////////////////////
 	//MISS
-	//
+#if 0
 	printf("write:MISS cacheline"str(CACHE_NAME)"\n");
-	//
+#endif
 
 #if LEVEL==1
 	write_L2Cache(src,addr,len);
@@ -247,8 +249,9 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 	//HIT
 	if(find)
 	{
+#if 0
 		printf("read :HIT cacheline "str(CACHE_NAME)"\n");
-		//printf("addr(%x)%%BLOCK_SIZE(%d)+len(%d)<=BLOCK_SIZE(%d)\n",addr,BLOCK_SIZE,len,BLOCK_SIZE);
+#endif
 		if(addr%BLOCK_SIZE+len<=BLOCK_SIZE)//align_read
 		{
 
@@ -286,8 +289,9 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 		#if LEVEL==1
 			return read_L2Cache(addr,len);
 		#elif LEVEL==2
-		printf("read:MISS cacheline "str(CACHE_NAME)"\n");
-
+#if 0
+printf("read:MISS cacheline "str(CACHE_NAME)"\n");
+#endif
 	/*BUG?>?*/	allocate_cacheline_L1Cache(addr,len);
 
 
