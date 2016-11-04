@@ -203,6 +203,11 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 	//MISS
 	//
 	//printf("MISS cacheline\n");
+	//
+
+#if level==1
+	write_L2Cache(src,addr,len);
+#elif level==2
 	#ifdef WRITE_ALLOCATE
 	//first update
 		dram_write(addr, len,src);
@@ -213,6 +218,9 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 	#ifdef NOT_WRITE_ALLOCATE
 		dram_write(addr, len,src);
 	#endif
+#else
+		assert(0);
+#endif
 
 	
 	return;
@@ -275,8 +283,14 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 	//MISS
 	else
 	{
+		#if level==1
+			return read_L2Cache(addr,len);
+		#elif level==2
 		//printf("MISS cacheline\n");
 		return concat(allocate_cacheline_,CACHE_NAME)(addr,len);
+		#else
+		assert(0);
+		#endif
 	}
 
 }
