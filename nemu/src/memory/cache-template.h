@@ -288,7 +288,7 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 		#elif LEVEL==2
 		printf("read:MISS cacheline "str(CACHE_NAME)"\n");
 
-	/*>?*/	allocate_cacheline_L1Cache(addr,len);
+	/*BUG?>?*/	allocate_cacheline_L1Cache(addr,len);
 
 
 		return concat(allocate_cacheline_,CACHE_NAME)(addr,len);
