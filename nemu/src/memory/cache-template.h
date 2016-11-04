@@ -121,7 +121,7 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 		if(CACHE_OBJECT.cacheline[group_index_in_array].dirty==1)
 		{
 			for(i=0;i<BLOCK_SIZE;i++)
-				dram_write((get_addr_note<<LOG2_BLOCK_SIZE)+i,1,CACHE_OBJECT.cacheline[group_index_in_array].data[i]);
+				dram_write((get_addr_note<<(LOG2_NR_GROUP+LOG2_BLOCK_SIZE))+i,1,CACHE_OBJECT.cacheline[group_index_in_array].data[i]);
 		}
 	#endif
 
