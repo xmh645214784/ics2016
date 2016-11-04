@@ -161,7 +161,7 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 
 	if(find)//HIT
 	{	
-		//printf("HIT cacheline\n");
+		printf("write:HIT cacheline"str(CACHE_NAME)"\n");
 		//ifdef WRITE_BACK modify the dirty bit
 		#ifdef WRITE_BACK	
 		for(i=0;i<WAY;i++)
@@ -202,7 +202,7 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 ////////////////////////////////
 	//MISS
 	//
-	//printf("MISS cacheline\n");
+	printf("write:MISS cacheline"str(CACHE_NAME)"\n");
 	//
 
 #if LEVEL==1
@@ -240,14 +240,13 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 	uint32_t group_index_in_array=get_group_index_in_array;
 	Assert(group_index_in_array>=0&&group_index_in_array<=NR_GROUP*WAY-WAY,"group index caculate failed");
 	/*each group first element's index*/
-
 	uint8_t *find=concat(find_data_point_,CACHE_NAME)(addr);
 	
-
+	
 	//HIT
 	if(find)
 	{
-		//printf("HIT cacheline\n");
+		printf("read :HIT cacheline "str(CACHE_NAME)"\n");
 		//printf("addr(%x)%%BLOCK_SIZE(%d)+len(%d)<=BLOCK_SIZE(%d)\n",addr,BLOCK_SIZE,len,BLOCK_SIZE);
 		if(addr%BLOCK_SIZE+len<=BLOCK_SIZE)//align_read
 		{
@@ -286,7 +285,7 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 		#if LEVEL==1
 			return read_L2Cache(addr,len);
 		#elif LEVEL==2
-		//printf("MISS cacheline\n");
+		printf("read:MISS cacheline "str(CACHE_NAME)"\n");
 		return concat(allocate_cacheline_,CACHE_NAME)(addr,len);
 		#else
 		assert(0);
