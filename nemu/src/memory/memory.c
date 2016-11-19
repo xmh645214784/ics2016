@@ -1,13 +1,17 @@
 #include "common.h"
 
+
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
 
 /* Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-
 	//return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+
+	#ifdef SHOWCACHEHITRATE
+		allCachecount++;
+	#endif
 	
 	extern uint32_t read_L1Cache(hwaddr_t,size_t);
 	// printf("\033[1;31;40m hwaddr_read addr=%08x len=%d \033[0m\n",addr,len);

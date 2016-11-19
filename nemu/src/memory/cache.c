@@ -1,11 +1,25 @@
 /*level 1 cache*/
 #include "common.h"
+
+#define SHOWCACHEHITRATE
+
+
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
 uint32_t concat(read_,L1Cache)(hwaddr_t addr,size_t len);
 uint32_t concat(read_,L2Cache)(hwaddr_t addr,size_t len);
 void concat(write_,L1Cache)(uint32_t src,hwaddr_t addr,size_t len);
 void concat(write_,L2Cache)(uint32_t src,hwaddr_t addr,size_t len);
+
+
+#ifdef SHOWCACHEHITRATE
+int allCachecount;
+int L1Cachecount;
+int L2Cachecount; 
+/*
+	prototype:concat(CACHE_NAME,count)
+ */
+#endif
 
 
 #define LOG2_BLOCK_SIZE (6)
