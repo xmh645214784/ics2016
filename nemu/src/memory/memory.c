@@ -7,24 +7,27 @@ void dram_write(hwaddr_t, size_t, uint32_t);
 /* Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-	//return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+	//old:return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 
 		extern int allCachecount;
 		allCachecount++;
 
 	extern uint32_t read_L1Cache(hwaddr_t,size_t);
-	// printf("\033[1;31;40m hwaddr_read addr=%08x len=%d \033[0m\n",addr,len);
-	// uint32_t temp=read_L1Cache(addr,len)& (~0u >> ((4 - len) << 3));
-	// Log("read_L1Cache(addr,len)&(~0u >> ((4 - len) << 3)))=%x\ndram_read(addr, len) & (~0u >> ((4 - len) << 3)))=%x",temp,dram_read(addr, len) & (~0u >> ((4 - len) << 3)));
-	// assert(temp==(dram_read(addr, len) & (~0u >> ((4 - len) << 3))));
-	// return temp;
+#if 0
+	printf("\033[1;31;40m hwaddr_read addr=%08x len=%d \033[0m\n",addr,len);
+	uint32_t temp=read_L1Cache(addr,len)& (~0u >> ((4 - len) << 3));
+	Log("read_L1Cache(addr,len)&(~0u >> ((4 - len) << 3)))=%x\ndram_read(addr, len) & (~0u >> ((4 - len) << 3)))=%x",temp,dram_read(addr, len) & (~0u >> ((4 - len) << 3)));
+	assert(temp==(dram_read(addr, len) & (~0u >> ((4 - len) << 3))));
+	return temp;
+#endif
 	return read_L1Cache(addr,len);
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
-	extern void write_L1Cache(uint32_t src,hwaddr_t addr,size_t len);
-
 //old: dram_write(addr, len, data);
+		extern int allCachecount;
+		allCachecount++;
+	extern void write_L1Cache(uint32_t src,hwaddr_t addr,size_t len);
 	write_L1Cache(data,addr,len);
 }
 
