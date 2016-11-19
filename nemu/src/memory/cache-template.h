@@ -218,7 +218,9 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 	//first update
 		dram_write(addr, len,src);
 	//allocate a new cacheline
-		//concat(allocate_cacheline_,L1Cache)(addr,len);
+	
+//why????
+		concat(allocate_cacheline_,L1Cache)(addr,len);
 		concat(allocate_cacheline_,CACHE_NAME)(addr,len);
 	#endif
 	
