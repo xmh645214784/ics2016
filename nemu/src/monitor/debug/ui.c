@@ -321,7 +321,7 @@ static int cmd_cache(char *args)
 	return 0;
 }
 
-#ifdef SHOWCACHEHITRATE
+
 static int cmd_show_cache_rate(char *args)
 {
 	extern int allCachecount;
@@ -337,7 +337,6 @@ static int cmd_show_cache_rate(char *args)
 	return 0;
 }
 
-#endif
 
 
 static struct {
@@ -363,7 +362,8 @@ static struct {
 	{"enable","enable watchpoint",cmd_enable},
 	{"disable","disable watchpoint",cmd_disable},
 	{"bt","print stackframe",cmd_bt},
-	{"cache","cache addr",cmd_cache}
+	{"cache","cache addr",cmd_cache},
+	{"showcacherate","show cache count and rate for debug",cmd_show_cache_rate}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
