@@ -165,10 +165,8 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 		printf("write:HIT cacheline"str(CACHE_NAME)"\n");
 #endif
 
-		
-		#ifdef SHOWCACHEHITRATE
+
 			concat(CACHE_NAME,count)++;
-		#endif
 
 		//ifdef WRITE_BACK modify the dirty bit
 		#ifdef WRITE_BACK	
@@ -259,9 +257,7 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 		printf("read :HIT cacheline "str(CACHE_NAME)"\n");
 #endif
 
-		#ifdef SHOWCACHEHITRATE
 			concat(CACHE_NAME,count)++;
-		#endif
 
 		if(addr%BLOCK_SIZE+len<=BLOCK_SIZE)//align_read
 		{
