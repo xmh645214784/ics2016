@@ -7,8 +7,8 @@
 /* All function defined with 'make_helper' return the length of the operation. */
 #define make_helper(name) int name(swaddr_t eip)
 
-static inline uint32_t instr_fetch(swaddr_t addr, size_t len) {
-	return swaddr_read(addr, len);
+static inline uint32_t instr_fetch(swaddr_t addr, size_t len,uint8_t seg) {
+	return swaddr_read(addr, len,seg);
 }
 
 /* Instruction Decode and EXecute */

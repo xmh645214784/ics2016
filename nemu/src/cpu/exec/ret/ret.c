@@ -4,7 +4,7 @@ extern CPU_state cpu;
 
 make_helper(ret_w)
 {
-	cpu.ip=swaddr_read(cpu.esp,2);
+	cpu.ip=swaddr_read(cpu.esp,2,SR_SS);
 	cpu.esp+=2;
 	cpu.eip=cpu.eip&0x0000FFFF;
 	print_asm("ret");
@@ -13,7 +13,7 @@ make_helper(ret_w)
 
 make_helper(ret_l)
 {
-	cpu.eip=swaddr_read(cpu.esp,4);
+	cpu.eip=swaddr_read(cpu.esp,4,SR_SS);
 	cpu.esp+=4;
 	print_asm("ret");
 	return 0;
@@ -21,7 +21,7 @@ make_helper(ret_l)
 
 make_helper(ret_i_w)
 {
-	cpu.eip=swaddr_read(cpu.esp,2);
+	cpu.eip=swaddr_read(cpu.esp,2,SR_SS);
 	decode_i_w(eip+1);
 	int16_t a=op_src->val;
 	cpu.esp+=2;
@@ -31,7 +31,7 @@ make_helper(ret_i_w)
 }
 make_helper(ret_i_l)
 {
-	cpu.eip=swaddr_read(cpu.esp,4);
+	cpu.eip=swaddr_read(cpu.esp,4,SR_SS);
 	decode_i_w(eip+1);
 	int16_t a=op_src->val;
 	cpu.esp+=4;

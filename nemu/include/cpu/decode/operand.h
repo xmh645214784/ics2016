@@ -17,7 +17,7 @@ typedef struct {
 	 */
 	
 			swaddr_t addr;
-			uint8_t seg;
+			uint8_t sreg;
 		};
 		uint32_t imm;
 		int32_t simm;

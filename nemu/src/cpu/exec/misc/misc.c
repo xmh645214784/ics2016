@@ -16,7 +16,7 @@ make_helper(int3) {
 
 make_helper(lea) {
 	ModR_M m;
-	m.val = instr_fetch(eip + 1, 1);
+	m.val = instr_fetch(eip + 1, 1,SR_CS);
 	int len = load_addr(eip + 1, &m, op_src);
 	reg_l(m.reg) = op_src->addr;
 

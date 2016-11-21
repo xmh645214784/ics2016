@@ -2,7 +2,7 @@
 extern CPU_state cpu;
 make_helper(lods_m_b)
 {
-	cpu.al=swaddr_read(cpu.esi,1);
+	cpu.al=swaddr_read(cpu.esi,1,SR_ES);
 	if(cpu.DF==0)
 		cpu.esi+=1;
 	else
@@ -14,7 +14,7 @@ make_helper(lods_m_b)
 
 make_helper(lods_m_w)
 {
-	cpu.ax=swaddr_read(cpu.esi,2);
+	cpu.ax=swaddr_read(cpu.esi,2,SR_ES);
 	if(cpu.DF==0)
 		cpu.esi+=2;
 	else
@@ -27,7 +27,7 @@ make_helper(lods_m_w)
 
 make_helper(lods_m_l)
 {
-	cpu.eax=swaddr_read(cpu.esi,4);
+	cpu.eax=swaddr_read(cpu.esi,4,SR_ES);
 	if(cpu.DF==0)
 		cpu.esi+=4;
 	else

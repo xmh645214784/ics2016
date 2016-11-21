@@ -13,7 +13,7 @@ static make_helper(_2byte_esc);
 	}; \
 	static make_helper(name) { \
 		ModR_M m; \
-		m.val = instr_fetch(eip + 1, 1); \
+		m.val = instr_fetch(eip + 1, 1,SR_CS); \
 		return concat(opcode_table_, name) [m.opcode](eip); \
 	}
 	
@@ -228,13 +228,13 @@ helper_fun _2byte_opcode_table [256] = {
 };
 
 make_helper(exec) {
-	ops_decoded.opcode = instr_fetch(eip, 1);
+	ops_decoded.opcode = instr_fetch(eip, 1,SR_CS);
 	return opcode_table[ ops_decoded.opcode ](eip);
 }
 
 static make_helper(_2byte_esc) {
 	eip ++;
-	uint32_t opcode = instr_fetch(eip, 1);
+	uint32_t opcode = instr_fetch(eip, 1,SR_CS);
 	ops_decoded.opcode = opcode | 0x100;
 	return _2byte_opcode_table[opcode](eip) + 1; 
 }

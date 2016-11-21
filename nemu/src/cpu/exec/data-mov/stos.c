@@ -2,7 +2,7 @@
 extern CPU_state cpu;
 make_helper(stos_m_b)
 {
-	swaddr_write(cpu.edi,1,cpu.al);
+	swaddr_write(cpu.edi,1,cpu.al,SR_ES);
 	if(cpu.DF==0)
 		cpu.edi+=1;
 	else
@@ -15,7 +15,7 @@ make_helper(stos_m_b)
 
 make_helper(stos_m_w)
 {
-	swaddr_write(cpu.edi,2,cpu.ax);
+	swaddr_write(cpu.edi,2,cpu.ax,SR_ES);
 	if(cpu.DF==0)
 		cpu.edi+=2;
 	else
@@ -28,7 +28,7 @@ make_helper(stos_m_w)
 
 make_helper(stos_m_l)
 {
-	swaddr_write(cpu.edi,4,cpu.eax);
+	swaddr_write(cpu.edi,4,cpu.eax,SR_ES);
 	if(cpu.DF==0)
 		cpu.edi+=4;
 	else

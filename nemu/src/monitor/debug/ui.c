@@ -175,7 +175,7 @@ static int cmd_x(char *args)
 		if(!success)
 			return 0;
 		printf("首地址为:0x%08x\n",exp );
-		printf("0x%08x  \n",swaddr_read(exp,4));
+		printf("0x%08x  \n",swaddr_read(exp,4,SR_DS));
 		return 0;
 	}
 	int num_int=atoi(num);
@@ -190,7 +190,7 @@ static int cmd_x(char *args)
 	int i=0;
 	for(;i<num_int;i++)
 	{	
-		printf("0x%08x  ",swaddr_read(exp+4*i,4));
+		printf("0x%08x  ",swaddr_read(exp+4*i,4,SR_DS));
 	}
 	printf("\n");
 	return 0;
@@ -259,12 +259,12 @@ static int cmd_bt(char *args)
 	do
 	{
 		/*hand prev_ebp ret args*/
-		sf[framenum].prev_ebp=swaddr_read(ebp_temp,4);
+		sf[framenum].prev_ebp=swaddr_read(ebp_temp,4,SR_SS);
 		//Log("sf[framenum].prev_ebp=%08x",sf[framenum].prev_ebp);
-		sf[framenum].ret_addr=swaddr_read(ebp_temp+4,4);
+		sf[framenum].ret_addr=swaddr_read(ebp_temp+4,4,SR_SS);
 		int i=0;
 		for(;i<4;i++)
-			sf[framenum].args[i]=swaddr_read(ebp_temp+8+4*i,4);
+			sf[framenum].args[i]=swaddr_read(ebp_temp+8+4*i,4,SR_SS);
 
 		/*update ebp_temp*/
 		ebp_temp=sf[framenum].prev_ebp;

@@ -17,7 +17,7 @@ make_instr_helper(rm2r)
 
 make_helper(mov_r2cr_l) {
 	int len=decode_r2rm_l(eip+1);
-	uint32_t modrm = instr_fetch(cpu.eip + 1, 1);
+	uint32_t modrm = instr_fetch(cpu.eip + 1, 1,SR_CS);
 	int cr_index = (modrm >> 3) & 0x7;
 
 	assert(cr_index==op_dest->reg&&cr_index==0);
@@ -34,7 +34,7 @@ make_helper(mov_r2cr_l) {
 
 make_helper(mov_cr2r_l) {
 	int len=decode_r2rm_l(eip+1);
-	uint32_t modrm = instr_fetch(eip + 1, 1);
+	uint32_t modrm = instr_fetch(eip + 1, 1,SR_CS);
 	int cr_index = (modrm >> 3) & 0x7;
 	assert(cr_index==op_dest->reg&&cr_index==0);
 /**
@@ -52,16 +52,16 @@ make_helper(mov_cr2r_l) {
 #endif
 
 make_helper(concat(mov_a2moffs_, SUFFIX)) {
-	swaddr_t addr = instr_fetch(eip + 1, 4);
-	MEM_W(addr, REG(R_EAX));
+	swaddr_t addr = instr_fetch(eip + 1, 4,SR_DS);
+	MEM_W(addr, REG(R_EAX),SR_DS);
 
 	print_asm("mov" str(SUFFIX) " %%%s,0x%x", REG_NAME(R_EAX), addr);
 	return 5;
 }
 
 make_helper(concat(mov_moffs2a_, SUFFIX)) {
-	swaddr_t addr = instr_fetch(eip + 1, 4);
-	REG(R_EAX) = MEM_R(addr);
+	swaddr_t addr = instr_fetch(eip + 1, 4,SR_DS);
+	REG(R_EAX) = MEM_R(addr,SR_DS);
 
 	print_asm("mov" str(SUFFIX) " 0x%x,%%%s", addr, REG_NAME(R_EAX));
 	return 5;

@@ -9,9 +9,15 @@ int load_addr(swaddr_t eip, ModR_M *m, Operand *rm) {
 	int base_reg = -1, index_reg = -1, scale = 0;
 	swaddr_t addr = 0;
 
+/**
+ * 	we first initialize it with SR_DS
+ */
+ 	rm->sreg=SR_DS;
+
+
 	if(m->R_M == R_ESP) {
 		SIB s;
-		s.val = instr_fetch(eip + 1, 1);
+		s.val = instr_fetch(eip + 1, 1,SR_CS);
 		base_reg = s.base;
 		disp_offset = 2;
 		scale = s.ss;
@@ -33,7 +39,7 @@ int load_addr(swaddr_t eip, ModR_M *m, Operand *rm) {
 	instr_len = disp_offset;
 	if(disp_size != 0) {
 		/* has disp */
-		disp = instr_fetch(eip + disp_offset, disp_size);
+		disp = instr_fetch(eip + disp_offset, disp_size,SR_CS);
 		if(disp_size == 1) { disp = (int8_t)disp; }
 
 		instr_len += disp_size;
@@ -42,6 +48,11 @@ int load_addr(swaddr_t eip, ModR_M *m, Operand *rm) {
 
 	if(base_reg != -1) {
 		addr += reg_l(base_reg);
+		/**
+		 * for segment binding
+		 */
+		if(base_reg==R_ESP||base_reg==R_EBP)
+			rm->sreg=SR_SS;
 	}
 
 	if(index_reg != -1) {
@@ -73,7 +84,11 @@ int load_addr(swaddr_t eip, ModR_M *m, Operand *rm) {
 		sprintf(rm->str, "%s", disp_buf);
 	}
 	else {
-		sprintf(rm->str, "%s(%s%s)", disp_buf, base_buf, index_buf);
+		//sprintf(rm->str, "%s(%s%s)", disp_buf, base_buf, index_buf);
+	/**
+	 * 	for seg :modifed
+	 */
+		sprintf(rm->str, "%s:%s(%s%s)",segreg_name[rm->sreg], disp_buf, base_buf, index_buf);
 	}
 #endif
 
@@ -85,10 +100,13 @@ int load_addr(swaddr_t eip, ModR_M *m, Operand *rm) {
 
 int read_ModR_M(swaddr_t eip, Operand *rm, Operand *reg) {
 	ModR_M m;
-	m.val = instr_fetch(eip, 1);
+	m.val = instr_fetch(eip, 1,SR_CS);
 	reg->type = OP_TYPE_REG;
 	reg->reg = m.reg;
 
+/**
+ * single reg
+ */
 	if(m.mod == 3) {
 		rm->type = OP_TYPE_REG;
 		rm->reg = m.R_M;
@@ -108,9 +126,12 @@ int read_ModR_M(swaddr_t eip, Operand *rm, Operand *reg) {
 #endif
 		return 1;
 	}
+	/**
+	 *  need translate MODR/M and SIB
+	 */
 	else {
 		int instr_len = load_addr(eip, &m, rm);
-		rm->val = swaddr_read(rm->addr, rm->size);
+		rm->val = swaddr_read(rm->addr, rm->size,rm->sreg);
 		return instr_len;
 	}
 }

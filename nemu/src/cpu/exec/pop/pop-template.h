@@ -6,7 +6,7 @@ extern CPU_state cpu;
 
 //通用执行函数
 static void do_execute() {
-	OPERAND_W(op_src,swaddr_read(cpu.esp,DATA_BYTE));
+	OPERAND_W(op_src,swaddr_read(cpu.esp,DATA_BYTE,SR_SS));
 #if DATA_BYTE==2
 	cpu.esp+=DATA_BYTE;
 #else

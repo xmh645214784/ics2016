@@ -4,7 +4,7 @@ extern CPU_state cpu;
 make_helper(movs_m2m_b)
 {
 
-	swaddr_write(cpu.edi,1,swaddr_read(cpu.esi,1));
+	swaddr_write(cpu.edi,1,swaddr_read(cpu.esi,1,SR_ES),SR_ES);
 	int incdec=0;
 	if(cpu.DF==0)
 		incdec=1;
@@ -18,7 +18,7 @@ make_helper(movs_m2m_b)
 
 make_helper(movs_m2m_w)
 {
-	swaddr_write(cpu.edi,2,swaddr_read(cpu.esi,2));
+	swaddr_write(cpu.edi,2,swaddr_read(cpu.esi,2,SR_ES),SR_ES);
 	int incdec=0;
 	if(cpu.DF==0)
 		incdec=2;
@@ -32,7 +32,7 @@ make_helper(movs_m2m_w)
 
 make_helper(movs_m2m_l)
 {
-	swaddr_write(cpu.edi,4,swaddr_read(cpu.esi,4));
+	swaddr_write(cpu.edi,4,swaddr_read(cpu.esi,4,SR_ES),SR_ES);
 	int incdec=0;
 	if(cpu.DF==0)
 		incdec=4;
