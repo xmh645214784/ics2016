@@ -101,4 +101,7 @@ void restart() {
 	init_L1Cache();
 	extern void init_L2Cache();
 	init_L2Cache();
+
+	/*initialize CR0*/
+	cpu.cr0.protect_enable=0;
 }

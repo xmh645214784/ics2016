@@ -59,3 +59,4 @@ make_helper(leave_v);
 
 #include "loop/loop.h"
 
+make_helper(lgdt_rm2r_l);
