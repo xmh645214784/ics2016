@@ -39,6 +39,17 @@ typedef struct SegmentDescriptor {
 	uint32_t base_31_24          : 8;
 } SegDesc;
 
+typedef struct 
+		{
+			struct 
+			{
+				uint32_t index:13;
+				uint32_t TI :1;
+				uint32_t RPL:2;
+			}selector;
+
+			SegDesc seg_cache;
+		}Segment_reg;
 
 
 
@@ -46,7 +57,7 @@ typedef struct SegmentDescriptor {
 enum { R_EAX, R_ECX, R_EDX, R_EBX, R_ESP, R_EBP, R_ESI, R_EDI };
 enum { R_AX, R_CX, R_DX, R_BX, R_SP, R_BP, R_SI, R_DI };
 enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
-
+enum {SR_ES,SR_CS,SR_SS,SR_DS};
 /* TODO: Re-organize the `CPU_state' structure to match the register
  * encoding scheme in i386 instruction format. For example, if we
  * access cpu.gpr[3]._16, we will get the `bx' register; if we access
@@ -174,17 +185,10 @@ typedef struct {
 		lnaddr_t gdtr;
 	};
 
-	struct 
-	{
-		struct 
-		{
-			uint32_t index:32;
-			uint32_t TI :1;
-			uint32_t RPL:2;
-		}selector;
-
-		SegDesc seg_cache;
-	}cs,ss,ds,es;
+	union{
+		Segment_reg es,cs,ss,ds;
+		Segment_reg segment_reg[4];
+	};
 } CPU_state;
 
 extern CPU_state cpu;
