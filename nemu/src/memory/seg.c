@@ -1,8 +1,8 @@
 #include "common.h"
 #include "cpu/reg.h"
 #include "memory/memory.h"
-#define get_SegDesc_base(temp) (temp.base_15_0|((uint32_t)temp.base_23_16<<16)|((uint32_t)temp.base_31_24<<24))
-#define get_SegDesc_limit(temp) ((temp.limit_15_0|((uint32_t)temp.limit_19_16<<16))*(temp.granularity?(1<<12):1))
+#define get_SegDesc_base(segdesc) (segdesc.base_15_0|((uint32_t)segdesc.base_23_16<<16)|((uint32_t)segdesc.base_31_24<<24))
+#define get_SegDesc_limit(segdesc) ((segdesc.limit_15_0|((uint32_t)segdesc.limit_19_16<<16))*(segdesc.granularity?(1<<12):1))
 
 void get_base_and_limit(uint8_t sreg,lnaddr_t *base,lnaddr_t * limit,bool *granularity)
 {
