@@ -112,5 +112,6 @@ void restart() {
 	temp.base_15_0=0;
 	temp.base_23_16=0;
 	temp.base_31_24=0;
+	temp.granularity=1;
 	cpu.cs.segdesc_cache=temp;
 }
