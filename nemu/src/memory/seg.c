@@ -29,7 +29,7 @@ void get_base_and_limit(uint8_t sreg,lnaddr_t *base,lnaddr_t * limit,bool *granu
 
 lnaddr_t seg_translate(swaddr_t addr, size_t len,uint8_t sreg)
 {
-	printf("sreg=%d\ncr0.protect_enable=%d\n",sreg,cpu.cr0.protect_enable );
+	//printf("sreg=%d\ncr0.protect_enable=%d\n",sreg,cpu.cr0.protect_enable );
 	if(cpu.cr0.protect_enable==1)
 	{
 		/*
@@ -43,9 +43,9 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len,uint8_t sreg)
 #endif*/
 	    SegDesc  temp= cpu.segment_reg[sreg].segdesc_cache;
 	    lnaddr_t base=get_SegDesc_base(temp);
-	    printf("base=%x\n",base );
+	  //  printf("base=%x\n",base );
 	    lnaddr_t limit=get_SegDesc_limit(temp);
-	    printf("limit=%x\n",limit );
+	   // printf("limit=%x\n",limit );
 	//    printf("cpu.cs.cache.granularity=%x\n",cpu.segment_reg[1].segdesc_cache.granularity);
 
 #ifdef DEBUG
