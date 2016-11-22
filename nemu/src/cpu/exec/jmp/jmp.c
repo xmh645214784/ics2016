@@ -62,7 +62,7 @@ make_helper(ljmp)
 extern void load_segment(int index,Selector selector);
     load_segment(SR_CS, selector);
     cpu.eip = new_eip;
-	printf("cpu.eip=%x\n",cpu.eip);  
+	Log("cpu.eip=%x\n",cpu.eip);  
 	return 1 + 4 + 2;	
 }
 
