@@ -31,14 +31,15 @@ make_instr_helper(rm2r)
  */
 make_helper(mov_r2cr_l) {
 	int len=decode_r2rm_l(eip+1);
-	uint32_t modrm = instr_fetch(eip + 1, 1,SR_CS);
-	uint32_t cr_index = (modrm >> 3) & 0x7;
+	//uint32_t modrm = instr_fetch(eip + 1, 1,SR_CS);
+	//uint32_t cr_index = (modrm >> 3) & 0x7;
 //	printf("modrm reg=%d\n cr_index=%d\n",op_src->reg,cr_index );
 
 #ifdef DEBUG
-	assert((modrm>>6)==3);
-	assert(cr_index==op_src->reg&&cr_index==0);
+	//assert((modrm>>6)==3);
+	//assert(cr_index==op_src->reg&&cr_index==0);
 	assert(len==1);
+	assert(op_src->reg==0);
 #endif
 
 
@@ -48,23 +49,24 @@ make_helper(mov_r2cr_l) {
 	cpu.cr0.val = op_dest->val;
 
 
-	print_asm("mov %s, %%cr%d", op_src->str, cr_index);
+	print_asm("mov %s, %%cr%d", op_src->str, op_src->reg);
 
     return len+1;
 }
 
 make_helper(mov_cr2r_l) {
 	int len=decode_r2rm_l(eip+1);
-	uint32_t modrm = instr_fetch(eip + 1, 1,SR_CS);
-	uint32_t cr_index = (modrm >> 3) & 0x7;
-	assert(cr_index==op_src->reg&&cr_index==0);
+	//uint32_t modrm = instr_fetch(eip + 1, 1,SR_CS);
+	//uint32_t cr_index = (modrm >> 3) & 0x7;
+	//assert(cr_index==op_src->reg&&cr_index==0);
 /**
  * now only have cr0
  */
+	assert(op_src->reg==0);
 	OPERAND_W(op_dest,cpu.cr0.val);
 
 
-	print_asm("mov %%cr%d,%s ",  cr_index,op_src->str);
+	print_asm("mov %%cr%d,%s ",  op_src->reg,op_src->str);
 
     return len+1;
 }
