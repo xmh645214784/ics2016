@@ -33,7 +33,7 @@ make_helper(mov_r2cr_l) {
 	int len=decode_r2rm_l(eip+1);
 	uint32_t modrm = instr_fetch(cpu.eip + 1, 1,SR_CS);
 	uint32_t cr_index = (modrm >> 3) & 0x7;
-	printf("modrm reg=%d\n cr_index=%d",op_src->reg,cr_index );
+	printf("modrm reg=%d\n cr_index=%d\n",op_src->reg,cr_index );
 
 #ifdef DEBUG
 	assert((modrm>>6)==3);
