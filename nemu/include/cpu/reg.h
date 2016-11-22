@@ -194,7 +194,13 @@ typedef struct {
 	};
 
 	union{
-		Segment_reg es,cs,ss,ds;
+		struct{
+			Segment_reg es;
+			Segment_reg cs;
+			Segment_reg ss;
+			Segment_reg ds;
+		};
+		
 		Segment_reg segment_reg[4];
 	};
 } CPU_state;
