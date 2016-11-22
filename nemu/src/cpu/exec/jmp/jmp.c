@@ -52,9 +52,10 @@ make_helper(ljmp)
 {
 	// if(cpu.cr0.protect_enable==0)
 	// 	assert(0);
-    assert(0);
 
 	uint32_t temp = instr_fetch(eip + 1 + 4,2, SR_CS);
+    assert(0);
+
 	Selector selector;
 	selector.val=temp;
     uint32_t new_eip = instr_fetch(eip + 1, 4,SR_CS);
