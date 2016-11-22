@@ -5,7 +5,7 @@
 extern uint8_t entry [];
 extern uint32_t entry_len;
 extern char *exec_file;
-
+extern CPU_state cpu;
 
 void load_elf_tables(int, char *[]);
 void init_regex();
@@ -104,4 +104,13 @@ void restart() {
 
 	/*initialize CR0*/
 	cpu.cr0.protect_enable=0;
+
+	/*initialize CS.descache*/
+	SegDesc temp;
+	temp.limit_15_0=0xffff;
+	temp.limit_19_16=0xf;
+	temp.base_15_0=0;
+	temp.base_23_16=0;
+	temp.base_31_24=0;
+	cpu.cs.segdesc_cache=temp;
 }
