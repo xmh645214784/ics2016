@@ -43,7 +43,10 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len,uint8_t sreg)
 #endif*/
 	    SegDesc  temp= cpu.segment_reg[sreg].segdesc_cache;
 	    lnaddr_t base=get_SegDesc_base(temp);
+	    printf("base=%x\n",base );
 	    lnaddr_t limit=get_SegDesc_limit(temp);
+	    printf("limit=%x\n",limit );
+
 #ifdef DEBUG
 	    assert(addr<limit);
 #endif
