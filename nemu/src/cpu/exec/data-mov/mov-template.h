@@ -33,7 +33,7 @@ make_helper(mov_r2cr_l) {
 	int len=decode_r2rm_l(eip+1);
 	uint32_t modrm = instr_fetch(cpu.eip + 1, 1,SR_CS);
 	int cr_index = (modrm >> 3) & 0x7;
-
+	assert((modrm>>6)==3);
 	assert(cr_index==op_src->reg&&cr_index==0);
 /**
  * now only have cr0
