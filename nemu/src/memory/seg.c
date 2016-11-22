@@ -29,6 +29,7 @@ void get_base_and_limit(uint8_t sreg,lnaddr_t *base,lnaddr_t * limit,bool *granu
 
 lnaddr_t seg_translate(swaddr_t addr, size_t len,uint8_t sreg)
 {
+	printf("sreg=%d\ncr0.protect_enable=%d\n",sreg,cpu.cr0.protect_enable );
 	if(cpu.cr0.protect_enable==1)
 	{
 		/*
