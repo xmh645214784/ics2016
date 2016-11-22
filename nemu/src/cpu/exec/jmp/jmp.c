@@ -54,8 +54,6 @@ make_helper(ljmp)
 	// 	assert(0);
 
 	uint32_t temp = instr_fetch(eip + 1 + 4,2, SR_CS);
-    assert(0);
-
 	Selector selector;
 	selector.val=temp;
     uint32_t new_eip = instr_fetch(eip + 1, 4,SR_CS);
@@ -64,7 +62,8 @@ make_helper(ljmp)
 extern void load_segment(int index,Selector selector);
     load_segment(SR_CS, selector);
     cpu.eip = new_eip;
-    
+        assert(0);
+
     
 	return 1 + 4 + 2;	
 }
