@@ -42,9 +42,9 @@ typedef struct SegmentDescriptor {
 typedef union 
 {
 	struct {
-	uint32_t index:13;
-	uint32_t TI :1;
 	uint32_t RPL:2;
+	uint32_t TI :1;
+	uint32_t index:13;
 	};
 
 	uint16_t val;
