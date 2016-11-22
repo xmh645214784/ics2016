@@ -46,5 +46,25 @@ make_helper(jmp_rm_l)
 /* for instruction encoding overloading */
 make_helper_v(jmp_rel)
 make_helper_v(jmp_rm)
+
+/*ptr16:32*/
+make_helper(ljmp)
+{
+	// if(cpu.cr0.protect_enable==0)
+	// 	assert(0);
+	uint32_t temp = instr_fetch(eip + 1 + 4,2, SR_CS);
+	Selector selector;
+	selector.val=temp;
+    uint32_t new_eip = instr_fetch(eip + 1, 4,SR_CS);
+	print_asm("jmp far %04x:%08x", temp, new_eip);
+
+extern void load_segment(int index,Selector selector);
+    load_segment(SR_CS, selector);
+    cpu.eip = new_eip;
+    
+    
+	return 1 + 4 + 2;	
+}
+
 #include "cpu/exec/helper.h"
 
