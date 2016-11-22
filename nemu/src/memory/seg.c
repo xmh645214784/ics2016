@@ -1,6 +1,8 @@
 #include "common.h"
 #include "cpu/reg.h"
 #include "memory/memory.h"
+#define get_SegDesc_base(temp) (temp.base_15_0|((uint32_t)temp.base_23_16<<16)|((uint32_t)temp.base_31_24<<24))
+#define get_SegDesc_limit(temp) ((temp.limit_15_0|((uint32_t)temp.limit_19_16<<16))*(temp.granularity?(1<<12):1))
 
 void get_base_and_limit(uint8_t sreg,lnaddr_t *base,lnaddr_t * limit,bool *granularity)
 {
@@ -16,9 +18,8 @@ void get_base_and_limit(uint8_t sreg,lnaddr_t *base,lnaddr_t * limit,bool *granu
 
 	SegDesc sgds;
 	memcpy(&sgds,temp,8);
-	*base=sgds.base_15_0|(((uint32_t)sgds.base_23_16<<16))|(((uint32_t)sgds.base_31_24<<24));
-	*limit=sgds.limit_15_0|((uint32_t)sgds.limit_19_16<<16);
-	*granularity=sgds.granularity;
+	*base=get_SegDesc_base(sgds);
+	*limit=get_SegDesc_limit(sgds);
 #ifdef DEBUG
 	Assert(sgds.present,"sgds failed");
 #endif 
@@ -26,19 +27,24 @@ void get_base_and_limit(uint8_t sreg,lnaddr_t *base,lnaddr_t * limit,bool *granu
 }
 
 
-
 lnaddr_t seg_translate(swaddr_t addr, size_t len,uint8_t sreg)
 {
 	if(cpu.cr0.protect_enable==1)
 	{
-		
+		/*
 	    lnaddr_t base,limit;
 	    bool granularity;
 	    get_base_and_limit(sreg,&base,&limit,&granularity);
 #ifdef DEBUG   
-	    if (addr > limit*(granularity?1<<12:1) || addr + len - 1 > limit*(granularity?1<<12:1)) {
+	    if (addr > limit || addr + len - 1 > limit) {
 	    	panic("can't do segment-translation");
 	    }
+#endif*/
+	    SegDesc  temp= cpu.segment_reg[sreg].segdesc_cache;
+	    lnaddr_t base=get_SegDesc_base(temp);
+	    lnaddr_t limit=get_SegDesc_limit(temp);
+#ifdef DEBUG
+	    assert(addr<limit);
 #endif
     	return base + addr;
 
