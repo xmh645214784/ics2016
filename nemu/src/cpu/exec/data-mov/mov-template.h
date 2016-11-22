@@ -32,9 +32,15 @@ make_instr_helper(rm2r)
 make_helper(mov_r2cr_l) {
 	int len=decode_r2rm_l(eip+1);
 	uint32_t modrm = instr_fetch(cpu.eip + 1, 1,SR_CS);
-	int cr_index = (modrm >> 3) & 0x7;
+	uint32_t cr_index = (modrm >> 3) & 0x7;
+
+
+#ifdef DEBUG
 	assert((modrm>>6)==3);
 	assert(cr_index==op_src->reg&&cr_index==0);
+#endif
+
+
 /**
  * now only have cr0
  */
@@ -49,7 +55,7 @@ make_helper(mov_r2cr_l) {
 make_helper(mov_cr2r_l) {
 	int len=decode_r2rm_l(eip+1);
 	uint32_t modrm = instr_fetch(eip + 1, 1,SR_CS);
-	int cr_index = (modrm >> 3) & 0x7;
+	uint32_t cr_index = (modrm >> 3) & 0x7;
 	assert(cr_index==op_src->reg&&cr_index==0);
 /**
  * now only have cr0
