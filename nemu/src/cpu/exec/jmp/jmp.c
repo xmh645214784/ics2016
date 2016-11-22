@@ -58,7 +58,7 @@ make_helper(ljmp)
 	selector.val=temp;
     uint32_t new_eip = instr_fetch(eip + 1, 4,SR_CS);
 	print_asm("jmp far %04x:%08x", temp, new_eip);
-
+	Log("jmp far %04x:%08x", temp, new_eip);
 extern void load_segment(int index,Selector selector);
     load_segment(SR_CS, selector);
     cpu.eip = new_eip;
