@@ -39,17 +39,25 @@ typedef struct SegmentDescriptor {
 	uint32_t base_31_24          : 8;
 } SegDesc;
 
-typedef struct 
-		{
-			struct 
-			{
-				uint32_t index:13;
-				uint32_t TI :1;
-				uint32_t RPL:2;
-			}selector;
+typedef union 
+{
+	struct {
+	uint32_t index:13;
+	uint32_t TI :1;
+	uint32_t RPL:2;
+	};
 
-			SegDesc seg_cache;
-		}Segment_reg;
+	uint16_t val;
+}Selector;//segment selector
+
+
+typedef struct 
+{
+
+	Selector selector;
+
+	SegDesc segdesc_cache;
+}Segment_reg;
 
 
 

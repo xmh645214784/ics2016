@@ -2,7 +2,7 @@
 #include "cpu/reg.h"
 #include "memory/memory.h"
 
-static void get_base_and_limit(uint8_t sreg,lnaddr_t *base,lnaddr_t * limit)
+void get_base_and_limit(uint8_t sreg,lnaddr_t *base,lnaddr_t * limit)
 {
 	uint32_t index_in_descripter_table=cpu.segment_reg[sreg].selector.index;
 
@@ -48,3 +48,27 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len,uint8_t sreg)
 		return addr;
 }
 
+/**
+ * [load_segment:modify segmentreg by reading selector showed by param1]
+ * @param index    [seg reg index]
+ * @param selector [selector]
+ */
+void load_segment(int index,Selector selector)
+{
+	Assert(index==0||index==1||index==2||index==3,"seg index fault");
+	SegDesc desc;
+	uint32_t temp[2];
+
+
+	Assert(cpu.gdtrlimit>=selector.index,"selector.index out of range");
+
+	temp[0] = lnaddr_read(cpu.gdtr + selector.index * 8, 4); // little endian
+	temp[1] = lnaddr_read(cpu.gdtr + selector.index * 8 + 4, 4);
+	memcpy(&desc, temp, 8);
+	
+	/**
+	 * load segment
+	 */
+	cpu.segment_reg[index].selector = selector;
+	cpu.segment_reg[index].segdesc_cache = desc;
+}

@@ -67,4 +67,18 @@ make_helper(concat(mov_moffs2a_, SUFFIX)) {
 	return 5;
 }
 
+#if DATA_BYTE==2
+make_helper(concat(mov_rm2seg_,SUFFIX))
+{
+	int len=decode_rm2r_w(eip+1);
+	uint32_t modrm = instr_fetch(eip + 1, 1,SR_CS);
+	int index = (modrm >> 3) & 0x7;
+	print_asm("mov %s, %%%s", op_src->str, segreg_name[index]);
+	extern void load_segment(int index,Selector selector);
+	Selector selector;
+	selector.val=op_src->val;
+	load_segment(index,selector);
+	return 1+len;
+}
+#endif
 #include "cpu/exec/template-end.h"
