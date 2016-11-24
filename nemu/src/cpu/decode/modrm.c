@@ -16,6 +16,9 @@ int load_addr(swaddr_t eip, ModR_M *m, Operand *rm) {
 
 
 	if(m->R_M == R_ESP) {
+		/**
+		 * HAVE SIB
+		 */
 		SIB s;
 		s.val = instr_fetch(eip + 1, 1,SR_CS);
 		base_reg = s.base;
