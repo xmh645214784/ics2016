@@ -104,7 +104,7 @@ void restart() {
 
 	/*initialize CR0*/
 	cpu.cr0.protect_enable=0;
-
+	cpu.cr0.paging=0;
 	/*initialize CS.descache*/
 	SegDesc temp;
 	temp.limit_15_0=0xffff;

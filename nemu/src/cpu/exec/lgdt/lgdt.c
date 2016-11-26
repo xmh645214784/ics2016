@@ -1,7 +1,7 @@
 #include "cpu/exec/helper.h"
 
 
-static inline void do_execute_rm2r() { // move gpr to cr
+static inline void do_execute() { // move gpr to cr
 #ifdef DEBUG
 	extern Operands ops_decoded;
 	Assert(ops_decoded.is_operand_size_16==0,"lgdt 16bit");
@@ -13,5 +13,5 @@ static inline void do_execute_rm2r() { // move gpr to cr
 }
 
 make_helper(lgdt_rm2r_l) {
-    return idex(eip, decode_rm2r_l, do_execute_rm2r);
+    return idex(eip, decode_rm2r_l, do_execute);
 }

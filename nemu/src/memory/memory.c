@@ -4,7 +4,7 @@
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
 lnaddr_t seg_translate(swaddr_t addr, size_t len,uint8_t sreg);
-
+hwaddr_t page_translate(lnaddr_t addr);
 
 /* Memory accessing interfaces */
 
@@ -34,11 +34,53 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 }
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
-	return hwaddr_read(addr, len);
+	if(cpu.cr0.protect_enable==1&&cpu.cr0.paging==1)
+	{
+		/*unaligned*/
+		if(((addr&0xfff)+len)>(0xfff+1))  /*1 is important*/
+		{
+			int len1=(addr&0xfff)+len-1-0xfff;
+			int len2=len-len1;
+			return (hwaddr_read(page_translate(addr),len1)&(~0u >> ((4 - len1) << 3)))|(hwaddr_read(page_translate(addr+len1),len2)<<(8*len1));
+		}
+		else
+		  return hwaddr_read(page_translate(addr),len);
+	}
+	else
+		return hwaddr_read(addr, len);
 }
 
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
-	hwaddr_write(addr, len, data);
+	if(cpu.cr0.protect_enable==1&&cpu.cr0.paging==1)
+	{
+		/*unaligned*/
+		if(((addr&0xfff)+len)>(0xfff+1))  /*1 is important*/
+		{
+			int len1=(addr&0xfff)+len-1-0xfff;
+			int len2=len-len1;
+			uint32_t write1,write2;
+			switch(len1)
+			{
+			case 1:write1=data&0xff;break;
+			case 2:write1=data&0xffff;break;
+			case 3:write1=data&0xffffff;break;
+			default: assert(0);
+			}
+			switch(len2)
+			{
+			case 1:write2=(data>>8*len1)&0xff;break;
+			case 2:write2=(data>>8*len1)&0xffff;break;
+			case 3:write2=(data>>8*len1)&0xffffff;break;
+			default: assert(0);
+			}
+			hwaddr_write(page_translate(addr),len1,write1);
+			hwaddr_write(page_translate(addr+len1),len2,write2);
+		}
+		else
+			hwaddr_write(page_translate(addr),len,data);
+	}
+	else
+		hwaddr_write(addr, len, data);
 }
 
 uint32_t swaddr_read(swaddr_t addr, size_t len,uint8_t sreg) {
