@@ -45,12 +45,12 @@ make_helper(mov_r2cr_l) {
 /**
  * now only have cr0 cr3
  */
-switch (op_src->reg)
-{
-	case 0:	cpu.cr0.val = op_dest->val; break;
-	case 3:	cpu.cr3.val = op_dest->val; break;
-	default:assert(0);
-}
+	switch (op_src->reg)
+	{
+		case 0:	cpu.cr0.val = op_dest->val; break;
+		case 3:	cpu.cr3.val = op_dest->val; extern void flush_TLB(); flush_TLB(); break;
+		default:assert(0);
+	}
 
 
 
