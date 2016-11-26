@@ -8,7 +8,7 @@ hwaddr_t page_translate(lnaddr_t addr)
 	#define PAGE(addr) ((addr>>12)&0x3ff)
 	#define OFFSET(addr) (addr &0xfff)
 hwaddr_t read_TLB(lnaddr_t addr);
-	return read_TLB(addr);
+	return read_TLB(addr)+OFFSET(addr);
 
 }
 
