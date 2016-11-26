@@ -75,9 +75,9 @@ static hwaddr_t find_hwaddr_due_lnaddr(lnaddr_t addr)
 
 /**
  * [allocate_TLBSlot description]
- * 	allocate one TLBSlot due to the addr and return the real hw_addr to add it with offset
+ * 	allocate one TLBSlot due to the addr and return hw:20
  * @param  addr [description]
- * @return      [return real hw_addr.It has been  <<12]
+ * @return      [return hw:20]
  */
 static hwaddr_t allocate_TLBSlot(lnaddr_t addr)
 {
@@ -101,7 +101,7 @@ static hwaddr_t allocate_TLBSlot(lnaddr_t addr)
 
 	tlb[0].ln_tag=((DIR(addr)<<10)|PAGE(addr));
 	tlb[0].hw_result=find_hwaddr_due_lnaddr(addr)>>12;	
-	return tlb[0].hw_result<<12;	
+	return tlb[0].hw_result;	
 }
 
 
@@ -126,7 +126,7 @@ hwaddr_t read_TLB(lnaddr_t addr)
 	/**
 	 * MISS TLB
 	 */
-	return allocate_TLBSlot(addr);
+	return allocate_TLBSlot(addr)<<12;
 }
 
 #undef DIR
