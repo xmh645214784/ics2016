@@ -2,27 +2,7 @@
 #define __REG_H__
 
 #include "common.h"
-
-typedef union CR0 {
-	struct {
-		uint32_t protect_enable      : 1;
-		uint32_t monitor_coprocessor : 1;
-		uint32_t emulation           : 1;
-		uint32_t task_switched       : 1;
-		uint32_t extension_type      : 1;
-		uint32_t numeric_error       : 1;
-		uint32_t pad0                : 10;
-		uint32_t write_protect       : 1; 
-		uint32_t pad1                : 1; 
-		uint32_t alignment_mask      : 1;
-		uint32_t pad2                : 10;
-		uint32_t no_write_through    : 1;
-		uint32_t cache_disable       : 1;
-		uint32_t paging              : 1;
-	};
-	uint32_t val;
-} CR0;
-
+#include "../../../lib-common/x86-inc/cpu.h"
 typedef struct SegmentDescriptor {
 	uint32_t limit_15_0          : 16;
 	uint32_t base_15_0           : 16;
@@ -58,7 +38,6 @@ typedef struct
 
 	SegDesc segdesc_cache;
 }Segment_reg;
-
 
 
 
@@ -203,6 +182,10 @@ typedef struct {
 		
 		Segment_reg segment_reg[4];
 	};
+	/**
+	 * for page
+	 */
+	CR3 cr3;
 } CPU_state;
 
 extern CPU_state cpu;
