@@ -69,8 +69,8 @@ uint32_t loader() {
 
 			 Elf32_Off Offset=ph->p_offset;
 
-				Elf32_Addr VirtAddr =mm_malloc(ph->p_vaddra,ph->p_memsz);
-			/*old value: VirtAddr=ph->p_vaddra*/
+				Elf32_Addr VirtAddr =mm_malloc(ph->p_vaddr,ph->p_memsz);
+			/*old value: VirtAddr=ph->p_vaddr*/
 
 			 int FileSiz=ph->p_filesz;
 			 int MemSize=ph->p_memsz;
