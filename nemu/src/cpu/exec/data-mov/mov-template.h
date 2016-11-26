@@ -39,14 +39,19 @@ make_helper(mov_r2cr_l) {
 	//assert((modrm>>6)==3);
 	//assert(cr_index==op_src->reg&&cr_index==0);
 	assert(len==1);
-	assert(op_src->reg==0);
 #endif
 
 
 /**
- * now only have cr0
+ * now only have cr0 cr3
  */
-	cpu.cr0.val = op_dest->val;
+switch (op_src->reg)
+{
+	case 0:	cpu.cr0.val = op_dest->val; break;
+	case 3:	cpu.cr3.val = op_dest->val; break;
+	default:assert(0);
+}
+
 
 
 	print_asm("mov %s, %%cr%d", op_src->str, op_src->reg);
