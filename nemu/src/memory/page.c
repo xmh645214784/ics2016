@@ -91,7 +91,7 @@ static hwaddr_t allocate_TLBSlot(lnaddr_t addr)
 			tlb[i].valid=1;
 			tlb[i].ln_tag=((DIR(addr)<<10)|PAGE(addr));
 			tlb[i].hw_result=find_hwaddr_due_lnaddr(addr)>>12;	
-			return tlb[i].hw_result<<12;																														 
+			return tlb[i].hw_result;																														 
 		}
 
 	/**
