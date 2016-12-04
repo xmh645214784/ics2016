@@ -11,9 +11,9 @@ void concat(write_,L1Cache)(uint32_t src,hwaddr_t addr,size_t len);
 void concat(write_,L2Cache)(uint32_t src,hwaddr_t addr,size_t len);
 
 
-int allCachecount;
-int L1Cachecount;
-int L2Cachecount; 
+uint64_t allCachecount;
+uint64_t L1Cachecount;
+uint64_t L2Cachecount; 
 /*
 	prototype:concat(CACHE_NAME,count)
  */

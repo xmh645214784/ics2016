@@ -324,13 +324,13 @@ static int cmd_cache(char *args)
 
 static int cmd_show_cache_rate(char *args)
 {
-	extern int allCachecount;
-	extern int L1Cachecount;
-	extern int L2Cachecount;
+	extern uint64_t allCachecount;
+	extern uint64_t L1Cachecount;
+	extern uint64_t L2Cachecount;
 	printf("Cache count:\n"
-			"\t all visit:%d\n"
-			"\tL1Cachecount:%d\n"
-			"\tL2Cachecount:%d\n"
+			"\t all visit:%lld\n"
+			"\tL1Cachecount:%lld\n"
+			"\tL2Cachecount:%lld\n"
 			"\tL1rate:%f\n"
 			"\tL2rate:%f\n",
 			allCachecount,L1Cachecount,L2Cachecount,L1Cachecount/(float)allCachecount,L2Cachecount/(float)allCachecount);
