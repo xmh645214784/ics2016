@@ -68,3 +68,6 @@ make_helper(cld);
 
 #include "intr/int.h"
 make_helper(cli);
+
+make_helper(pusha);
+make_helper(popa);
