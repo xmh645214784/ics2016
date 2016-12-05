@@ -2,7 +2,7 @@
 make_helper(int_i_b)
 {
 	int len=decode_i_b(eip+1);
-	assert(0);
+//	assert(0);
 
 extern	void raise_intr(uint8_t NO);
 	
