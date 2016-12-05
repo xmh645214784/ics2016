@@ -60,6 +60,7 @@ make_helper(leave_v);
 #include "loop/loop.h"
 
 make_helper(lgdt_rm2r_l);
+make_helper(lidt_rm2r_l);
 
 make_helper(std);
 

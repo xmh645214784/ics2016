@@ -173,6 +173,15 @@ typedef struct {
 	 * for page
 	 */
 	CR3 cr3;
+
+	/**
+	 * for interrupt
+	 */
+	struct 
+	{
+		uint16_t idtrlimit;		
+		lnaddr_t idtr;
+	};
 } CPU_state;
 
 extern CPU_state cpu;
