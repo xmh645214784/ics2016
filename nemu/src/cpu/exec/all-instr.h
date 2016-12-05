@@ -65,3 +65,5 @@ make_helper(lidt_rm2r_l);
 make_helper(std);
 
 make_helper(cld);
+
+#include "intr/int.h"
