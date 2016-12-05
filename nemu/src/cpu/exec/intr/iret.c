@@ -3,7 +3,6 @@ make_helper(iretd)
 {
 	if(cpu.cr0.protect_enable==0)
 	{
-		extern Operands ops_decoded;
 		if(ops_decoded.is_operand_size_16)
 		{
 			// Log("need notice")
