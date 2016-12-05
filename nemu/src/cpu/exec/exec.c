@@ -87,7 +87,7 @@ make_group(group6,
 	inv, inv, inv, inv)
 
 make_group(group7,
-	inv, lidt_rm2r_l, lgdt_rm2r_l, inv, 
+	inv, inv, lgdt_rm2r_l, lidt_rm2r_l, 
 	inv, inv, inv, inv)
 
 
