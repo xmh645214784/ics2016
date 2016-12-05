@@ -3,7 +3,6 @@
 
 static inline void do_execute() { // move gpr to cr
 #ifdef DEBUG
-	extern Operands ops_decoded;
 	Assert(ops_decoded.is_operand_size_16==0,"lgdt 16bit");
 #endif
 	print_asm("lgdt fword %s", op_src->str);
