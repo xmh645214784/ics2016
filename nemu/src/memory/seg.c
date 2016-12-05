@@ -79,7 +79,7 @@ void load_segment(int index,Selector selector)
 	memcpy(&desc, temp, 8);
 	
 	/**
-	 * load segment
+	 * load segment reg
 	 */
 	cpu.segment_reg[index].selector = selector;
 	cpu.segment_reg[index].segdesc_cache = desc;
