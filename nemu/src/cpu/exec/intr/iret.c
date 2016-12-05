@@ -58,11 +58,25 @@ extern void load_segment(int index,Selector selector);
 		load_segment(SR_DS,temp);
 		cpu.esp+=4;	
 
-		//FS ??????
-		temp.val=swaddr_read(cpu.esp,4,SR_SS);
-		load_segment(SR_DS,temp);
-		cpu.esp+=4;	
-		assert(0);	
+		//FS 
+		cpu.esp+=4;
+
+		//GS
+		cpu.esp+=4;
+
+		uint32_t tempesp=swaddr_read(cpu.esp,4,SR_SS);
+		cpu.esp+=4;
+		uint32_t tempss=swaddr_read(cpu.esp,4,SR_SS);
+		cpu.esp+=4;
+		cpu.esp=tempesp;
+
+/**
+ * load SS:ESp
+ */
+		
+		temp.val=tempss;
+		load_segment(SR_SS,temp);
+		
 
 	}
 	print_asm("iretd");
