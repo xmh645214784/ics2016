@@ -20,6 +20,7 @@ called.
 //This is important
 	print_asm("int 0x%02x",op_src->val);
 	raise_intr(op_src->val);
+	assert(0);
 	return 1+len;
 }
 /*
@@ -41,6 +42,6 @@ make_helper(int4)
 extern void raise_intr(uint8_t NO);
 	raise_intr(4);
 
-
+	assert(0);
 	return 1;
 }
