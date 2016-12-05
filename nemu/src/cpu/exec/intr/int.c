@@ -18,9 +18,8 @@ called.
 	
 	cpu.eip+=2;
 //This is important
-
-	raise_intr(op_src->val);
 	print_asm("int 0x%02x",op_src->val);
+	raise_intr(op_src->val);
 	return 1+len;
 }
 /*
