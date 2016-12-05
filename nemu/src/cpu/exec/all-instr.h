@@ -67,3 +67,4 @@ make_helper(std);
 make_helper(cld);
 
 #include "intr/int.h"
+make_helper(cli);

@@ -16,7 +16,7 @@ called.
 	assert((int)op_src->val>=0&&(int)op_src->val<=255);
 #endif	
 	
-	cpu.eip+=2;
+//	cpu.eip+=2;
 //This is important
 
 	raise_intr(op_src->val);
@@ -40,6 +40,6 @@ make_helper(int4)
 	raise_intr(4);
 
 	print_asm("int 4");
-	cpu.eip+=1;
+//	cpu.eip+=1;
 	return 1;
 }
