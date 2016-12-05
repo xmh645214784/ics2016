@@ -6,7 +6,7 @@ static inline void do_execute() { // move gpr to cr
 	extern Operands ops_decoded;
 	Assert(ops_decoded.is_operand_size_16==0,"lgdt 16bit");
 #endif
-	print_asm("lgdt fword %s", op_src->str);
+	print_asm("lidt fword %s", op_src->str);
 	cpu.idtr = lnaddr_read(op_src->addr + 2, 4);
 	cpu.idtrlimit = lnaddr_read(op_src->addr, 2);
 
