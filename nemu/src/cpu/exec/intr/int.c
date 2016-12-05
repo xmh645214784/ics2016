@@ -4,7 +4,7 @@ make_helper(int_i_b)
 	int len=decode_i_b(eip+1);
 
 
-	void raise_intr(uint8_t NO);
+extern	void raise_intr(uint8_t NO);
 	
 /**
  * The INT instruction generates via software a call to an interrupt
@@ -39,7 +39,7 @@ make_helper(int4)
 	print_asm("int 4");
 	cpu.eip+=1;
 
-	void raise_intr(uint8_t NO);
+extern void raise_intr(uint8_t NO);
 	raise_intr(4);
 
 
