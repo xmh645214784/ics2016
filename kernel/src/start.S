@@ -60,8 +60,8 @@
 	.p2align 2                    # force 4 byte alignment
 	gdt:
 		MAKE_NULL_SEG_DESC                   # empty segment
-		MAKE_SEG_DESC(0xA, 0x10, 0xffffffff)  # code
-		MAKE_SEG_DESC(0x2, 0x10, 0xffffffff)  # data
+		MAKE_SEG_DESC(0xA, 0x0, 0xffffffff)  # code
+		MAKE_SEG_DESC(0x2, 0x0, 0xffffffff)  # data
 
 	gdtdesc:                      # descriptor
 		.word   (gdtdesc - gdt - 1)    # limit = sizeof(gdt) - 1
