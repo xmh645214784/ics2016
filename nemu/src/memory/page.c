@@ -58,6 +58,7 @@ static hwaddr_t find_hwaddr_due_lnaddr(lnaddr_t addr)
 	PDE pde;
 	pde.val=hwaddr_read(page_directory_base+4*dir,4);
 #ifdef DEBUG
+	printf("%08x",addr);
 	assert(pde.present);
 #endif
 
