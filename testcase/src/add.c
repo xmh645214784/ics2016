@@ -11,6 +11,7 @@ char str[] = "abcdefg";
 #define NR_DATA (sizeof(test_data) / sizeof(test_data[0]))
 
 int main() {
+	*NULL;
 	int i, j, ans_idx = 0;
 	int loop = 0;
 	for(i = 0; i < NR_DATA; i ++) {
