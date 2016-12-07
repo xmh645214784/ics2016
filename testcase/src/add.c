@@ -12,6 +12,7 @@ char str[] = "abcdefg";
 
 int main() {
 	*NULL;
+	set_bp();
 	int i, j, ans_idx = 0;
 	int loop = 0;
 	for(i = 0; i < NR_DATA; i ++) {
