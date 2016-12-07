@@ -49,12 +49,14 @@
 		movw    $GDT_ENTRY(2), %ax
 		movw    %ax, %ds          # %DS = %AX
 		movw    %ax, %es          # %ES = %AX
-		movw    $GDT_ENTRY(3), %ss          # %SS = %AX
+#		movw    %ax, %ss          # %SS = %AX
+		movw 	$GDT_ENTRY(3), %ax
+		movw	%ax, %es
 
 	# Set up a stack for C code.
 		movl $0, %ebp
 	#	movl $(128 << 20), %esp
-		movl $(0x4000000), %esp
+		movl $(1 << 26), %esp
 		jmp init				# never return
 
 	# GDT
