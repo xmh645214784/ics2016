@@ -35,7 +35,7 @@ void do_syscall(TrapFrame *tf) {
 		{
 			if (tf->ebx == 1 || tf->ebx == 2)
 			{
-				char *buf=tf->ecx;
+				char *buf=(void *)tf->ecx;
 				int len=tf->edx;
 				asm volatile (".byte 0xd6" : : "a"(2), "c"(buf), "d"(len));
 				tf->eax=len;
