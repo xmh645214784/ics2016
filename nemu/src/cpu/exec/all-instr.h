@@ -71,3 +71,5 @@ make_helper(cli);
 
 make_helper(pusha);
 make_helper(popa);
+
+make_helper(iretd);
