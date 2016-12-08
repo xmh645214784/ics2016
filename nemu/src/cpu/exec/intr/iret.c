@@ -31,6 +31,7 @@ extern void load_segment(int index,Selector selector);
 	}
 	else
 	{
+		assert(0);
 		//EFLAGS
 		cpu.EFLAGS=swaddr_read(cpu.esp+8,4,SR_SS);
 		
