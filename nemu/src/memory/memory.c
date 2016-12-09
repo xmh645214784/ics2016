@@ -1,6 +1,6 @@
 #include "common.h"
 #include "cpu/reg.h"
-
+#include "device/mmio.h"
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
 lnaddr_t seg_translate(swaddr_t addr, size_t len,uint8_t sreg);
@@ -11,7 +11,7 @@ hwaddr_t page_translate(lnaddr_t addr);
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	//old:return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 
-		extern int allCachecount;
+		extern long long allCachecount;
 		allCachecount++;
 
 	extern uint32_t read_L1Cache(hwaddr_t,size_t);
@@ -27,10 +27,19 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 //old: dram_write(addr, len, data);
-		extern int allCachecount;
+		extern long long allCachecount;
 		allCachecount++;
+
+
+	int mmio_id = is_mmio(addr);	
+	if(mmio_id==-1){
 	extern void write_L1Cache(uint32_t src,hwaddr_t addr,size_t len);
 	write_L1Cache(data,addr,len);
+	}
+	else
+	{
+
+	}
 }
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
