@@ -7,9 +7,13 @@ make_helper(hlt)
 		assert(0);
 	while(cpu.INTR==0)
 	{
-	extern void device_update() ;
-		device_update();
 		//??????????????????
+#ifdef DEBUG
+		Log("in hlt");
+#endif
 	}
+#ifdef DEBUG	
+	Log("out hlt");
+#endif
 	return 1;
 }
