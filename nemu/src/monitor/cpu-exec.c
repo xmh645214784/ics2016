@@ -103,15 +103,17 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 	if (cpu.INTR&&cpu.IF) 
 	{
+		/**
+	     * important
+	     */
+	    cpu.IF=0;
+	    
 	    uint32_t intr_no = i8259_query_intr();
 	    i8259_ack_intr();
 extern void raise_intr(uint8_t NO);
 	    raise_intr(intr_no);
 
-	    /**
-	     * important
-	     */
-	    cpu.IF=0;
+
 	}
 
 
