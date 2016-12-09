@@ -80,4 +80,4 @@ extern void load_segment(int index,Selector selector);
 // 	}
 	print_asm("iretd");
 	return 0;
-}
+}//BUG???

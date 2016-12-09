@@ -17,7 +17,7 @@ called.
 #endif	
 	
 	cpu.eip+=2;
-//This is important
+//This is very important for save info in stack
 	print_asm("int 0x%02x",op_src->val);
 	raise_intr(op_src->val);
 	assert(0);
@@ -37,6 +37,8 @@ make_helper(int3)
 make_helper(int4)
 {
 	print_asm("int 4");
+
+//This is very important for save info in stack
 	cpu.eip+=1;
 
 extern void raise_intr(uint8_t NO);
