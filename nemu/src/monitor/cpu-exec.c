@@ -108,6 +108,9 @@ void cpu_exec(volatile uint32_t n) {
 extern void raise_intr(uint8_t NO);
 	    raise_intr(intr_no);
 	}
+
+
+	
 	if(nemu_state != RUNNING) { return; }
 	}
 
