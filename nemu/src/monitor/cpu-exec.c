@@ -107,6 +107,11 @@ void cpu_exec(volatile uint32_t n) {
 	    i8259_ack_intr();
 extern void raise_intr(uint8_t NO);
 	    raise_intr(intr_no);
+
+	    /**
+	     * important
+	     */
+	    cpu.IF=0;
 	}
 
 
