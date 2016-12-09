@@ -13,8 +13,9 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 
 		extern long long allCachecount;
 		allCachecount++;
-
-	extern uint32_t read_L1Cache(hwaddr_t,size_t);
+	int map_NO = is_mmio(addr);	
+	if(map_NO==-1){
+		
 #if 0
 	printf("\033[1;31;40m hwaddr_read addr=%08x len=%d \033[0m\n",addr,len);
 	uint32_t temp=read_L1Cache(addr,len)& (~0u >> ((4 - len) << 3));
@@ -22,7 +23,11 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	assert(temp==(dram_read(addr, len) & (~0u >> ((4 - len) << 3))));
 	return temp;
 #endif
-	return read_L1Cache(addr,len);
+		extern uint32_t read_L1Cache(hwaddr_t,size_t);
+		return read_L1Cache(addr,len);
+	}
+	else
+		return mmio_read(addr,len,map_NO);
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
@@ -31,14 +36,14 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 		allCachecount++;
 
 
-	int mmio_id = is_mmio(addr);	
-	if(mmio_id==-1){
-	extern void write_L1Cache(uint32_t src,hwaddr_t addr,size_t len);
-	write_L1Cache(data,addr,len);
+	int map_NO = is_mmio(addr);	
+	if(map_NO==-1){
+		extern void write_L1Cache(uint32_t src,hwaddr_t addr,size_t len);
+		write_L1Cache(data,addr,len);
 	}
 	else
 	{
-
+		mmio_write(addr,len,data,map_NO);
 	}
 }
 
