@@ -182,6 +182,11 @@ typedef struct {
 		uint16_t idtrlimit;		
 		lnaddr_t idtr;
 	};
+
+	/**
+	 * for outdevice intr
+	 */
+	bool INTR;
 } CPU_state;
 
 extern CPU_state cpu;

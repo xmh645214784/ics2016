@@ -41,6 +41,12 @@ void init_monitor(int argc, char *argv[]) {
 
 	/* Display welcome message. */
 	welcome();
+
+	/* For outside device*/
+extern void init_device() ;
+extern void init_sdl();
+	init_device();
+	init_sdl();
 }
 
 #ifdef USE_RAMDISK
