@@ -47,7 +47,7 @@ extern void load_segment(int index,Selector selector);
 
 //throwaway ← Pop(); (* pop away EFLAGS already read *)
 		cpu.esp+=4;
-
+		assert(0);
 		//ES
 		temp.val=swaddr_read(cpu.esp,4,SR_SS);
 		load_segment(SR_ES,temp);
