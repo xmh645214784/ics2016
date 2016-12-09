@@ -73,3 +73,6 @@ make_helper(pusha);
 make_helper(popa);
 
 make_helper(iretd);
+
+#include "inout/in.h"
+#include "inout/out.h"
