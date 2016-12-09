@@ -7,7 +7,8 @@ make_helper(hlt)
 		assert(0);
 	while(cpu.INTR==0)
 	{
-		;
+	extern void device_update() ;
+		device_update();
 	}
 	return 1;
 }
