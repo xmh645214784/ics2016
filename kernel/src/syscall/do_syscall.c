@@ -1,5 +1,4 @@
 #include "irq.h"
-
 #include <sys/syscall.h>
 
 void add_irq_handle(int, void (*)(void));
@@ -41,9 +40,11 @@ void do_syscall(TrapFrame *tf) {
            		char ch;
            		while (len--) 
            		 {
-		            ch = swaddr_read(buf++, 1, SR_DS);
+		            //ch = swaddr_read(buf++, 1, /*SR_DS*/3);
+		           	ch=*(buf++);
 		            if (ch == '\0') 
 		            	break;
+					extern void serial_printc(char ch);
 		            serial_printc(ch);				
 	            }
 	        	tf->eax=len;
