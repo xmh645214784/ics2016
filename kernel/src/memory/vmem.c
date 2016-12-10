@@ -30,7 +30,7 @@ void create_video_mapping() {
 
 	/* make 1 PDE invalid */
 	memset(va_to_pa(updir), 0, 1 * sizeof(PDE));
-
+	assert(updir->val==0);
 
 	/* fill the first PDE */
 	updir->val=make_pde(vtable);
