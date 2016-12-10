@@ -352,7 +352,7 @@ uint32_t eval(int p,int q,bool *success)
 			if(strcasecmp(tokens[p].str,"$idtr")==0)
 				return cpu.idtr;
 
-			if(strcasecmp(tokens[p].str,"$int80")==0)
+			if(strcasecmp(tokens[p].str,"$inttrap")==0)
 				return lnaddr_read(cpu.idtr + 128 * 8,4);
 
 		}
