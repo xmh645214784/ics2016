@@ -288,7 +288,9 @@ static int cmd_bt(char *args)
 						sf[framenum].func_addr=cpu.eip;
 					else
 						sf[framenum].func_addr=symtab[i].st_value;
+#ifdef DEBUG
 					Assert(snprintf(sf[framenum].funcname,20,"%s",strtab+symtab[i].st_name)<20,"bt buffer overflow");
+#endif
 				}
 			}
 
