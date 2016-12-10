@@ -76,3 +76,5 @@ make_helper(iretd);
 
 #include "inout/in.h"
 #include "inout/out.h"
+
+make_helper(sti);
