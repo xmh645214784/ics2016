@@ -21,7 +21,7 @@ void create_video_mapping() {
 	 * some page tables to create this mapping.
 	 */
 	PDE * updir=get_updir();
-	PTE *vtable = (PTE *)(vptable);
+	PTE *vtable = (PTE *)va_to_pa(vptable);
 
 
 
