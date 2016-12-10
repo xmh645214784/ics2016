@@ -22,7 +22,10 @@ void raise_intr(uint8_t NO) {
 	*/
 	//EFLAGS
 	//
+#ifdef DEBUG
 	Log("intr=%d",NO);
+#endif
+	
 	cpu.esp-=4;
 	swaddr_write(cpu.esp,4,cpu.EFLAGS,SR_SS);
 	

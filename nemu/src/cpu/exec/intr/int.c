@@ -20,7 +20,9 @@ called.
 //This is very important for save info in stack
 	print_asm("int 0x%02x",op_src->val);
 	raise_intr(op_src->val);
+#ifdef DEBUG
 	assert(0);
+#endif
 	return 1+len;
 }
 /*
@@ -44,6 +46,8 @@ make_helper(int4)
 extern void raise_intr(uint8_t NO);
 	raise_intr(4);
 
+#ifdef DEBUG
 	assert(0);
+#endif
 	return 1;
 }

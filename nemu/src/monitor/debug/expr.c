@@ -349,6 +349,9 @@ uint32_t eval(int p,int q,bool *success)
 			if(strcasecmp(tokens[p].str,"$bh")==0)
 				return cpu.bh;
 
+			if(strcasecmp(tokens[p].str,"$idtr")==0)
+				return cpu.idtr;
+
 		}
 		if(tokens[p].type==SYMBOL)
 		{
