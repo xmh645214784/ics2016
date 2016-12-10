@@ -37,8 +37,16 @@ void do_syscall(TrapFrame *tf) {
 			{
 				char *buf=(void *)tf->ecx;
 				int len=tf->edx;
-				asm volatile (".byte 0xd6" : : "a"(2), "c"(buf), "d"(len));
-				tf->eax=len;
+				// asm volatile (".byte 0xd6" : : "a"(2), "c"(buf), "d"(len));
+           		char ch;
+           		while (len--) 
+           		 {
+		            ch = swaddr_read(buf++, 1, SR_DS);
+		            if (ch == '\0') 
+		            	break;
+		            serial_printc(ch);				
+	            }
+	        	tf->eax=len;
 			}
 			else
 			{

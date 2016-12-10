@@ -77,7 +77,11 @@ uint32_t loader() {
 
 			 int FileSiz=ph->p_filesz;
 			 int MemSize=ph->p_memsz;
+#ifdef HAS_DEVICE
 			 ramdisk_read((void*)(ELF_OFFSET_IN_DISK+VirtAddr),Offset,FileSiz);
+#else
+			 ide_read((void*)(ELF_OFFSET_IN_DISK+VirtAddr),Offset,FileSiz);
+#endif
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
