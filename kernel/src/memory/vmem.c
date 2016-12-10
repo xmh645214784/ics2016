@@ -36,7 +36,7 @@ void create_video_mapping() {
 	/* fill PTEs */
 	uint32_t pframe_addr = VMEM_ADDR;
 
-	/* add vtable to align to 0xa000*/
+	/* add vtable to align to 0xa0000*/
 	vtable+=10;
 
 	/* fill PTEs straightly */
