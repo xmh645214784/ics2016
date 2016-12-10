@@ -40,7 +40,7 @@ void create_video_mapping() {
 	vtable+=10;
 
 	/* fill PTEs straightly */
-	for (; pframe_addr <=VMEM_ADDR+SCR_SIZE; pframe_addr += PAGE_SIZE) {
+	for (; pframe_addr <VMEM_ADDR+SCR_SIZE; pframe_addr += PAGE_SIZE) {
 		vtable->val = make_pte(pframe_addr);
 		vtable++;
 	}
