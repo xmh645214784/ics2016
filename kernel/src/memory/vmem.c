@@ -36,6 +36,9 @@ void create_video_mapping() {
 	/* fill PTEs */
 	uint32_t pframe_addr = VMEM_ADDR;
 
+	/* add vtable to align to 0xa0000*/
+	vtable+=10;
+
 	/* fill PTEs straightly */
 	for (; pframe_addr <=VMEM_ADDR+SCR_SIZE; pframe_addr += PAGE_SIZE) {
 		vtable->val = make_pte(pframe_addr);
