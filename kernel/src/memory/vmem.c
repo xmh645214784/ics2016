@@ -21,13 +21,15 @@ void create_video_mapping() {
 	 * some page tables to create this mapping.
 	 */
 //BEFORE:	PDE * updir=va_to_pa(get_updir());
+//Thanks LWB
+//To quote val,we mustnt use va to pa 
 	PDE * updir=get_updir();
 	PTE *vtable = (PTE *)va_to_pa(vptable);
 
 
 
 	/* make 1 PDE invalid */
-	// memset(va_to_pa(updir), 0, 1 * sizeof(PDE));
+	memset(va_to_pa(updir), 0, 1 * sizeof(PDE));
 
 
 	/* fill the first PDE */
