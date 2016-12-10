@@ -25,18 +25,18 @@ make_helper(in_i2a_l) {
 //////////////////////
 make_helper(in_d2a_b) {
 	cpu.al = pio_read(cpu.dx, 1);
-	print_asm("in (%%dx),(%%al)");
+	print_asm("in (%%dx),%%al");
 	return 1;
 }
 make_helper(in_d2a_w) {
 	cpu.ax = pio_read(cpu.dx, 2);
-	print_asm("in (%%dx),(%%al)");
+	print_asm("in (%%dx),%%ax");
 	return 1;
 }
 
 make_helper(in_d2a_l) {
 	cpu.eax = pio_read(cpu.dx, 4);
-	print_asm("in (%%dx),(%%al)");
+	print_asm("in (%%dx),%%eax");
 	return 1;
 }
 
