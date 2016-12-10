@@ -21,6 +21,8 @@ void raise_intr(uint8_t NO) {
 	*	7. 跳转到入口地址
 	*/
 	//EFLAGS
+	//
+	Log("intr=%d",NO);
 	cpu.esp-=4;
 	swaddr_write(cpu.esp,4,cpu.EFLAGS,SR_SS);
 	

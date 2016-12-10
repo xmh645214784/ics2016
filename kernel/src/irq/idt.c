@@ -82,5 +82,4 @@ void init_idt() {
 
 	/* the `idt' is its virtual address */
 	write_idtr(idt, sizeof(idt));
-	set_bp();
 }
