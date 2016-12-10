@@ -9,7 +9,7 @@
  */
 
 // static PDE vpdir[NR_PDE] align_to_page;						// video page directory
-static PTE vptable[SCR_SIZE/ PAGE_SIZE+1] align_to_page;		// video page tables
+static PTE vptable[(VMEM_ADDR+SCR_SIZE)/ PAGE_SIZE+1] align_to_page;		// video page tables
 
 /* Use the function to get the start address of user page directory. */
 PDE* get_updir();
@@ -36,7 +36,7 @@ void create_video_mapping() {
 	/* fill PTEs */
 	uint32_t pframe_addr = VMEM_ADDR;
 
-	/* add vtable to align to 0xa0000*/
+	/* add vtable to align to 0xa000*/
 	vtable+=10;
 
 	/* fill PTEs straightly */
