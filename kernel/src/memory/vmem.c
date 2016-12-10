@@ -9,8 +9,8 @@
  */
 
 // static PDE vpdir[NR_PDE] align_to_page;						// video page directory
-static PTE vptable[(VMEM_ADDR+SCR_SIZE)/ PAGE_SIZE+1] align_to_page;		// video page tables
-
+// static PTE vptable[(VMEM_ADDR+SCR_SIZE)/ PAGE_SIZE+1] align_to_page;		// video page tables
+static PTE vptable[NR_PTE] align_to_page;		// video page tables
 /* Use the function to get the start address of user page directory. */
 PDE* get_updir();
 
