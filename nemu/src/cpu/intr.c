@@ -23,7 +23,7 @@ void raise_intr(uint8_t NO) {
 	//EFLAGS
 	//
 #ifdef DEBUG
-	// Log("intr=%d",NO);
+	Log("intr=%d",NO);
 #endif
 	
 	cpu.esp-=4;
