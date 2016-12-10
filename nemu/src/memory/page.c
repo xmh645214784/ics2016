@@ -66,7 +66,7 @@ static hwaddr_t find_hwaddr_due_lnaddr(lnaddr_t addr)
 	pte.val=hwaddr_read((pde.page_frame<<12)+4*page,4);
 
 #ifdef DEBUG
-	//assert(pte.present);
+	assert(pte.present);
 #endif
 	return (pte.page_frame<<12)|offset;
 }
