@@ -109,7 +109,7 @@ void cpu_exec(volatile uint32_t n) {
 	 //    cpu.IF=0;
 	    
 	    uint32_t intr_no = i8259_query_intr();
-	    Log("intr_no=%d",intr_no);
+	//    Log("intr_no=%d",intr_no);
 	    i8259_ack_intr();
 extern void raise_intr(uint8_t NO);
 	    raise_intr(intr_no);
