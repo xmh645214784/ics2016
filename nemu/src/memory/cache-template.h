@@ -45,10 +45,13 @@ typedef struct
 /*prototype: init_L1Cache*/
 void concat(init_,CACHE_NAME)()
 {
+#ifdef DEBUG
 	Assert((1<<LOG2_NR_GROUP)==NR_GROUP,"group index caculate failed");
-
+#endif
 	memset(&CACHE_OBJECT,0,sizeof(CACHE_OBJECT));
+#ifdef DEBUG
 	Assert(sizeof(CACHE_OBJECT)>=4,"sizeof CACHE_OBJECT caculate failed");
+#endif
 	/*prototype l1cache l2cache*/
 }
 
@@ -90,7 +93,9 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 {
 	int i;
 	uint32_t group_index_in_array=get_group_index_in_array;
+#ifdef DEBUG
 	Assert(group_index_in_array>=0&&group_index_in_array<=NR_GROUP*WAY-WAY,"group index caculate failed");
+#endif
 	for(i=0;i<WAY;i++)
 	{
 		//have unused cachline
