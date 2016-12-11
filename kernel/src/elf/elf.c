@@ -24,11 +24,11 @@ uint32_t loader() {
 
 	uint8_t buf[4096];
 
-#ifdef HAS_DEVICE
-	ide_read(buf, ELF_OFFSET_IN_DISK, 4096);
-#else
+// #ifdef HAS_DEVICE
+// 	ide_read(buf, ELF_OFFSET_IN_DISK, 4096);
+// #else
 	ramdisk_read(buf, ELF_OFFSET_IN_DISK, 4096);
-#endif
+// #endif
 
 	elf = (void*)buf;
 
