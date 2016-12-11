@@ -6,12 +6,12 @@
 
 #define ELF_OFFSET_IN_DISK 0
 
-// #ifdef HAS_DEVICE
+#ifdef HAS_DEVICE
 void ide_read(uint8_t *, uint32_t, uint32_t);
-// #else
+#else
 void ramdisk_read(uint8_t *, uint32_t, uint32_t);
 void ramdisk_write(uint8_t *, uint32_t, uint32_t);
-// #endif
+#endif
 
 #define STACK_SIZE (1 << 20)
 
@@ -24,11 +24,11 @@ uint32_t loader() {
 
 	uint8_t buf[4096];
 
-// #ifdef HAS_DEVICE
-// 	ide_read(buf, ELF_OFFSET_IN_DISK, 4096);
-// #else
+#ifdef HAS_DEVICE
+	ide_read(buf, ELF_OFFSET_IN_DISK, 4096);
+#else
 	ramdisk_read(buf, ELF_OFFSET_IN_DISK, 4096);
-// #endif
+#endif
 
 	elf = (void*)buf;
 
