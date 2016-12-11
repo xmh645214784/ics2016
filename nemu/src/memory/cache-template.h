@@ -49,9 +49,9 @@ void concat(init_,CACHE_NAME)()
 	Assert((1<<LOG2_NR_GROUP)==NR_GROUP,"group index caculate failed");
 #endif
 	memset(&CACHE_OBJECT,0,sizeof(CACHE_OBJECT));
-#ifdef DEBUG
-	Assert(sizeof(CACHE_OBJECT)>=4,"sizeof CACHE_OBJECT caculate failed");
-#endif
+// #ifdef DEBUG
+// 	Assert(sizeof(CACHE_OBJECT)>=4,"sizeof CACHE_OBJECT caculate failed");
+// #endif
 	/*prototype l1cache l2cache*/
 }
 
