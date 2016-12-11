@@ -44,7 +44,7 @@ FLOAT f2F(float a) {
 
 	void* point=&a;
 	int float_int=*(int *)point;
-	unsigned exp=(float_int>>23)&0xFF-127;
+	unsigned exp=((float_int>>23)&0xFF)-127;
 	int sign=(float_int>>31)&1;
 	unsigned e=float_int&0x7FFFFF;
 	e=e|0x800000;// 1+23  duo<<le 7   1---24   1 should be at 17
@@ -57,35 +57,11 @@ FLOAT f2F(float a) {
 	{
 		e<<=(exp&0xFF);
 	}
-FLOAT lwbf2F(float a);
-	FLOAT result= sign==0?e:-e;
-	if(result!=lwbf2F(a))
-	 	printf("my=%08x lwb=%08x\n",result,lwbf2F(a));	
-	return lwbf2F(a);
+	FLOAT result= sign==0?e:-e;	
+	return result;
 
 }
-FLOAT lwbf2F(float a)
-{
-	union {
-		float f;
-		struct{
-			unsigned int frac : 23;
-			unsigned int expn : 8;
-			unsigned int sign : 1;
-		};
-	} data;
-	int temp;
-	data.f = a;
-	temp = (data.expn == 0 ? data.frac : data.frac | 0x00800000);
-	if (data.expn - 0x7f > (23 - 16)) {
-		temp <<= (data.expn - 0x7f - (23 - 16));
-	}
-	else {
-		temp >>= ((23 - 16) + 0x7f - data.expn);
-	}
-	temp = (data.sign == 1 ? - temp : temp);
-	return temp;
-}
+
 FLOAT Fabs(FLOAT a) {
 	
 	return a>=0?a:-a;
