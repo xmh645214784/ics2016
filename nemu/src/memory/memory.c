@@ -40,6 +40,7 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	if(map_NO==-1){
 		extern void write_L1Cache(uint32_t src,hwaddr_t addr,size_t len);
 		write_L1Cache(data,addr,len);
+		assert(data==hwaddr_read(addr,len));
 		// dram_write(addr, len, data);
 	}
 	else
