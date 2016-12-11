@@ -59,9 +59,9 @@ FLOAT f2F(float a) {
 	}
 FLOAT lwbf2F(float a);
 	FLOAT result= sign==0?e:-e;
-	if(result!=lwbf2F(a))
-		printf("SB\n");	
-	return result;
+	// if(result!=lwbf2F(a))
+	// 	printf("SB\n");	
+	return lwbf2F(a);
 
 }
 FLOAT lwbf2F(float a)
