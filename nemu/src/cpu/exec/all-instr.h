@@ -78,3 +78,5 @@ make_helper(iretd);
 #include "inout/out.h"
 
 make_helper(sti);
+
+make_helper(hlt);
