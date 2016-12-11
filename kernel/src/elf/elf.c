@@ -80,9 +80,9 @@ uint32_t loader() {
 #ifndef HAS_DEVICE
 			 ramdisk_read((void*)(ELF_OFFSET_IN_DISK+VirtAddr),Offset,FileSiz);
 #else
-			 set_bp();
+			 // set_bp();
 			 ide_read((void*)(ELF_OFFSET_IN_DISK+VirtAddr),Offset,FileSiz);
-			 set_bp();
+			 // set_bp();
 #endif
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
