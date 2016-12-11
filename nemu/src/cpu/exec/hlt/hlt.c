@@ -8,6 +8,12 @@ make_helper(hlt)
 	while(cpu.INTR==0)
 	{
 		//??????????????????
+#ifdef DEBUG
+		Log("in hlt");
+#endif
 	}
+#ifdef DEBUG	
+	Log("out hlt");
+#endif
 	return 1;
 }

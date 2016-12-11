@@ -186,7 +186,7 @@ typedef struct {
 	/**
 	 * for outdevice intr
 	 */
-	bool INTR;
+	volatile bool INTR;
 } CPU_state;
 
 extern CPU_state cpu;
