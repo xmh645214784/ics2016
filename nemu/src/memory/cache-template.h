@@ -79,7 +79,7 @@ static uint8_t * concat(find_data_point_,CACHE_NAME)(hwaddr_t addr)
 		{
 			printf("%s find addr is %08x\n value=%x",str(CACHE_NAME),addr,CACHE_OBJECT.cacheline[group_index_in_array+i].data[get_offset]);
 
-			return &CACHE_OBJECT.cacheline[group_index_in_array+i].data[get_offset];
+			return &(CACHE_OBJECT.cacheline[group_index_in_array+i].data[get_offset]);
 		}
 	}
 	return NULL;
@@ -271,7 +271,6 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 
 		if(addr%BLOCK_SIZE+len<=BLOCK_SIZE)//align_read
 		{
-			Log("1");
 			switch(len)
 			{
 				case 4:return unalign_rw(find,4);
