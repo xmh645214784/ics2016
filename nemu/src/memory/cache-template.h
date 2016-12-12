@@ -264,7 +264,7 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 	if(find)
 	{
 // #if 0
-		printf("read :HIT cacheline "str(CACHE_NAME)"\n");
+		Log("read :HIT cacheline "str(CACHE_NAME));
 // #endif
 
 			concat(CACHE_NAME,count)++;
@@ -331,16 +331,16 @@ void concat(debug_,CACHE_NAME) (uint32_t addr)
 	{
 		if(CACHE_OBJECT.cacheline[group_index_in_array+i].valid==1&&CACHE_OBJECT.cacheline[group_index_in_array+i].addrnote==get_addr_note)
 		{
-			printf("HIT\n");
-			 printf("%02x\n",CACHE_OBJECT.cacheline[group_index_in_array+i].data[get_offset]);
+			Log("HIT");
+			 Log("%02x",CACHE_OBJECT.cacheline[group_index_in_array+i].data[get_offset]);
 			 #ifdef WRITE_BACK
-			 	printf("FLAG:valid=%d dirty=%d\n",1,CACHE_OBJECT.cacheline[group_index_in_array+i].dirty);
+			 	Log("FLAG:valid=%d dirty=%d",1,CACHE_OBJECT.cacheline[group_index_in_array+i].dirty);
 			 #endif
 			 return ;
 		}
 	}
 	
-	printf("MISS\n");
+	Log("MISS");
 }
 
 
