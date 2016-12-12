@@ -77,7 +77,7 @@ static uint8_t * concat(find_data_point_,CACHE_NAME)(hwaddr_t addr)
 	{
 		if(CACHE_OBJECT.cacheline[group_index_in_array+i].valid==1&&CACHE_OBJECT.cacheline[group_index_in_array+i].addrnote==get_addr_note)
 		{
-			Log("%s find addr is %08x value=%x",str(CACHE_NAME),addr,CACHE_OBJECT.cacheline[group_index_in_array+i].data[get_offset]);
+			// Log("%s find addr is %08x value=%x",str(CACHE_NAME),addr,CACHE_OBJECT.cacheline[group_index_in_array+i].data[get_offset]);
 
 			return &(CACHE_OBJECT.cacheline[group_index_in_array+i].data[get_offset]);
 		}
@@ -263,9 +263,9 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 	//HIT
 	if(find)
 	{
-// #if 0
+#if 0
 		Log("read :HIT cacheline "str(CACHE_NAME));
-// #endif
+#endif
 
 			concat(CACHE_NAME,count)++;
 
