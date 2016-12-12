@@ -19,7 +19,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 
 	printf("\033[1;31;40m hwaddr_read addr=%08x len=%d \033[0m\n",addr,len);
 	uint32_t temp=read_L1Cache(addr,len)& (~0u >> ((4 - len) << 3));
-	Log("read_L1Cache(addr,len)&(~0u >> ((4 - len) << 3)))=%x\ndram_read(addr, len) & (~0u >> ((4 - len) << 3)))=%x",temp,dram_read(addr, len) & (~0u >> ((4 - len) << 3)));
+	Log("read_L1Cache(addr,len)&(~0u >> ((4 - len) << 3)))=%x\ndram_read(addr, len) & (~0u >> ((4 - len) << 3)))=%x\n",temp,dram_read(addr, len) & (~0u >> ((4 - len) << 3)));
 	// assert(temp==(dram_read(addr, len) & (~0u >> ((4 - len) << 3))));
 	return temp;
 		// 
