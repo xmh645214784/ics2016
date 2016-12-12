@@ -261,15 +261,15 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 	//HIT
 	if(find)
 	{
-#if 0
+// #if 0
 		printf("read :HIT cacheline "str(CACHE_NAME)"\n");
-#endif
+// #endif
 
 			concat(CACHE_NAME,count)++;
 
 		if(addr%BLOCK_SIZE+len<=BLOCK_SIZE)//align_read
 		{
-
+			Log("1");
 			switch(len)
 			{
 				case 4:return unalign_rw(find,4);
