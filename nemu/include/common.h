@@ -7,6 +7,9 @@
 #define HAS_DEVICE
 
 #define DEBUG
+#define CACHE_DEBUG
+
+
 #define LOG_FILE
 #include "debug.h"
 #include "macro.h"

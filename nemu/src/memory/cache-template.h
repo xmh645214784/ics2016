@@ -45,13 +45,10 @@ typedef struct
 /*prototype: init_L1Cache*/
 void concat(init_,CACHE_NAME)()
 {
-#ifdef DEBUG
+#ifdef CACHE_DEBUG
 	Assert((1<<LOG2_NR_GROUP)==NR_GROUP,"group index caculate failed");
 #endif
 	memset(&CACHE_OBJECT,0,sizeof(CACHE_OBJECT));
-// #ifdef DEBUG
-// 	Assert(sizeof(CACHE_OBJECT)>=4,"sizeof CACHE_OBJECT caculate failed");
-// #endif
 	/*prototype l1cache l2cache*/
 }
 
@@ -72,7 +69,9 @@ static uint8_t * concat(find_data_point_,CACHE_NAME)(hwaddr_t addr)
 {
 	int i=0;
 	uint32_t group_index_in_array=get_group_index_in_array;
+#ifdef CACHE_DEBUG
 	Assert(group_index_in_array>=0&&group_index_in_array<=NR_GROUP*WAY-WAY,"group index caculate failed");
+#endif
 	for(i=0;i<WAY;i++)
 	{
 		if(CACHE_OBJECT.cacheline[group_index_in_array+i].valid==1&&CACHE_OBJECT.cacheline[group_index_in_array+i].addrnote==get_addr_note)
@@ -95,7 +94,7 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 {
 	int i;
 	uint32_t group_index_in_array=get_group_index_in_array;
-#ifdef DEBUG
+#ifdef CACHE_DEBUG
 	Assert(group_index_in_array>=0&&group_index_in_array<=NR_GROUP*WAY-WAY,"group index caculate failed");
 #endif
 	for(i=0;i<WAY;i++)
@@ -114,8 +113,9 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 				CACHE_OBJECT.cacheline[group_index_in_array+i].data[j]=dram_read((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index<<LOG2_BLOCK_SIZE)|j, 1);
 				
 			}
-
+#ifdef CACHE_DEBUG
 			Assert(((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index<<LOG2_BLOCK_SIZE)|get_offset)==addr,"for debug");
+#endif
 			return result;
 		}
 	}
@@ -135,7 +135,9 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 	/**
 	 * replace the first element in this group!  not random
 	 */
+#ifdef CACHE_DEBUG
 	Assert(CACHE_OBJECT.cacheline[group_index_in_array].valid==1,"..");
+#endif
 	CACHE_OBJECT.cacheline[group_index_in_array].addrnote=get_addr_note;
 
 	#ifdef WRITE_ALLOCATE
@@ -147,7 +149,9 @@ static inline uint32_t concat(allocate_cacheline_,CACHE_NAME)(hwaddr_t addr,size
 	{
 		CACHE_OBJECT.cacheline[group_index_in_array].data[j]=dram_read((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index<<LOG2_BLOCK_SIZE)|j, 1);
 	}
+#ifdef CACHE_DEBUG
 Assert(addr==((get_addr_note<<(LOG2_BLOCK_SIZE+LOG2_NR_GROUP))|(get_group_index<<LOG2_BLOCK_SIZE)|get_offset),"caculate failed");
+#endif	
 	return result;
 
 }
@@ -162,8 +166,9 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 
 	//Log("group_num=%d  get_group_index_in_array=%d",get_group_index,get_group_index_in_array);
 	//Log("NR_GROUP=%d  WAY=%d",NR_GROUP,WAY);
+#ifdef CACHE_DEBUG
 	Assert(group_index_in_array>=0&&group_index_in_array<=NR_GROUP*WAY-WAY,"group index caculate failed");
-
+#endif
 	uint8_t *find=concat(find_data_point_,CACHE_NAME)(addr);
 
 	if(find)//HIT
@@ -255,7 +260,9 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 	//Log("group_num=%d  get_group_index_in_array=%d",get_group_index,get_group_index_in_array);
 	//Log("%d  %d",NR_GROUP,WAY);
 	uint32_t group_index_in_array=get_group_index_in_array;
+#ifdef CACHE_DEBUG
 	Assert(group_index_in_array>=0&&group_index_in_array<=NR_GROUP*WAY-WAY,"group index caculate failed");
+#endif
 	/*each group first element's index*/
 	uint8_t *find=concat(find_data_point_,CACHE_NAME)(addr);
 	
@@ -323,7 +330,9 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 void concat(debug_,CACHE_NAME) (uint32_t addr)
 {
 	uint32_t group_index_in_array=get_group_index_in_array;
+#ifdef CACHE_DEBUG
 	Assert(group_index_in_array>=0&&group_index_in_array<=NR_GROUP*WAY-WAY,"group index caculate failed");
+#endif
 	/*each group first element's index*/
 
 	int i=0;
