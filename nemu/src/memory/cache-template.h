@@ -232,7 +232,7 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 	//allocate a new cacheline
 	
 //why????
-		concat(allocate_cacheline_,L1Cache)(addr,len);
+		// concat(allocate_cacheline_,L1Cache)(addr,len);
 		concat(allocate_cacheline_,CACHE_NAME)(addr,len);
 	#endif
 	
