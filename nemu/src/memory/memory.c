@@ -38,6 +38,8 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 
 	int map_NO = is_mmio(addr);	
 	if(map_NO==-1){
+
+		printf("\033[1;31;40m hwaddr_write addr=%08x len=%d data=%x\033[0m\n",addr,len,data);
 		extern void write_L1Cache(uint32_t src,hwaddr_t addr,size_t len);
 		write_L1Cache(data,addr,len);
 		assert(data==hwaddr_read(addr,len));
