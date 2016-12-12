@@ -23,8 +23,8 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	// // assert(temp==(dram_read(addr, len) & (~0u >> ((4 - len) << 3))));
 	// return temp;
 		// 
-		return read_L1Cache(addr,len);
-		// return (dram_read(addr, len) & (~0u >> ((4 - len) << 3)));
+		// return read_L1Cache(addr,len);
+		return (dram_read(addr, len) & (~0u >> ((4 - len) << 3)));
 	}
 	else
 		return mmio_read(addr,len,map_NO);
@@ -41,9 +41,9 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 
 		// printf("\033[1;31;40m hwaddr_write addr=%08x len=%d data=%x\033[0m\n",addr,len,data);
 		extern void write_L1Cache(uint32_t src,hwaddr_t addr,size_t len);
-		write_L1Cache(data,addr,len);
+		// write_L1Cache(data,addr,len);
 		// assert(data==hwaddr_read(addr,len));
-		// dram_write(addr, len, data);
+		dram_write(addr, len, data);
 	}
 	else
 	{
