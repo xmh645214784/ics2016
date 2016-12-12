@@ -77,6 +77,7 @@ static uint8_t * concat(find_data_point_,CACHE_NAME)(hwaddr_t addr)
 	{
 		if(CACHE_OBJECT.cacheline[group_index_in_array+i].valid==1&&CACHE_OBJECT.cacheline[group_index_in_array+i].addrnote==get_addr_note)
 		{
+			printf("%s find addr is %08x\n",str(CACHE_NAME),addr );
 			return &CACHE_OBJECT.cacheline[group_index_in_array+i].data[get_offset];
 		}
 	}
