@@ -33,10 +33,11 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len,uint8_t sreg)
 	if(cpu.cr0.protect_enable==1)
 	{
 		/*
-	    lnaddr_t base,limit;
+	    lnaddr_t base,;
 	    bool granularity;
 	    get_base_and_limit(sreg,&base,&limit,&granularity);
 #ifdef DEBUG   
+		lnaddr_t limit;
 	    if (addr > limit || addr + len - 1 > limit) {
 	    	panic("can't do segment-translation");
 	    }
