@@ -7,6 +7,13 @@
 
 int get_fps();
 
+
+static inline char *findoffset(SDL_Surface *src,int x,int y)
+{
+	return (char*)src->pixels+y*src->pitch+x;
+}
+
+//blit::::::::::bit block transfer)
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, 
 		SDL_Surface *dst, SDL_Rect *dstrect) {
 	assert(dst && src);
@@ -28,8 +35,21 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	 * `w' X `h' of `src' surface to position (`dx', `dy') of
 	 * `dst' surface.
 	 */
-
-	assert(0);
+	 /**
+	  * height---->width
+	  */
+	 
+	 /**
+	  * KISS  we think it is 32 wei se
+	  */
+	 assert(src->format->BytesPerPixel==4);
+	 assert(src->format->BytesPerPixel==4);
+	 h--;
+	 for(;h>=0;h--)
+	 {
+	 	memcpy(findoffset(dst,dx,dy+h),findoffset(src,sx,sy+h),w);
+	 }
+	// assert(0);
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
@@ -40,8 +60,18 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	 * in surface `dst' with color `color'. If dstrect is
 	 * NULL, fill the whole surface.
 	 */
-
-	assert(0);
+	int dx = (dstrect == NULL ? 0 : dstrect->x);
+	int dy = (dstrect == NULL ? 0 : dstrect->y);
+	int w = (dstrect == NULL ? dst->w : dstrect->w);
+	int h = (dstrect == NULL ? dst->h : dstrect->h);
+	// assert(0);
+	 h--;
+	 for(;h>=0;h--)
+	 {
+	 	int i=0;
+	 	for(;i<w;i++)
+	 		*findoffset(dst,dx+i,dy+h)=color;
+	 }
 }
 
 void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors, 
@@ -70,7 +100,8 @@ void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors,
 
 	if(s->flags & SDL_HWSURFACE) {
 		/* TODO: Set the VGA palette by calling write_palette(). */
-		assert(0);
+		// assert(0);
+		write_palette(colors, ncolors);
 	}
 }
 
