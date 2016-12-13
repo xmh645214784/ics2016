@@ -1,5 +1,6 @@
 #include "common.h"
 #include <sys/ioctl.h>
+#include <string.h>
 
 typedef struct {
 	char *name;
@@ -49,7 +50,7 @@ int fs_open(const char *pathname, int flags)    /* 在我们的实现中可以�
 {
 	int index=3;
 	for (; index < 3+NR_FILES; index++)
-        if (strcmp(pathname, file_info[index-3].name) == 0)
+        if (strcmp(pathname, file_table[index-3].name) == 0)
             break;
 	assert(index!=3+NR_FILES);
 	file_state[index].opened=1;
@@ -62,8 +63,8 @@ int fs_read(int fd, void *buf, int len)
 	assert(file_state[fd].opened);
 
 
-	len=((file_state[fd].offset+len)<=file_info[fd-3].size)?len:file_info[fd-3].size- file_state[fd].offset;
-	ide_read(buf,file_info[fd-3].offset+file_state[fd].offset,len);
+	len=((file_state[fd].offset+len)<=file_table[fd-3].size)?len:file_table[fd-3].size- file_state[fd].offset;
+	ide_read(buf,file_table[fd-3].disk_offset+file_state[fd].offset,len);
 
 	file_state[fd].offset+=len;
 	return len;
@@ -74,20 +75,21 @@ int fs_write(int fd, void *buf, int len)
 	
 	if(fd==0||fd==1||fd==2)
 	{
-
+		assert(0);
+		return -1;
 	}
 	else{
 		assert(file_state[fd].opened);
 
 
-		len=((file_state[fd].offset+len)<=file_info[fd-3].size)?len:file_info[fd-3].size- file_state[fd].offset;
-		ide_write(buf,file_info[fd-3].offset+file_state[fd].offset,len);
+		len=((file_state[fd].offset+len)<=file_table[fd-3].size)?len:file_table[fd-3].size- file_state[fd].offset;
+		ide_write(buf,file_table[fd-3].disk_offset+file_state[fd].offset,len);
 
 		file_state[fd].offset+=len;
 		return len;
 	}
 }
-int fs_lseek(int fd, int offset, int whence);
+int fs_lseek(int fd, int offset, int whence)
 {
 	/**
 	 * SEEK_SET
@@ -102,21 +104,24 @@ int fs_lseek(int fd, int offset, int whence);
 	 */
 	assert(fd>=3);
 	assert(file_state[fd].opened);
-	 switch (whence) {
+	 switch (whence) 
+	 {
 		case SEEK_SET:
 			file_state[fd].offset =offset;break;
 		case SEEK_CUR:
 			file_state[fd].offset =file_state[fd].offset+offset;break;
 		case SEEK_END:
-			file_state[fd].offset =file_info[fd-3].size+offset;break;
+			file_state[fd].offset =file_table[fd-3].size+offset;break;
 		default:
-            assert(0);
-    assert(file_state[fd].offset<file_info[fd-3].size);
-    return file_state[fd].offset;
+			assert(0);
+	}
+	assert(file_state[fd].offset<file_table[fd-3].size);
+	return file_state[fd].offset;
 }
 int fs_close(int fd)
 {
 	assert(fd>=3);
 	assert(file_state[fd].opened);
 	file_state[fd].opened=0;	
+	return 0;
 }
