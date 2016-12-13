@@ -26,7 +26,14 @@ static const file_info file_table[] __attribute__((used)) = {
 	{"word.dat", 5650, 28155717},
 };
 
+typedef struct {
+	int opened;
+	uint32_t offset;
+} Fstate;
+
 #define NR_FILES (sizeof(file_table) / sizeof(file_table[0]))
+
+Fstate file_state[3+NR_FILES];
 
 int fs_ioctl(int fd, uint32_t request, void *p) {
 	assert(request == TCGETS);
@@ -38,3 +45,78 @@ void ide_write(uint8_t *, uint32_t, uint32_t);
 
 /* TODO: implement a simplified file system here. */
 
+int fs_open(const char *pathname, int flags)    /* 在我们的实现中可以忽略flags */
+{
+	int index=3;
+	for (; index < 3+NR_FILES; index++)
+        if (strcmp(pathname, file_info[index-3].name) == 0)
+            break;
+	assert(index!=3+NR_FILES);
+	file_state[index].opened=1;
+	file_state[index].offset=0;
+	return index;
+}
+int fs_read(int fd, void *buf, int len)
+{
+	assert(fd>=3);
+	assert(file_state[fd].opened);
+
+
+	len=((file_state[fd].offset+len)<=file_info[fd-3].size)?len:file_info[fd-3].size- file_state[fd].offset;
+	ide_read(buf,file_info[fd-3].offset+file_state[fd].offset,len);
+
+	file_state[fd].offset+=len;
+	return len;
+
+}
+int fs_write(int fd, void *buf, int len)
+{
+	
+	if(fd==0||fd==1||fd==2)
+	{
+
+	}
+	else{
+		assert(file_state[fd].opened);
+
+
+		len=((file_state[fd].offset+len)<=file_info[fd-3].size)?len:file_info[fd-3].size- file_state[fd].offset;
+		ide_write(buf,file_info[fd-3].offset+file_state[fd].offset,len);
+
+		file_state[fd].offset+=len;
+		return len;
+	}
+}
+int fs_lseek(int fd, int offset, int whence);
+{
+	/**
+	 * SEEK_SET
+       		  The offset is set to offset bytes.
+
+       SEEK_CUR
+              The offset is set to its current location plus offset bytes.
+
+       SEEK_END
+              The offset is set to the size of the file plus offset bytes.
+
+	 */
+	assert(fd>=3);
+	assert(file_state[fd].opened);
+	 switch (whence) {
+		case SEEK_SET:
+			file_state[fd].offset =offset;break;
+		case SEEK_CUR:
+			file_state[fd].offset =file_state[fd].offset+offset;break;
+		case SEEK_END:
+			file_state[fd].offset =file_info[fd-3].size+offset;break;
+		default:
+            assert(0);
+    assert(file_state[fd].offset<file_info[fd-3].size);
+    return file_state[fd].offset;
+}
+int fs_close(int fd)
+{
+	assert(fd>=3);
+	assert(file_state[fd].opened);
+	file_state[fd].opened=0;	
+}

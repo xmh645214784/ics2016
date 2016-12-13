@@ -13,6 +13,13 @@ static void sys_ioctl(TrapFrame *tf) {
 	tf->eax = fs_ioctl(tf->ebx, tf->ecx, (void *)tf->edx);
 }
 
+
+extern int fs_open(const char *pathname, int flags);    /* 在我们的实现中可以忽略flags */
+extern int fs_read(int fd, void *buf, int len);
+extern int fs_write(int fd, void *buf, int len);
+extern int fs_lseek(int fd, int offset, int whence);
+extern int fs_close(int fd);
+
 void do_syscall(TrapFrame *tf) {
 	switch(tf->eax) {
 		/* The `add_irq_handle' system call is artificial. We use it to
