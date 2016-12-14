@@ -60,7 +60,9 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 		{
 			int len1=(addr&0xfff)+len-1-0xfff;
 			int len2=len-len1;
-			return (hwaddr_read(page_translate(addr),len1)&(~0u >> ((4 - len1) << 3)))|(hwaddr_read(page_translate(addr+len1),len2)<<(8*len1));
+			uint32_t low=(hwaddr_read(page_translate(addr),4)&(~0u >> ((4 - len1) << 3)));
+			uint32_t high=((hwaddr_read(page_translate(addr+len1),4)&(~0u >> ((4 - len2) << 3)))<<(8*len1));
+			return low|high;
 		}
 		else
 		  return hwaddr_read(page_translate(addr),len);
@@ -75,25 +77,31 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 		/*unaligned*/
 		if(((addr&0xfff)+len)>(0xfff+1))  /*1 is important*/
 		{
-			int len1=(addr&0xfff)+len-1-0xfff;
-			int len2=len-len1;
-			uint32_t write1,write2;
-			switch(len1)
+			// int len1=(addr&0xfff)+len-1-0xfff;
+			// int len2=len-len1;
+			// uint32_t write1,write2;
+			// switch(len1)
+			// {
+			// case 1:write1=data&0xff;break;
+			// case 2:write1=data&0xffff;break;
+			// case 3:write1=data&0xffffff;break;
+			// default: assert(0);
+			// }
+			// switch(len2)
+			// {
+			// case 1:write2=(data>>8*len1)&0xff;break;
+			// case 2:write2=(data>>8*len1)&0xffff;break;
+			// case 3:write2=(data>>8*len1)&0xffffff;break;
+			// default: assert(0);
+			// }
+			// hwaddr_write(page_translate(addr),len1,write1);
+			// hwaddr_write(page_translate(addr+len1),len2,write2);
+			int i=0;
+			for(;i<len;i++)
 			{
-			case 1:write1=data&0xff;break;
-			case 2:write1=data&0xffff;break;
-			case 3:write1=data&0xffffff;break;
-			default: assert(0);
+				hwaddr_write(page_translate(addr+i),1,(uint8_t)data);
+				data=data>>8;
 			}
-			switch(len2)
-			{
-			case 1:write2=(data>>8*len1)&0xff;break;
-			case 2:write2=(data>>8*len1)&0xffff;break;
-			case 3:write2=(data>>8*len1)&0xffffff;break;
-			default: assert(0);
-			}
-			hwaddr_write(page_translate(addr),len1,write1);
-			hwaddr_write(page_translate(addr+len1),len2,write2);
 		}
 		else
 			hwaddr_write(page_translate(addr),len,data);
