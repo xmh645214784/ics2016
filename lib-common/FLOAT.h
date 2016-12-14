@@ -7,7 +7,10 @@
 typedef int FLOAT;
 
 static inline int F2int(FLOAT a) {	
-	return a>>16;
+	if(a>=0)
+		return a>>16;
+	else
+		return (a>> 16)+1;
 }
 
 static inline FLOAT int2F(int a) {
