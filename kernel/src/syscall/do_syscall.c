@@ -58,8 +58,23 @@ void do_syscall(TrapFrame *tf) {
 			}
 			else
 			{
-				panic("assert 0");
+				 tf->eax = fs_write(tf->ebx, (void *) tf->ecx, tf->edx);
 			}
+			break;
+		}
+		case SYS_open:
+		{
+			 tf->eax = fs_open((char *)tf->ebx,tf->ecx);
+			break;
+		}
+		case SYS_close:
+		{
+			tf->eax=fs_close(tf->ebx);
+			break;
+		}
+		case SYS_lseek:
+		{
+			tf->eax=fs_lseek(tf->ebx,tf->ecx,tf->edx);
 			break;
 		}
 		default: panic("Unhandled system call: id = %d, eip = 0x%08x", tf->eax, tf->eip);
