@@ -8,7 +8,7 @@
 
 // #define DEBUG
 // #define CACHE_DEBUG
-
+// #define TLB
 
 #define LOG_FILE
 #include "debug.h"

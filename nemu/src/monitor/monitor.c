@@ -122,8 +122,9 @@ void restart() {
 	temp.base_31_24=0;
 	temp.granularity=1;
 	cpu.cs.segdesc_cache=temp;
-
+#ifdef TLB
 	/*initialize TLB*/
 	extern void init_TLB();
 	init_TLB();
+#endif
 }

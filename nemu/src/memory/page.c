@@ -2,42 +2,11 @@
 #include "common.h"
 #include "../../../lib-common/x86-inc/mmu.h"
 #include "memory/memory.h"
-hwaddr_t page_translate(lnaddr_t addr)
-{
+
+
 	#define DIR(addr) ((addr>>22)&0x3ff)
 	#define PAGE(addr) ((addr>>12)&0x3ff)
 	#define OFFSET(addr) (addr &0xfff)
-hwaddr_t read_TLB(lnaddr_t addr);
-	return read_TLB(addr)+OFFSET(addr);
-
-}
-
-/////////////////////////////////////////////////////////////////////////////
-/**
- *  TLB
- */
-typedef struct 
-{
-	uint32_t ln_tag:20;
-	uint32_t hw_result:20;
-	uint32_t valid:1;
-
-}TLBSlot;
-
-#define NR_TLBSLOT 60
-TLBSlot tlb [NR_TLBSLOT];
-
-void init_TLB()
-{
-	int i=0;
-	for(;i<NR_TLBSLOT;i++)
-		tlb[i].valid=0;
-}
-
-void flush_TLB()
-{
-	init_TLB();
-}
 
 /**
  * [find_hwaddr_due_lnaddr description]
@@ -70,6 +39,49 @@ static hwaddr_t find_hwaddr_due_lnaddr(lnaddr_t addr)
 #endif
 	return (pte.page_frame<<12)|offset;
 }
+
+
+
+
+hwaddr_t page_translate(lnaddr_t addr)
+{
+#ifdef TLB
+hwaddr_t read_TLB(lnaddr_t addr);
+	return read_TLB(addr)+OFFSET(addr);
+#else
+	return find_hwaddr_due_lnaddr(addr);
+#endif
+
+}
+
+#ifdef TLB
+/////////////////////////////////////////////////////////////////////////////
+/**
+ *  TLB
+ */
+typedef struct 
+{
+	uint32_t ln_tag:20;
+	uint32_t hw_result:20;
+	uint32_t valid:1;
+
+}TLBSlot;
+
+#define NR_TLBSLOT 60
+TLBSlot tlb [NR_TLBSLOT];
+
+void init_TLB()
+{
+	int i=0;
+	for(;i<NR_TLBSLOT;i++)
+		tlb[i].valid=0;
+}
+
+void flush_TLB()
+{
+	init_TLB();
+}
+
 
 
 
@@ -128,6 +140,7 @@ hwaddr_t read_TLB(lnaddr_t addr)
 	 */
 	return allocate_TLBSlot(addr)<<12;
 }
+#endif
 
 #undef DIR
 #undef PAGE
