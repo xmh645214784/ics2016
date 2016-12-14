@@ -82,3 +82,5 @@ make_helper(iretd);
 make_helper(sti);
 
 make_helper(hlt);
+
+#include "arith/bt.h"
