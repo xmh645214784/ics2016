@@ -116,7 +116,7 @@ int fs_lseek(int fd, int offset, int whence)
 		case SEEK_CUR:
 			file_state[fd].offset =file_state[fd].offset+offset;break;
 		case SEEK_END:
-			file_state[fd].offset =file_table[fd-3].size+offset;break;
+			file_state[fd].offset =file_table[fd-3].size-1+offset;break;
 		default:
 			assert(0);
 	}
