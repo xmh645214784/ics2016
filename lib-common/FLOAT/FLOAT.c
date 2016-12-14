@@ -2,7 +2,7 @@
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	long long x=a;
-	long long y=b;
+	int  y=b;
 	return (x*y)>>16;
 }
 
