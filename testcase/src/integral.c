@@ -24,7 +24,7 @@ int main() {
 	FLOAT ans = f2F(0.551222);
 
 	set_bp();
-	printf("%f\n",Fabs(a-ans) );
+	printf("%x\n",Fabs(a-ans) );
 	nemu_assert(Fabs(a - ans) < f2F(1e-4));
 
 	return 0;
