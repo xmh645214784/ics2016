@@ -48,7 +48,7 @@ void ide_write(uint8_t *, uint32_t, uint32_t);
 
 int fs_open(const char *pathname, int flags)    /* 在我们的实现中可以忽略flags */
 {
-	printk("fs_open %s\n",pathname);
+	// printk("fs_open %s\n",pathname);
 	int index=3;
 	for (; index < 3+NR_FILES; index++)
         if (strcmp(pathname, file_table[index-3].name) == 0)
@@ -60,7 +60,7 @@ int fs_open(const char *pathname, int flags)    /* 在我们的实现中可以�
 }
 int fs_read(int fd, void *buf, int len)
 {
-	printk("fs_read fd=%d len=%d\n",fd,len);
+	// printk("fs_read fd=%d len=%d\n",fd,len);
 
 	assert(fd>=3);
 	assert(file_state[fd].opened);
@@ -75,7 +75,7 @@ int fs_read(int fd, void *buf, int len)
 }
 int fs_write(int fd, void *buf, int len)
 {
-	printk("fs_write fd=%d len=%d\n",fd,len);
+	// printk("fs_write fd=%d len=%d\n",fd,len);
 	if(fd==0||fd==1||fd==2)
 	{
 		assert(0);
@@ -105,7 +105,7 @@ int fs_lseek(int fd, int offset, int whence)
               The offset is set to the size of the file plus offset bytes.
 
 	 */
-	printk("fs_lseek fd=%d offset=%d whence=%d\n",fd,offset,whence);
+	// printk("fs_lseek fd=%d offset=%d whence=%d\n",fd,offset,whence);
 
 	assert(fd>=3);
 	assert(file_state[fd].opened);
@@ -125,7 +125,7 @@ int fs_lseek(int fd, int offset, int whence)
 }
 int fs_close(int fd)
 {
-	printk("fs_close fd=%d\n",fd);
+	// printk("fs_close fd=%d\n",fd);
 
 	assert(fd>=3);
 	assert(file_state[fd].opened);
