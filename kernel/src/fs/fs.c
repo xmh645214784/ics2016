@@ -27,6 +27,9 @@ static const file_info file_table[] __attribute__((used)) = {
 	{"word.dat", 5650, 28155717},
 };
 
+
+
+
 typedef struct {
 	int opened;
 	uint32_t offset;
