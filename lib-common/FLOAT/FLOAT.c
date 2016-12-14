@@ -43,7 +43,7 @@ FLOAT f2F(float a) {
 	 */
 
 	void* point=&a;
-	int float_int=*(int *)point;
+	unsigned float_int=*(unsigned *)point;
 	unsigned exp=((float_int>>23)&0xFF)-127;
 	int sign=(float_int>>31)&1;
 	unsigned e=float_int&0x7FFFFF;
