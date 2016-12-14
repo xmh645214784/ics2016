@@ -109,14 +109,14 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 	{
 		if(key_state[i]==KEY_STATE_PRESS)
 		{
-			key_state[i]=KEY_STATE_EMPTY;
+			key_state[i]=KEY_STATE_WAIT_RELEASE;
 			key_press_callback(get_keycode(i));
 			sti();
 			return true;
 		}
 		else if(key_state[i]==KEY_STATE_RELEASE)
 		{
-			key_state[i]=KEY_STATE_WAIT_RELEASE;
+			key_state[i]=KEY_STATE_EMPTY;
 			key_release_callback(get_keycode(i));
 			//becasue we think it has been proceed;
 			sti();
