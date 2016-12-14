@@ -1,5 +1,6 @@
 #include "trap.h"
 #include "FLOAT.h"
+#include "stdio.h"
 
 FLOAT f(FLOAT x) { 
 	/* f(x) = 1/(1+25x^2) */
@@ -23,6 +24,7 @@ int main() {
 	FLOAT ans = f2F(0.551222);
 
 	set_bp();
+	printf("%f\n",Fabs(a-ans) );
 	nemu_assert(Fabs(a - ans) < f2F(1e-4));
 
 	return 0;
