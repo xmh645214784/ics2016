@@ -162,11 +162,12 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 {
 	//Log("write:len=%d addr=%08x",len,addr);
 	int i;
-	uint32_t group_index_in_array=get_group_index_in_array;
 
+	uint32_t group_index_in_array=get_group_index_in_array;
+#ifdef CACHE_DEBUG
 	//Log("group_num=%d  get_group_index_in_array=%d",get_group_index,get_group_index_in_array);
 	//Log("NR_GROUP=%d  WAY=%d",NR_GROUP,WAY);
-#ifdef CACHE_DEBUG
+
 	Assert(group_index_in_array>=0&&group_index_in_array<=NR_GROUP*WAY-WAY,"group index caculate failed");
 #endif
 	uint8_t *find=concat(find_data_point_,CACHE_NAME)(addr);
@@ -181,6 +182,7 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 			concat(CACHE_NAME,count)++;
 
 		//ifdef WRITE_BACK modify the dirty bit
+		group_index_in_array=group_index_in_array;
 		#ifdef WRITE_BACK	
 		for(i=0;i<WAY;i++)
 			if(CACHE_OBJECT.cacheline[group_index_in_array+i].valid==1&&CACHE_OBJECT.cacheline[group_index_in_array+i].addrnote==get_addr_note)
@@ -259,8 +261,8 @@ uint32_t concat(read_,CACHE_NAME)(hwaddr_t addr,size_t len)
 	//Log("read:len=%d addr=%08x",len,addr);
 	//Log("group_num=%d  get_group_index_in_array=%d",get_group_index,get_group_index_in_array);
 	//Log("%d  %d",NR_GROUP,WAY);
-	uint32_t group_index_in_array=get_group_index_in_array;
 #ifdef CACHE_DEBUG
+	uint32_t group_index_in_array=get_group_index_in_array;
 	Assert(group_index_in_array>=0&&group_index_in_array<=NR_GROUP*WAY-WAY,"group index caculate failed");
 #endif
 	/*each group first element's index*/

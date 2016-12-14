@@ -45,11 +45,12 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len,uint8_t sreg)
 	    SegDesc  temp= cpu.segment_reg[sreg].segdesc_cache;
 	    lnaddr_t base=get_SegDesc_base(temp);
 	  //  printf("base=%x\n",base );
-	    lnaddr_t limit=get_SegDesc_limit(temp);
+	    
 	   // printf("limit=%x\n",limit );
 	//    printf("cpu.cs.cache.granularity=%x\n",cpu.segment_reg[1].segdesc_cache.granularity);
 
 #ifdef DEBUG
+	    lnaddr_t limit=get_SegDesc_limit(temp);
 	    assert(addr<limit);
 #endif
     	return base + addr;

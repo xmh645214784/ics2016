@@ -6,8 +6,8 @@
 /* You will define this macro in PA4 */
 #define HAS_DEVICE
 
-#define DEBUG
-#define CACHE_DEBUG
+// #define DEBUG
+// #define CACHE_DEBUG
 
 
 #define LOG_FILE
