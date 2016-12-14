@@ -84,3 +84,5 @@ make_helper(sti);
 make_helper(hlt);
 
 #include "arith/bt.h"
+
+make_helper(cbw_v);
