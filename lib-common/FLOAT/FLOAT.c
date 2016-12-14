@@ -22,7 +22,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	 * It is OK not to use the template above, but you should figure
 	 * out another way to perform the division.
 	 */
-	long long bcs=a<<16;
+	long long bcs=(int)a<<16;
 	int low_32=bcs&0xFFFFFFFF;
 	int high_32=(bcs>>32)&0xFFFFFFFF;
 	FLOAT result;
