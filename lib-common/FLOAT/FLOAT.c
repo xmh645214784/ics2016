@@ -42,7 +42,7 @@ FLOAT f2F(float a) {
 	 * stack. How do you retrieve it to another variable without
 	 * performing arithmetic operations on it directly?
 	 */
-/*
+
 	void* point=&a;
 	unsigned float_int=*(unsigned *)point;
 	unsigned exp=((float_int>>23)&0xFF)-127;
@@ -60,21 +60,7 @@ FLOAT f2F(float a) {
 	}
 	FLOAT result= sign==0?e:-e;	
 	return result;
-*/
-	int *b = (int *)&a;
-	int flag = *b >> 31;
-	if (flag == 0)
-	{
-		int pow = ((*b & 0x7fffffff) >> 23) - 127;
-		int inl = ((*b & 0x00ffffff) | 0x00800000) >> (7 - pow);
-		return inl;
-	}
-	else
-	{
-		int pow = ((*b & 0x7fffffff) >> 23) - 127;
-		int inl = ~(((*b & 0x00ffffff) | 0x00800000) >> (7 - pow)) + 0x1;
-		return inl;
-	}
+
 }
 
 FLOAT Fabs(FLOAT a) {
