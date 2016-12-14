@@ -1,7 +1,8 @@
 #include "cpu/exec/helper.h"
 
 
-make_helper(lidt_rm2r_l) {
+make_helper(lidt_rm2r_l)
+{
 	int len=decode_rm2r_l(eip+1);
 #ifdef DEBUG
 	Assert(ops_decoded.is_operand_size_16==0,"lidt 16bit");

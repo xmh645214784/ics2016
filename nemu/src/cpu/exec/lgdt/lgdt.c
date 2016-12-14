@@ -1,6 +1,7 @@
 #include "cpu/exec/helper.h"
 
-make_helper(lgdt_rm2r_l) {
+make_helper(lgdt_rm2r_l)
+{
 	int len=decode_rm2r_l(eip+1);
 #ifdef DEBUG
 	Assert(ops_decoded.is_operand_size_16==0,"lgdt 16bit");
