@@ -33,7 +33,8 @@ keyboard_event(void) {
 	int code = in_byte(0x60);
 						//0x60
 	int index = getkeyindex(code);
-	assert(index!=-1);
+	if(index==-1)
+		return ;
 	/*
 	你应该从数字逻辑电路实验中认识到和扫描码相关的内容了: 
 	当按下一个键的时候, 键盘控制器将会发送该键的通码(make code); 当
