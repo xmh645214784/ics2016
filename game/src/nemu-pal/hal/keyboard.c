@@ -58,7 +58,7 @@ keyboard_event(void) {
 
 	// release
 		switch(key_state[index]){
-			// case KEY_STATE_EMPTY:key_state[index] = KEY_STATE_PRESS;break;
+			case KEY_STATE_EMPTY:key_state[index] = KEY_STATE_RELEASE;break;
 			case KEY_STATE_PRESS:key_state[index] = KEY_STATE_RELEASE;break;
 			case KEY_STATE_WAIT_RELEASE:key_state[index] = KEY_STATE_RELEASE;break;
 			// case KEY_STATE_RELEASE:key_state[index] = KEY_STATE_PRESS;break;
