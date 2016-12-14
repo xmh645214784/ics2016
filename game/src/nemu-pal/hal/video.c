@@ -42,8 +42,8 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	 /**
 	  * KISS  we think it is 32 wei se
 	  */
-	 assert(src->format->BytesPerPixel==4);
-	 assert(src->format->BytesPerPixel==4);
+	 assert(src->format->BytesPerPixel==1);
+	 assert(src->format->BytesPerPixel==1);
 	 h--;
 	 for(;h>=0;h--)
 	 {
