@@ -56,15 +56,15 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 	if(cpu.cr0.protect_enable==1&&cpu.cr0.paging==1)
 	{
 		/*unaligned*/
-		if(((addr&0xfff)+len)>(0xfff+1))  /*1 is important*/
-		{
-			int len1=(addr&0xfff)+len-1-0xfff;
-			int len2=len-len1;
-			uint32_t low=(hwaddr_read(page_translate(addr),4)&(~0u >> ((4 - len1) << 3)));
-			uint32_t high=((hwaddr_read(page_translate(addr+len1),4)&(~0u >> ((4 - len2) << 3)))<<(8*len1));
-			return low|high;
-		}
-		else
+//		if(((addr&0xfff)+len)>(0xfff+1))  /*1 is important*/
+//		{
+//			int len1=(addr&0xfff)+len-1-0xfff;
+//			int len2=len-len1;
+//			uint32_t low=(hwaddr_read(page_translate(addr),4)&(~0u >> ((4 - len1) << 3)));
+//			uint32_t high=((hwaddr_read(page_translate(addr+len1),4)&(~0u >> ((4 - len2) << 3)))<<(8*len1));
+//			return low|high;
+//		}
+//		else
 		  return hwaddr_read(page_translate(addr),len);
 	}
 	else
@@ -75,8 +75,8 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 	if(cpu.cr0.protect_enable==1&&cpu.cr0.paging==1)
 	{
 		/*unaligned*/
-		if(((addr&0xfff)+len)>(0xfff+1))  /*1 is important*/
-		{
+//		if(((addr&0xfff)+len)>(0xfff+1))  /*1 is important*/
+//		{
 			// int len1=(addr&0xfff)+len-1-0xfff;
 			// int len2=len-len1;
 			// uint32_t write1,write2;
@@ -96,14 +96,14 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 			// }
 			// hwaddr_write(page_translate(addr),len1,write1);
 			// hwaddr_write(page_translate(addr+len1),len2,write2);
-			int i=0;
-			for(;i<len;i++)
-			{
-				hwaddr_write(page_translate(addr+i),1,(uint8_t)data);
-				data=data>>8;
-			}
-		}
-		else
+//			int i=0;
+//			for(;i<len;i++)
+//			{
+//				hwaddr_write(page_translate(addr+i),1,(uint8_t)data);
+//				data=data>>8;
+//			}
+//		}
+//		else
 			hwaddr_write(page_translate(addr),len,data);
 	}
 	else
