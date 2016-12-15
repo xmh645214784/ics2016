@@ -119,27 +119,27 @@ typedef struct {
 	//EFLAGS
 	union
 	{
-		uint32_t EFLAGS;
+		volatile uint32_t EFLAGS;
 		struct 
 		{
-			uint8_t CF :1;
-			uint8_t nodef1:1;
-			uint8_t PF :1;
-			uint8_t nodef3 :1;
-			uint8_t AF :1;
-			uint8_t nodef5 :1;
-			uint8_t ZF :1;
-			uint8_t SF :1;
-			uint8_t TF :1;
-			uint8_t IF :1;
-			uint8_t DF :1;
-			uint8_t OF :1;
-			uint8_t TOPL:2;
-			uint8_t NT :1;
-			uint8_t nodef15 :1;
-			uint8_t RF :1;
-			uint8_t VM :1;
-			uint16_t nodef18:14;
+			volatile uint8_t CF :1;
+			volatile uint8_t nodef1:1;
+			volatile uint8_t PF :1;
+			volatile uint8_t nodef3 :1;
+			volatile uint8_t AF :1;
+			volatile uint8_t nodef5 :1;
+			volatile uint8_t ZF :1;
+			volatile uint8_t SF :1;
+			volatile uint8_t TF :1;
+			volatile uint8_t IF :1;
+			volatile uint8_t DF :1;
+			volatile uint8_t OF :1;
+			volatile uint8_t TOPL:2;
+			volatile uint8_t NT :1;
+			volatile uint8_t nodef15 :1;
+			volatile uint8_t RF :1;
+			volatile uint8_t VM :1;
+			volatile uint16_t nodef18:14;
 		};
 	};
 
