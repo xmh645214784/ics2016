@@ -163,7 +163,6 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 	//Log("write:len=%d addr=%08x",len,addr);
 	int i;
 
-	uint32_t group_index_in_array=get_group_index_in_array;
 #ifdef CACHE_DEBUG
 	//Log("group_num=%d  get_group_index_in_array=%d",get_group_index,get_group_index_in_array);
 	//Log("NR_GROUP=%d  WAY=%d",NR_GROUP,WAY);
@@ -182,8 +181,9 @@ void concat(write_,CACHE_NAME)(uint32_t src,hwaddr_t addr,size_t len)
 			concat(CACHE_NAME,count)++;
 
 		//ifdef WRITE_BACK modify the dirty bit
-		group_index_in_array=group_index_in_array;
-		#ifdef WRITE_BACK	
+		//group_index_in_array=get_group_index_in_array;
+		#ifdef WRITE_BACK			
+		uint32_t group_index_in_array=get_group_index_in_array;			
 		for(i=0;i<WAY;i++)
 			if(CACHE_OBJECT.cacheline[group_index_in_array+i].valid==1&&CACHE_OBJECT.cacheline[group_index_in_array+i].addrnote==get_addr_note)
 			{
