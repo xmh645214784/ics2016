@@ -41,18 +41,18 @@ do\
 {\
 if(isADD)\
 {\
-	DATA_TYPE_S sum=(DATA_TYPE_S)src+(DATA_TYPE_S)des;\
-	long long a_=(DATA_TYPE_S)src;\
-	long long b_=(DATA_TYPE_S)des;\
+	DATA_TYPE_S sum=(DATA_TYPE_S)(src)+(DATA_TYPE_S)(des);\
+	long long a_=(DATA_TYPE_S)(src);\
+	long long b_=(DATA_TYPE_S)(des);\
 	long long sum2=a_+b_;\
 	cpu.OF=sum!=sum2;\
 }\
 else\
 {\
-	long long a_=(DATA_TYPE_S)src;\
-	long long b_=(DATA_TYPE_S)des;\
+	long long a_=(DATA_TYPE_S)(src);\
+	long long b_=(DATA_TYPE_S)(des);\
 	long long sum2=b_-a_;\
-	DATA_TYPE_S sum=-(DATA_TYPE_S)src+(DATA_TYPE_S)des;\
+	DATA_TYPE_S sum=-(DATA_TYPE_S)(src)+(DATA_TYPE_S)(des);\
 	cpu.OF=sum!=sum2;\
 }\
 }while(0);
@@ -62,11 +62,11 @@ do\
 {\
 	if(isADD)\
 	{\
-		cpu.SF=MSB(src+des);\
+		cpu.SF=MSB((DATA_TYPE_S)(src)+(DATA_TYPE_S)(des));\
 	}\
 	else\
 	{\
-		cpu.SF=MSB(-src+des);\
+		cpu.SF=MSB(-(DATA_TYPE_S)(src)+(DATA_TYPE_S)(des));\
 	}\
 }while(0);
 
@@ -75,11 +75,11 @@ do\
 {\
 	if(isADD)\
 	{\
-		cpu.ZF=(src+des)==0;\
+		cpu.ZF=(DATA_TYPE_S)((DATA_TYPE_S)(src)+(DATA_TYPE_S)(des))==0;\
 	}\
 	else\
 	{\
-		cpu.ZF=(-src+des)==0;\
+		cpu.ZF=(DATA_TYPE_S)(-(DATA_TYPE_S)(src)+(DATA_TYPE_S)(des))==0;\
 	}\
 }while(0);
 
@@ -88,9 +88,9 @@ do\
 do\
 {\
 	if(isADD)\
-		cpu.PF=is_even_number_of_1(src+des);\
+		cpu.PF=is_even_number_of_1((src)+(des));\
 	else\
-		cpu.PF=is_even_number_of_1(-src+des);\
+		cpu.PF=is_even_number_of_1(-(src)+(des));\
 }while(0);
 
 
@@ -100,16 +100,16 @@ do\
 {\
 	if(isADD)\
 	{\
-		DATA_TYPE sum=src+des;\
-		if(sum>=src&&sum>=des)\
+		DATA_TYPE sum=(DATA_TYPE_S)(src)+(DATA_TYPE_S)(des);\
+		if(sum>=(src)&&sum>=(des))\
 			cpu.CF=0;\
 		else\
 			cpu.CF=1;\
 	}\
 	else\
 	{\
-		DATA_TYPE src__neg=src;\
-		if(des>=src__neg)\
+		DATA_TYPE src__neg=(src);\
+		if((des)>=src__neg)\
 			cpu.CF=0;\
 		else\
 			cpu.CF=1;\
